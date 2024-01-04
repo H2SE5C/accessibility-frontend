@@ -1,0 +1,31 @@
+body {
+    background-color: #D9EBF7;
+}
+
+.navigatie {
+    background-color: #2B50EC;
+    font-family: Inter;
+    color: white;
+}
+.nav-logo {
+    height: 2em;
+    padding: 0;
+    margin: 0.5em;
+}
+
+.navbar-brand {
+    display: flex;
+    align-content: center;
+}
+
+.logo-tekst {
+    margin: 0;
+
+}
+
+.login-knop {
+    color: white;
+    font-size: large;
+    text-decoration: none;
+    margin: 1em;
+}

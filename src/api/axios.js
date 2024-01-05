@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+let url = '';
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    url = 'https://localhost:5000';
+}
+else {
+    url = 'https://accessibility-frontend.azurewebsites.net/'
+}
 export default axios.create({
-    baseUrl: 'https://localhost:5000/'
+    baseURL: url
 })

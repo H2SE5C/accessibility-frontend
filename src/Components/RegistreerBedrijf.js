@@ -4,16 +4,24 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
 function RegistreerBedrijf() {
-    const REGISTREER_URL = '/a';
+    const REGISTREER_URL = '/api/gebruiker';
     const { setAuth } = useContext(AuthContext);
     const [bedrijfsnaam, setBedrijfsnaam] = useState("");
     const [email, setEmail] = useState("");
     const [locatie, setLocatie] = useState("");
     const [website, setWebsite] = useState("");
     const [wachtwoord, setWachtwoord] = useState("");
+
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(email, locatie, wachtwoord);
+        try {
+            const response = await axios(REGISTREER_URL);
+            console.log(response);
+        }
+        catch (err){
+            console.log(err);
+        }
+  /*      console.log(email, locatie, wachtwoord);*/
     }
     return (
         <div className="container">
@@ -35,7 +43,7 @@ function RegistreerBedrijf() {
                 </div>
                 <div className="form-group">
                     <label htmlFor="website">Website van uw bedrijf</label>
-                    <input type="email" className="form-control" id="website" placeholder="voorbeeld.nl" value={website} onChange={(e) => { setWebsite(e.target.value) }} />
+                    <input type="text" className="form-control" id="website" placeholder="voorbeeld.nl" value={website} onChange={(e) => { setWebsite(e.target.value) }} />
                 </div>
                 
                 <div className="form-group">

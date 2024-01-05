@@ -29,3 +29,9 @@ body {
     text-decoration: none;
     margin: 1em;
 }
+.inhoud {
+    background-color: white;
+    padding: 2em;
+    border-radius: 1em;
+    margin-top: 2em;
+}

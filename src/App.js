@@ -2,10 +2,10 @@ import NavigatieBar from "./Components/NavigatieBar";
 import Inhoud from "./Components/Inhoud";
 function App() {
     return (
-        <div>
+        <main>
             <NavigatieBar />
             <Inhoud />
-        </div>
+        </main>
   );
 }
 

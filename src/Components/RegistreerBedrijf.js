@@ -1,11 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/styles.css';
 import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
 function RegistreerBedrijf() {
-    const REGISTREER_URL = '/api/gebruiker';
-    const { setAuth } = useContext(AuthContext);
+    const REGISTREER_URL = '/api/authenticatie/registreer-bedrijf';
     const [bedrijfsnaam, setBedrijfsnaam] = useState("");
     const [email, setEmail] = useState("");
     const [locatie, setLocatie] = useState("");

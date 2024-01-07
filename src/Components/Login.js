@@ -3,6 +3,7 @@ import '../css/styles.css';
 import { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
+import { Link } from 'react-router-dom';
 function Login() {
     const LOGIN_URL = '/api/authenticatie/login';
     const { setAuth } = useContext(AuthContext);
@@ -39,6 +40,7 @@ function Login() {
                 </div>
 
                 <button type="submit" className="btn btn-primary mt-2">Login</button>
+                <p className="registreer-tekst"><Link to="/registreer-bedrijf">Geen account? Registreer!</Link></p>
             </form>
         </div>
     );

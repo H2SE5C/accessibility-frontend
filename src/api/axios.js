@@ -8,5 +8,5 @@ else {
     url = 'https://accessibility-backend.azurewebsites.net'
 }
 export default axios.create({
-    baseURL: url
+    baseURL: url,
 })

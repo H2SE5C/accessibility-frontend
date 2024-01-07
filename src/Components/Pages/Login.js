@@ -1,11 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import '../css/styles.css';
-import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
-import axios from '../api/axios';
+import '../../css/styles.css';
+import { useRef, useState, useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
+import axios from '../../api/axios';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+//moet nog errors laten zien
 function Login() {
     const LOGIN_URL = '/api/authenticatie/login';
-    const { setAuth } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    
+    const { setAuth } = useAuth();
     const [email, setEmail] = useState("");
     const [wachtwoord, setWachtwoord] = useState("");
 
@@ -17,9 +22,17 @@ function Login() {
                 'Access-Control-Allow-Crendentials': true
             });
             console.log(response);
+            const expiration = response?.data?.expiration;
+            const token = response?.data?.token;
+            const roles = response?.data?.roles;
+            setAuth({expiration, token, roles});
+            
+            const from = location.state?.from?.pathname || "/"+[roles];
+
+            navigate(from, {replace: true});
         }
         catch (err) {
-            console.log(err?.response?.data.message);
+            console.log(err?.response?.data?.message);
         }
         /*      console.log(email, locatie, wachtwoord);*/
     }
@@ -39,6 +52,7 @@ function Login() {
                 </div>
 
                 <button type="submit" className="btn btn-primary mt-2">Login</button>
+                <p className="registreer-tekst"><Link to="/registreer-bedrijf">Geen account? Registreer hier als bedrijf!</Link></p>
             </form>
         </div>
     );

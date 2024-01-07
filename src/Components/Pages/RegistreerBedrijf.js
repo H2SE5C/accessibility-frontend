@@ -1,7 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import '../css/styles.css';
+import '../../css/styles.css';
 import { useRef, useState, useEffect, useContext } from 'react';
-import axios from '../api/axios';
+import axios from '../../api/axios';
+import { Link } from 'react-router-dom';
 function RegistreerBedrijf() {
     const REGISTREER_URL = '/api/authenticatie/registreer-bedrijf';
     const [bedrijfsnaam, setBedrijfsnaam] = useState("");
@@ -50,6 +51,7 @@ function RegistreerBedrijf() {
                 </div>
 
                 <button type="submit" className="btn btn-primary mt-2">Registreer</button>
+                <p className="registreer-tekst"><Link to="/login">Al een account? Inloggen!</Link></p>
             </form>
         </div>
     );

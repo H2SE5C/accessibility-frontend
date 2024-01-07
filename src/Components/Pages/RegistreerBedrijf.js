@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import '../css/styles.css';
+import '../../css/styles.css';
 import { useRef, useState, useEffect, useContext } from 'react';
-import axios from '../api/axios';
+import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 function RegistreerBedrijf() {
     const REGISTREER_URL = '/api/authenticatie/registreer-bedrijf';

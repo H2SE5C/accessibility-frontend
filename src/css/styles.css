@@ -6,6 +6,8 @@ body {
     background-color: #2B50EC;
     font-family: Inter;
     color: white;
+    list-style: none; 
+    padding: 0;     
 }
 .nav-logo {
     height: 2em;
@@ -13,9 +15,11 @@ body {
     margin: 0.5em;
 }
 
+
 .navbar-brand {
     display: flex;
     align-content: center;
+    justify-content : left;
 }
 
 .logo-tekst {
@@ -23,11 +27,12 @@ body {
 
 }
 
-.login-knop {
+.Navlink {
     color: white;
     font-size: large;
     text-decoration: none;
     margin: 1em;
+    justify-content: end;
 }
 .inhoud {
     background-color: white;

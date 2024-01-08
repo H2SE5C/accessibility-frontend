@@ -9,6 +9,7 @@ import ErvaringsdeskundigeHomePagina from "./Components/Pages/Ervaringsdeskundig
 import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
+import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
 
 function App() {
     return (
@@ -28,6 +29,10 @@ function App() {
 
                     <Route element={<RequireAuth allowedRoles={["Bedrijf"]}/>} >
                         <Route path="/bedrijf" element={<BedrijfHomePagina />}/>
+                    </Route>
+
+                    <Route element={<RequireAuth allowedRoles={["Bedrijf"]} />} >
+                        <Route path="/bedrijf/profiel" element={<BedrijfProfielPagina />} />
                     </Route>
 
                     <Route element={<RequireAuth allowedRoles={["Beheerder"]}/>} >

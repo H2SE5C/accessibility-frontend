@@ -8,14 +8,19 @@ function NavigatieBar() {
     const { setAuth } = useAuth();
     
     const active = ({ isActive }) => { return isActive ? { /*color: "red"*/ } : {} }
+
     const isUserAuthEmpty = Object.keys(userAuth).length === 0;
+    const hasBedrijfRole = !isUserAuthEmpty && userAuth.roles[0] === "Bedrijf";
+  
     return (
         <nav className="navbar navigatie">
-            <Link to="/" className="navbar-brand">
+            <Link to="/" className="navbar-brand" >
                 <img src={logo} alt="Logo" className="nav-logo" />
                 {/*<div className="logo-tekst">Accessibility</div>*/}
             </Link>
-            { !isUserAuthEmpty ? <NavLink to="/" className="login-knop" onClick={() => setAuth({})}>Log uit</NavLink> : <NavLink style={active} to="/login" className="login-knop">Login</NavLink>}
+            {hasBedrijfRole ? <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >BedrijfProfiel</NavLink> : <></>}
+            {!isUserAuthEmpty ? <NavLink to="/" className="login-knop Navlink" onClick={() => setAuth({})}>Log uit</NavLink> : <NavLink style={active} to="/login" className="login-knop Navlink">Login</NavLink>}
+            
         </nav>
     );
 }

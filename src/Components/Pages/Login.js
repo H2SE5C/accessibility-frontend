@@ -21,7 +21,6 @@ function Login() {
                 'headers': { 'Content-Type': 'application/json' },
                 'Access-Control-Allow-Crendentials': true
             });
-            console.log(response);
             const expiration = response?.data?.expiration;
             const token = response?.data?.token;
             const roles = response?.data?.roles;

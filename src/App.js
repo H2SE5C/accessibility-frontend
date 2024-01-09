@@ -10,7 +10,6 @@ import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
 import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
-
 function App() {
     return (
         <main className="app">

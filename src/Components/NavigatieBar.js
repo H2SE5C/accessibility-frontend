@@ -18,7 +18,11 @@ function NavigatieBar() {
                 <img src={logo} alt="Logo" className="nav-logo" />
                 {/*<div className="logo-tekst">Accessibility</div>*/}
             </Link>
-            {hasBedrijfRole ? <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >BedrijfProfiel</NavLink> : <></>}
+            {hasBedrijfRole ? 
+                <div>
+                <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >BedrijfProfiel</NavLink>
+                </div>
+                : <></>}
             {!isUserAuthEmpty ? <NavLink to="/" className="login-knop Navlink" onClick={() => setAuth({})}>Log uit</NavLink> : <NavLink style={active} to="/login" className="login-knop Navlink">Login</NavLink>}
             
         </nav>

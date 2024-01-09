@@ -22,13 +22,15 @@ const Gebruikers = () => {
       }
     };
 
-    getUsers();
-
+    if(userAuth?.token) {
+      getUsers();
+    }
+    
     return () => {
         isMounted = false;
         controller.abort();
     }
-  }, []);
+  }, [userAuth]);
   return (
     <>
       <h1>Gebruikers lijst</h1>

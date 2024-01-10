@@ -43,3 +43,8 @@ body {
     white-space: pre-wrap;
     word-break: break-word;
 }
+
+.checkBox {
+    border: 3px solid black;
+    border-radius: 4px;
+}

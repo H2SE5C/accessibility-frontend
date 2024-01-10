@@ -8,15 +8,19 @@ function RegistreerErvaringsdeskundige() {
     const REGISTREER_URL = '/api/Authenticatie/registreer-ervaringsdeskundige';
     const [voornaam, setVoornaam] = useState("");
     const [achternaam, setAchternaam] = useState("")
-    const [email, setEmail] = useState("");
-    const [postcode, setPostcode] = useState("");
-    const [minderjarig, setMinderjarig] = useState(false);
-    const [wachtwoord, setWachtwoord] = useState("");
+    const [email, setEmail] = useState("")
+    const [postcode, setPostcode] = useState("")
+    const [minderjarig, setMinderjarig] = useState(false)
+    const [wachtwoord, setWachtwoord] = useState("")
     const [telefoonnummer, setTelefoonnummer] = useState("")
     const [voorkeurBenadering, setVoorkeurBenadering] = useState("")
     const [typeOnderzoeken, setTypeOnderzoeken] = useState([])
     const [aandoeningen, setAandoeningen] = useState([])
     const [commerciele, setCommerciele] = useState(false)
+    const [voogd, setVoogd] = useState([])
+    const [mes, setMessage] = useState("");
+    const [success, setSuccess] = useState(true);
+
 
     const fetchOnderzoeken = async () => {
         const responsTypeOnderzoeken = await axios('/api/Ervaringsdeskundige/TypeOnderzoeken');
@@ -53,16 +57,42 @@ function RegistreerErvaringsdeskundige() {
 
     };
 
- 
+    const handleFormChange = (formData) => {
+        // 在这里处理从子组件传回来的数据
+        setVoogd(formData);
+        console.log(formData);
+    };
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(e);
         try {
-            const response = await axios.post(REGISTREER_URL);
+            
+            const response = await axios.post(REGISTREER_URL, {
+                voornaam: voornaam,
+                achternaam: achternaam,
+                wachtwoord: wachtwoord,
+                email: email,
+                postcode: postcode,
+                minderjarig: minderjarig,
+                telefoonnummer: telefoonnummer,
+                aandoeningen: aandoeningen,
+                typeOnderzoeken: typeOnderzoeken,
+                voorkeurBenadering: voorkeurBenadering,
+                commerciele: commerciele,
+                voogdVoornaam: voogd.voogdVoornaam,
+                voogdAchternaam: voogd.voogdAchternaam,
+                voogdTelefoonnummer: voogd.voogdTelefoonnummer,
+                voogdEmail: voogd.voogdEmail
+            }
+                , { 'Access-Control-Allow-Crendentials': true });
+            setMessage("Account success gemaakt" );
+            setSuccess(true);
             console.log(response);
+            console.log(response.data['message']);
         }
-        catch (err){
-            console.log(err);
+        catch (err) {
+            setMessage("registeer verkeert opnieuw proberen!");
+            setSuccess(false);
+            console.log("error"+err);
         }
     }
     return (
@@ -70,6 +100,7 @@ function RegistreerErvaringsdeskundige() {
             <div className="header text-center">
                 <h1>Registreer uw account!</h1>
             </div>
+            {success ? <h1 className="text-success">{mes}</h1> : <h1 className="text-danger ">{mes}</h1> }
             <form onSubmit={ handleSubmit }>
                 <div className="form-group">
                     <label htmlFor="voornaam">Voornaam</label>
@@ -139,7 +170,7 @@ function RegistreerErvaringsdeskundige() {
                     <input type="checkbox" className="form-check-input checkBox" id="minderjarig" placeholder="minderjarig" value={minderjarig} onChange={(e) => { setMinderjarig(e.target.checked) }} />
                 </div>
 
-                {minderjarig && ( <Voogdformule /> ) }
+                {minderjarig && (<Voogdformule onFormChange={handleFormChange} /> ) }
 
                 <button type="submit" className="btn btn-primary mt-2">Registreer</button>
                 <p className="registreer-tekst"><Link to="/login">Al een account? Inloggen!</Link></p>

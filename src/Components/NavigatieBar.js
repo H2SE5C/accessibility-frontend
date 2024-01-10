@@ -3,10 +3,11 @@ import '../css/styles.css';
 import logo from '../images/Logo Icon/Op blauw/Transparant/icon_accessibility_on-blue_transp.png';
 import { NavLink, Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+
 function NavigatieBar() {
-    const { userAuth } = useAuth();
-    const { setAuth } = useAuth();
-    
+    const {userAuth}  = useAuth() || {};
+    const {setAuth}  = useAuth() || {};
+    console.log(userAuth);
     const active = ({ isActive }) => { return isActive ? { /*color: "red"*/ } : {} }
 
     const isUserAuthEmpty = Object.keys(userAuth).length === 0;

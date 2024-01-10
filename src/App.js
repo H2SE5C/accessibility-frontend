@@ -1,6 +1,7 @@
 import NavigatieBar from "./Components/NavigatieBar";
 import { Route, Routes } from 'react-router-dom';
 import RegistreerBedrijf from "./Components/Pages/RegistreerBedrijf";
+import RegistreerErvaringsdeskundige from "./Components/Pages/RegistreerErvaringsdeskundige";
 import Login from "./Components/Pages/Login";
 import BezoekerHomePagina from "./Components/Pages/BezoekerHomePagina";
 import PaginaNietGevonden from "./Components/Pages/PaginaNietGevonden";
@@ -10,7 +11,6 @@ import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
 import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
-
 function App() {
     return (
         <main className="app">
@@ -22,6 +22,7 @@ function App() {
                     
                     <Route path="/login" element={<Login />} />
                     <Route path="/registreer-bedrijf" element={<RegistreerBedrijf />} />
+                    <Route path="/registreer-ervaringsdeskundige" element={<RegistreerErvaringsdeskundige />} />
 
                     <Route element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]}/>} >
                         <Route path="/ervaringsdeskundige" element={<ErvaringsdeskundigeHomePagina />}/>

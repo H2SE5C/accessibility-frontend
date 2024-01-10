@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
 const Gebruikers = () => {
-  const [users, setUsers] = useState();
-  const {userAuth} = useAuth();
+  const [users, setUsers] = useState() || {};
+  const {userAuth} = useAuth() || {};
 
   //useeffect met react.restrictmode wordt 2 keer opgeroepen voor een reden.... hierdoor geeft het een error van canceled in abortcontroller
   useEffect(() => {
@@ -22,13 +22,15 @@ const Gebruikers = () => {
       }
     };
 
-    getUsers();
-
+    if(userAuth?.token) {
+      getUsers();
+    }
+    
     return () => {
         isMounted = false;
         controller.abort();
     }
-  }, []);
+  }, [userAuth, setUsers]);
   return (
     <>
       <h1>Gebruikers lijst</h1>

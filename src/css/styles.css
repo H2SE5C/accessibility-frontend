@@ -24,7 +24,6 @@ body {
 
 .logo-tekst {
     margin: 0;
-
 }
 
 .Navlink {
@@ -42,4 +41,9 @@ body {
     word-wrap: break-word;
     white-space: pre-wrap;
     word-break: break-word;
+}
+
+.checkBox {
+    border: 3px solid black;
+    border-radius: 4px;
 }

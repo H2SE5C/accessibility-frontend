@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../css/styles.css';
-import { useRef, useState, useEffect } from 'react';
+import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -52,6 +52,7 @@ function Login() {
 
                 <button type="submit" className="btn btn-primary mt-2">Login</button>
                 <p className="registreer-tekst"><Link to="/registreer-bedrijf">Geen account? Registreer hier als bedrijf!</Link></p>
+                <p className="registreer-tekst"><Link to="/registreer-ervaringsdeskundige">Ervaringdeskundige!</Link></p>
             </form>
         </div>
     );

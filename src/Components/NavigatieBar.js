@@ -16,6 +16,7 @@ function NavigatieBar() {
                 {/*<div className="logo-tekst">Accessibility</div>*/}
             </Link>
             <Link to="/ervaringsdeskundige">Ervaringsdeskundige</Link>
+            <Link to="/ervaringsdeskundige/profiel">Profiel</Link>
             { !isUserAuthEmpty ? <NavLink to="/" className="login-knop" onClick={() => setAuth({})}>Log uit</NavLink> : <NavLink style={active} to="/login" className="login-knop">Login</NavLink>}
         </nav>
     );

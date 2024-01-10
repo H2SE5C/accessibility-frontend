@@ -19,9 +19,9 @@ function Login() {
         try {
             const response = await axios.post(LOGIN_URL, JSON.stringify({ email, wachtwoord }), {
                 'headers': { 'Content-Type': 'application/json' },
-                'Access-Control-Allow-Crendentials': true
+                'withCredentials': true
             });
-            console.log(response);
+            // console.log(response);
             const expiration = response?.data?.expiration;
             const token = response?.data?.token;
             const roles = response?.data?.roles;
@@ -32,7 +32,7 @@ function Login() {
             navigate(from, {replace: true});
         }
         catch (err) {
-            console.log(err?.response?.data?.message);
+            // console.log(err?.response?.data?.message);
         }
         /*      console.log(email, locatie, wachtwoord);*/
     }

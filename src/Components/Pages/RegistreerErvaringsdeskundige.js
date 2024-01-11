@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../css/styles.css';
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 import Voogdformule from './Voogdformule';
@@ -74,8 +74,8 @@ function RegistreerErvaringsdeskundige() {
                 postcode: postcode,
                 minderjarig: minderjarig,
                 telefoonnummer: telefoonnummer,
-                aandoeningen: aandoeningen,
-                typeOnderzoeken: typeOnderzoeken,
+                aandoeningen: geselecteerdeAandoeningen,
+                typeOnderzoeken: geselecteerdeTypes,
                 voorkeurBenadering: voorkeurBenadering,
                 commerciele: commerciele,
                 voogdVoornaam: voogd.voogdVoornaam,

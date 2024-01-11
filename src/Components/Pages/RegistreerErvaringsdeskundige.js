@@ -58,7 +58,6 @@ function RegistreerErvaringsdeskundige() {
     };
 
     const handleFormChange = (formData) => {
-        // 在这里处理从子组件传回来的数据
         setVoogd(formData);
         console.log(formData);
     };

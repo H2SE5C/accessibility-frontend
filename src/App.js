@@ -1,5 +1,5 @@
 import NavigatieBar from "./Components/NavigatieBar";
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 import RegistreerBedrijf from "./Components/Pages/RegistreerBedrijf";
 import RegistreerErvaringsdeskundige from "./Components/Pages/RegistreerErvaringsdeskundige";
 import Login from "./Components/Pages/Login";
@@ -11,6 +11,8 @@ import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
 import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
+import PersistLogin from "./Components/PersistLogin";
+
 function App() {
     return (
         <main className="app">
@@ -24,9 +26,15 @@ function App() {
                     <Route path="/registreer-bedrijf" element={<RegistreerBedrijf />} />
                     <Route path="/registreer-ervaringsdeskundige" element={<RegistreerErvaringsdeskundige />} />
 
-                    <Route element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]}/>} >
-                        <Route path="/ervaringsdeskundige" element={<ErvaringsdeskundigeHomePagina />}/>
-                    </Route>
+          <Route element={<PersistLogin />}>
+            <Route
+              element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]} />}
+            >
+              <Route
+                path="/ervaringsdeskundige"
+                element={<ErvaringsdeskundigeHomePagina />}
+              />
+            </Route>
 
                     <Route element={<RequireAuth allowedRoles={["Bedrijf"]}/>} >
                         <Route path="/bedrijf" element={<BedrijfHomePagina />}/>
@@ -36,19 +44,19 @@ function App() {
                         <Route path="/bedrijf/profiel" element={<BedrijfProfielPagina />} />
                     </Route>
 
-                    <Route element={<RequireAuth allowedRoles={["Beheerder"]}/>} >
-                        <Route path="/beheerder" element={<BeheerderHomePagina />}/>
-                    </Route>
+            <Route element={<RequireAuth allowedRoles={["Beheerder"]} />}>
+              <Route path="/beheerder" element={<BeheerderHomePagina />} />
+            </Route>
 
-                    <Route element={<RequireAuth allowedRoles={["Medewerker"]}/>} >
-                        <Route path="/medewerker" element={<MedewerkerHomePagina />}/>
-                    </Route>
+            <Route element={<RequireAuth allowedRoles={["Medewerker"]} />}>
+              <Route path="/medewerker" element={<MedewerkerHomePagina />} />
+            </Route>
+          </Route>
 
-                    <Route path="*" element={<PaginaNietGevonden />} />
-                </Routes>
-            </div>
-           
-        </main>
+          <Route path="*" element={<PaginaNietGevonden />} />
+        </Routes>
+      </div>
+    </main>
   );
 }
 

@@ -3,16 +3,29 @@ import '../css/styles.css';
 import logo from '../images/Logo Icon/Op blauw/Transparant/icon_accessibility_on-blue_transp.png';
 import { NavLink, Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import axios from '../api/axios';
 
 function NavigatieBar() {
     const {userAuth}  = useAuth() || {};
     const {setAuth}  = useAuth() || {};
-    console.log(userAuth);
     const active = ({ isActive }) => { return isActive ? { /*color: "red"*/ } : {} }
 
     const isUserAuthEmpty = Object.keys(userAuth).length === 0;
     const hasBedrijfRole = !isUserAuthEmpty && userAuth.roles[0] === "Bedrijf";
   
+    const logUit = async () => {
+        
+        setAuth({})
+
+        try {
+            await axios.post('loguit', {}, {
+                'withCredentials': true
+            })
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
     return (
         <nav className="navbar navigatie">
             <Link to="/" className="navbar-brand" >
@@ -24,7 +37,7 @@ function NavigatieBar() {
                 <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >BedrijfProfiel</NavLink>
                 </div>
                 : <></>}
-            {!isUserAuthEmpty ? <NavLink to="/" className="login-knop Navlink" onClick={() => setAuth({})}>Log uit</NavLink> : <NavLink style={active} to="/login" className="login-knop Navlink">Login</NavLink>}
+            {!isUserAuthEmpty ? <NavLink to="/" className="login-knop Navlink" onClick={() => logUit()}>Log uit</NavLink> : <NavLink style={active} to="/login" className="login-knop Navlink">Login</NavLink>}
             
         </nav>
     );

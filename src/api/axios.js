@@ -11,3 +11,8 @@ else {
 export default axios.create({
     baseURL: url,
 })
+
+export const axiosPrivate = axios.create({
+    baseURL: url,
+    headers: {'Content-Type': 'application/json'}
+})

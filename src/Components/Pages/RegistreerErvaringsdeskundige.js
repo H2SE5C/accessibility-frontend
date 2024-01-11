@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../css/styles.css';
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
-import Voogdformule from './Voogdformule';
+import VoogdFormulier from './VoogdFormulier';
 function RegistreerErvaringsdeskundige() {
     const REGISTREER_URL = '/api/Authenticatie/registreer-ervaringsdeskundige';
     const [voornaam, setVoornaam] = useState("");
@@ -58,7 +58,7 @@ function RegistreerErvaringsdeskundige() {
     };
 
     const handleFormChange = (formData) => {
-        // 在这里处理从子组件传回来的数据
+         
         setVoogd(formData);
         console.log(formData);
     };
@@ -74,8 +74,8 @@ function RegistreerErvaringsdeskundige() {
                 postcode: postcode,
                 minderjarig: minderjarig,
                 telefoonnummer: telefoonnummer,
-                aandoeningen: aandoeningen,
-                typeOnderzoeken: typeOnderzoeken,
+                aandoeningen: geselecteerdeAandoeningen,
+                typeOnderzoeken: geselecteerdeTypes,
                 voorkeurBenadering: voorkeurBenadering,
                 commerciele: commerciele,
                 voogdVoornaam: voogd.voogdVoornaam,
@@ -98,7 +98,7 @@ function RegistreerErvaringsdeskundige() {
     return (
         <div className="container">
             <div className="header text-center">
-                <h1>Registreer uw account!</h1>
+                <h1>Registreer als ervaringsdeskundige</h1>
             </div>
             {success ? <h1 className="text-success">{mes}</h1> : <h1 className="text-danger ">{mes}</h1> }
             <form onSubmit={ handleSubmit }>
@@ -115,7 +115,7 @@ function RegistreerErvaringsdeskundige() {
                     <input type="text" className="form-control" id="email" placeholder="voorbeeld@voorbeeld.com" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="postcode">postcode</label>
+                    <label htmlFor="postcode">Postcode</label>
                     <input type="text" className="form-control" id="postcode" placeholder="1111DD" value={postcode} onChange={(e) => { setPostcode(e.target.value) }}  />
                 </div>
                 <div className="form-group">
@@ -129,12 +129,12 @@ function RegistreerErvaringsdeskundige() {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="voorkeurBenadering">voorkeurBenadering</label>
+                    <label htmlFor="voorkeurBenadering">Voorkeur benadering voor bedrijf/stichting</label>
                     <input type="text" className="form-control" id="voorkeurBenadering" placeholder="feysiek" value={voorkeurBenadering} onChange={(e) => { setVoorkeurBenadering(e.target.value) }} />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="typeOnderzoek">Kies de onderzoek Type</label>
+                    <label htmlFor="typeOnderzoek">Kies uw voorkeur voor de type onderzoeken</label>
                     <select id="typeOnderzoek" className="form-control" multiple value={geselecteerdeTypes.map(option => option.naam)} onChange={selecteerOnderzoekType}>
                         {typeOnderzoeken.map((typeOnderzoek) => (
                             <option key={typeOnderzoek.id} value={typeOnderzoek.naam}>
@@ -143,7 +143,7 @@ function RegistreerErvaringsdeskundige() {
                         ))}
                     </select>
 
-                    <p>Het keis is: {geselecteerdeTypes.map(option => `${option.naam} `).join(', ')}</p>
+                    <p>Uw geselecteerde onderzoekstypes: {geselecteerdeTypes.map(option => `${option.naam} `).join(', ')}</p>
                 </div>
 
 
@@ -157,20 +157,20 @@ function RegistreerErvaringsdeskundige() {
                         ))}
                     </select>
 
-                    <p>Het keis is: {geselecteerdeAandoeningen.map(option => `${option.naam} `).join(', ')}</p>
+                    <p>Uw geselecteerde aandoeningen: {geselecteerdeAandoeningen.map(option => `${option.naam} `).join(', ')}</p>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="commerciele" >Commerciele </label>
+                    <label htmlFor="commerciele">Wilt u toestaan dat 3de partijen u mag bereiken?</label>
                     <input type="checkbox" className="form-check-input checkBox" id="commerciele" placeholder="commerciele" value={commerciele} onChange={(e) => { setCommerciele(e.target.checked) }} />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="minderjarig" id="minderjarigCheck">Ben je minder dan 18? </label>
+                    <label htmlFor="minderjarig" id="minderjarigCheck">Bent u jonger dan 18?</label>
                     <input type="checkbox" className="form-check-input checkBox" id="minderjarig" placeholder="minderjarig" value={minderjarig} onChange={(e) => { setMinderjarig(e.target.checked) }} />
                 </div>
 
-                {minderjarig && (<Voogdformule onFormChange={handleFormChange} /> ) }
+                {minderjarig && (<VoogdFormulier onFormChange={handleFormChange} /> ) }
 
                 <button type="submit" className="btn btn-primary mt-2">Registreer</button>
                 <p className="registreer-tekst"><Link to="/login">Al een account? Inloggen!</Link></p>

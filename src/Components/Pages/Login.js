@@ -18,7 +18,6 @@ function Login() {
         e.preventDefault();
         try {
             const response = await axios.post(LOGIN_URL, JSON.stringify({ email, wachtwoord }), {
-                'headers': { 'Content-Type': 'application/json' },
                 'withCredentials': true
             });
             const expiration = response?.data?.expiration;

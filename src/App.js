@@ -7,6 +7,7 @@ import PaginaNietGevonden from "./Components/Pages/PaginaNietGevonden";
 import RequireAuth from "./Components/RequireAuth";
 import ErvaringsdeskundigeHomePagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeHomePagina";
 import ErvaringsdeskundigeProfielPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeProfielPagina";
+import ErvaringsdeskundigeProfielBewerkenPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeProfielBewerkenPagina";
 import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
@@ -26,6 +27,7 @@ function App() {
                     <Route element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]}/>} >
                         <Route path="/ervaringsdeskundige" element={<ErvaringsdeskundigeHomePagina />}/>
                         <Route path="/ervaringsdeskundige/profiel" element={<ErvaringsdeskundigeProfielPagina/>}/>
+                        <Route path="/ervaringsdeskundige/profiel/bewerken" element={<ErvaringsdeskundigeProfielBewerkenPagina/>}/>
                     </Route>
 
                     <Route element={<RequireAuth allowedRoles={["Bedrijf"]}/>} >

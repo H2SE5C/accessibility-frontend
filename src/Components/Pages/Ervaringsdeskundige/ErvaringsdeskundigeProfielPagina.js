@@ -1,18 +1,44 @@
+import { useState, useEffect } from 'react';
+import useAuth from '../../../hooks/useAuth';
+import axios from '../../../api/axios';
+
 function ErvaringsdeskundigeHomePagina() {
-    const buttonsWrapperStyle = { "align-items": "right" };
-    const bewerkKnopStyle = { "color": "blue", "text-decoration": "none", "margin-right": "10px" };
-    const verwijderKnopStyle = { "color": "red", "text-decoration": "none", "font-weight": "700" };
+    const bewerkKnopStyle = { "color": "blue", "textDecoration": "none", "marginRight": "10px" };
+    const verwijderKnopStyle = { "color": "red", "textDecoration": "none", "fontWeight": "700" };
+
+    const {userAuth} = useAuth();
+    const [ervaringsdeskundige, setErvaringsdeskundige] = useState({});
+
+    const fetchErvaringsdeskundige = async () => {
+        try {
+            const response = await axios.get(`/api/ervaringsdeskundige`, {
+                headers: {
+                    'Authorization': `Bearer ${userAuth.token}`
+                }
+            });
+            setErvaringsdeskundige(response.data);
+        } catch (error) {
+            console.error('Fout bij het ophalen van gegevens:', error);
+        }
+    }
+
+        
+    useEffect(() => {
+        fetchErvaringsdeskundige();
+    }, []);
 
     return (
         <div className="container">
             <h2>Profiel</h2>
+            <p>{userAuth.token}</p>
             <div className="row">
                 <div className="col-md-4">
                     <ul className="list-unstyled">
-                        <li>Voornaam: Tim</li>
+                        <li>Voornaaam: { ervaringsdeskundige.voornaam }</li>
                         <li>Achternaam: Can</li>
                         <li>Email: timcan@example.com</li>
                         <li>Postcode: 1234 AB</li>
+                        <li>Plaats: Den Haag</li>
                         <li>Wachtwoord: *********</li>
                         <li>Telefoon: +3161235923</li>
                     </ul>
@@ -40,7 +66,7 @@ function ErvaringsdeskundigeHomePagina() {
                 </div>
             </div>
             <div className="column">
-                <a href="#" style={bewerkKnopStyle}>bewerk</a>
+                <a href="/ervaringsdeskundige/profiel/bewerken" style={bewerkKnopStyle}>bewerk</a>
                 <a href="#" style={verwijderKnopStyle}>verwijder account</a>
             </div>
         </div>

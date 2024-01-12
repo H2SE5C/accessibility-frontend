@@ -1,12 +1,10 @@
-import useAuth from "../../../hooks/useAuth";
-
 function ErvaringsdeskundigeHomePagina () {
-    const kolomDivStyle = { "border": "1px solid red", "max-height": "75vh", "overflow": "auto" };
+    const kolomDivStyle = { "maxHeight": "75vh", "overflow": "auto" };
     const onderzoekDivStyle = {
         "border-radius": "10px",
         "border": "1px solid black",
-        "box-shadow": "0px 5px 7px 1px rgba(0,0,0,0.12)",
-        "margin-bottom": "10px",
+        "boxShadow": "0px 5px 7px 1px rgba(0,0,0,0.12)",
+        "marginBottom": "10px",
         "padding": "5px"
     };
     const detailsKnopStyle = { "font-weight": "700", "color": "blue" };

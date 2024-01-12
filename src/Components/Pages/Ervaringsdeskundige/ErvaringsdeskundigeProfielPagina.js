@@ -11,7 +11,7 @@ function ErvaringsdeskundigeHomePagina() {
 
     const fetchErvaringsdeskundige = async () => {
         try {
-            const response = await axios.get(`/api/ervaringsdeskundige`, {
+            const response = await axios.get(`/api/ervaringsdeskundige/profiel`, {
                 headers: {
                     'Authorization': `Bearer ${userAuth.token}`
                 }
@@ -21,7 +21,6 @@ function ErvaringsdeskundigeHomePagina() {
             console.error('Fout bij het ophalen van gegevens:', error);
         }
     }
-
         
     useEffect(() => {
         fetchErvaringsdeskundige();
@@ -30,17 +29,16 @@ function ErvaringsdeskundigeHomePagina() {
     return (
         <div className="container">
             <h2>Profiel</h2>
-            <p>{userAuth.token}</p>
             <div className="row">
                 <div className="col-md-4">
                     <ul className="list-unstyled">
                         <li>Voornaaam: { ervaringsdeskundige.voornaam }</li>
-                        <li>Achternaam: Can</li>
-                        <li>Email: timcan@example.com</li>
-                        <li>Postcode: 1234 AB</li>
-                        <li>Plaats: Den Haag</li>
+                        <li>Achternaam: { ervaringsdeskundige.achternaam }</li>
+                        <li>Email: { ervaringsdeskundige.email }</li>
+                        <li>Postcode: { ervaringsdeskundige.postcode }</li>
+                        <li>Plaats: { ervaringsdeskundige.plaats }</li>
                         <li>Wachtwoord: *********</li>
-                        <li>Telefoon: +3161235923</li>
+                        <li>Telefoon: { ervaringsdeskundige.phoneNumber }</li>
                     </ul>
                 </div>
                 <div className="col-md-4">

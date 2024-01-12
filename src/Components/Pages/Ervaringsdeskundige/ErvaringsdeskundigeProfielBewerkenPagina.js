@@ -47,7 +47,7 @@ function ErvaringsdeskundigeProfielBewerkenPagina() {
                         </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div className="form-group col-md-4">
                         <div className="form-group row">
                             <label htmlFor="inputBeperking" className="col-sm-2 col-form-label">Beperking:</label>
                             <div className="col-sm-4">
@@ -102,8 +102,8 @@ function ErvaringsdeskundigeProfielBewerkenPagina() {
                             <label htmlFor="inputBenadering" className="col-sm-2 col-form-label">Benadering:</label>
                             <div className="col-sm-4">
                                 <select className="form-control" id="inputBenadering">
-                                    <option>Mail</option>
-                                    <option>SMS</option>
+                                    <option>Geen voorkeur</option>
+                                    <option>Email</option>
                                     <option>Telefoon</option>
                                 </select>
                             </div>
@@ -112,9 +112,9 @@ function ErvaringsdeskundigeProfielBewerkenPagina() {
                             <label htmlFor="inputVoorkeurOnderzoek" className="col-sm-2 col-form-label">Voorkeur onderzoek:</label>
                             <div className="col-sm-4">
                                 <select className="form-control" id="inputVoorkeurOnderzoek">
-                                    <option>Interview</option>
-                                    <option>Online formulier</option>
-                                    <option>Telefoongesprek</option>
+                                    <option>Vragenlijst</option>
+                                    <option>Fysiek</option>
+                                    <option>Website test</option>
                                 </select>
                             </div>
                         </div>
@@ -133,7 +133,7 @@ function ErvaringsdeskundigeProfielBewerkenPagina() {
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div className="form-group col-md-4">
                         <div className="form-group row">
                             <label htmlFor="inputVoogdVoornaam" className="col-sm-2 col-form-label">Voornaam:</label>
                             <div className="col-sm-4">

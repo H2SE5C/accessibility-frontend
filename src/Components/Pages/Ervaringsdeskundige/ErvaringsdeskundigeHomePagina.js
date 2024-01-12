@@ -1,14 +1,14 @@
 function ErvaringsdeskundigeHomePagina () {
     const kolomDivStyle = { "maxHeight": "75vh", "overflow": "auto" };
     const onderzoekDivStyle = {
-        "border-radius": "10px",
+        "borderRadius": "10px",
         "border": "1px solid black",
         "boxShadow": "0px 5px 7px 1px rgba(0,0,0,0.12)",
         "marginBottom": "10px",
         "padding": "5px"
     };
-    const detailsKnopStyle = { "font-weight": "700", "color": "blue" };
-    const uitschrijvenKnopStyle = { "font-weight": "700", "color": "red" };
+    const detailsKnopStyle = { "fontWeight": "700", "color": "blue" };
+    const uitschrijvenKnopStyle = { "fontWeight": "700", "color": "red" };
     const listStyle = { "margin": "0" };
     
     return (

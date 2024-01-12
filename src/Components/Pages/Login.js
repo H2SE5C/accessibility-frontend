@@ -52,7 +52,7 @@ function Login() {
 
                 <button type="submit" className="btn btn-primary mt-2">Login</button>
                 <p className="registreer-tekst"><Link to="/registreer-bedrijf">Geen account? Registreer hier als bedrijf!</Link></p>
-                <p className="registreer-tekst"><Link to="/registreer-ervaringsdeskundige">Ervaringdeskundige!</Link></p>
+                <p className="registreer-tekst"><Link to="/registreer-ervaringsdeskundige">Geen account? Registreer hier als ervaringsdeskundige!</Link></p>
             </form>
         </div>
     );

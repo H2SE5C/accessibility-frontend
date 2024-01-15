@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "../../css/styles.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
@@ -18,7 +18,6 @@ function RegistreerBedrijf() {
   const [bericht, setBericht] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const errRef = useRef(null);
 
   useEffect(() => {
     setError(false);
@@ -55,11 +54,6 @@ function RegistreerBedrijf() {
         setBericht(JSON.stringify(err?.message));
       }
       setError(true);
-      console.log(errRef);
-      if (errRef.current) {
-        console.log("chekc");
-        errRef.current.focus();
-      }
     } finally {
       setLoading(false);
     }
@@ -76,8 +70,7 @@ function RegistreerBedrijf() {
           <>
             <div className="header text-center">
               <h1>Registreer uw Bedrijf!</h1>
-              <p className={error ? "text-danger" : "buitenscherm"} ref={errRef} tabIndex={0}>{bericht}</p>
-              {console.log(errRef)}
+              <p className={error ? "text-danger" : "buitenscherm"} tabIndex={0} aria-live="assertive">Foutmelding: {bericht}</p>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">

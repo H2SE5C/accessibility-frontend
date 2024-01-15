@@ -42,6 +42,7 @@ function BedrijfProfielPagina() {
             await updateBedrijf(tempBedrijf);
             setSaveSuccess(true);
             setIsEditing(false);
+            setBedrijf(tempBedrijf);
         } catch (error) {
             console.error('Fout bij het opslaan van bedrijfsgegevens:', error);
             setSaveSuccess(false);
@@ -55,7 +56,7 @@ function BedrijfProfielPagina() {
 
     const updateBedrijf = async (updatedData) => {
         try {
-            await axios.put(`/api/bedrijf/profiel`, updatedData, {
+            await axios.put(`/api/bedrijf/update`, updatedData, {
                 headers: {
                     'Authorization': `Bearer ${userAuth.token}`
                 }
@@ -98,10 +99,6 @@ function BedrijfProfielPagina() {
                                     <input type="text" name="email" value={tempBedrijf.email || ''} onChange={handleInputChange} />
                                 </div>
                                 <div className="bio-row">
-                                    <label>Wachtwoord</label>
-                                    <input type="password" name="password" value={''} />
-                                </div>
-                                <div className="bio-row">
                                     <label>Telefoon</label>
                                     <input type="text" name="phoneNumber" value={tempBedrijf.phoneNumber || ''} onChange={handleInputChange} />
                                 </div>
@@ -113,7 +110,6 @@ function BedrijfProfielPagina() {
                                 <div className="bio-row"><p><span>Beschrijving </span>: {bedrijf.omschrijving}</p></div>
                                 <div className="bio-row"><p><span>Website </span>: {bedrijf.linkNaarBedrijf}</p></div>
                                 <div className="bio-row"><p><span>Email </span>: {bedrijf.email}</p></div>
-                                <div className="bio-row"><p><span>Wachtwoord </span>: **********</p></div>
                                 <div className="bio-row"><p><span>Telefoon </span>: {bedrijf.phoneNumber}</p></div>
                             </>
                         )}

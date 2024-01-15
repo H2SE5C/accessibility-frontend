@@ -30,19 +30,19 @@ function VoogdFormulier({ onFormChange }) {
         <div className="voogdFormulier row">
             <div className="form-group col-md-6">
                 <label htmlFor="voogdVoornaam">Voornaam voogd</label>
-                <input required type="text" className="form-control" name="voogdVoornaam" id="voogdVoornaam" placeholder="Kafka" value={voogd.voogdVoornaam} onChange={handleInputChange} />
+                <input aria-required required type="text" className="form-control" name="voogdVoornaam" id="voogdVoornaam" placeholder="Kafka" value={voogd.voogdVoornaam} onChange={handleInputChange} />
             </div>
             <div className="form-group col-md-6">
                 <label htmlFor="voogdAchternaam">Achternaam voogd</label>
-                <input required type="text" className="form-control" name="voogdAchternaam" id="voogdAchternaam" placeholder="Jones" value={voogd.voogdAchternaam} onChange={handleInputChange} />
+                <input aria-required required type="text" className="form-control" name="voogdAchternaam" id="voogdAchternaam" placeholder="Jones" value={voogd.voogdAchternaam} onChange={handleInputChange} />
             </div>
             <div className="form-group col-md-12">
                 <label htmlFor="voogdEmail">Email voogd</label>
-                <input required type="text" className="form-control" name="voogdEmail" id="voogdEmail" placeholder="voorbeeld@voorbeeld.com" value={voogd.voogdEmail} onChange={handleInputChange} />
+                <input aria-required required type="text" className="form-control" name="voogdEmail" id="voogdEmail" placeholder="voorbeeld@voorbeeld.com" value={voogd.voogdEmail} onChange={handleInputChange} />
             </div>
             <div className="form-group col-md-12">
                 <label htmlFor="voogdTelefoonnummer">Telefoonnummer voogd</label>
-                <input required type="text" className="form-control" name="voogdTelefoonnummer" id="voogdTelefoonnummer" placeholder="0611111111" value={voogd.voogdTelefoonnummer} onChange={handleInputChange} />
+                <input aria-required required type="text" className="form-control" name="voogdTelefoonnummer" id="voogdTelefoonnummer" placeholder="0611111111" value={voogd.voogdTelefoonnummer} onChange={handleInputChange} />
             </div>
         </div>
     );

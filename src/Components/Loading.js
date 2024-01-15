@@ -1,10 +1,8 @@
-import React from 'react';
-
 function Loading({ isLoading, children }) {
   return (
     <div>
       {isLoading ? (
-        <p>Laden...</p>
+        <p aria-live='assertive'>Laden... Wees geduldig.</p>
       ) : (
         <>
           {children}

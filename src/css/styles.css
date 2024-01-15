@@ -1,5 +1,6 @@
 body {
     background-color: #D9EBF7;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .navigatie {
@@ -73,3 +74,7 @@ option {
     margin-bottom: 2em;
 }
 
+.buitenscherm {
+    position: absolute;
+    left: -9999px;
+}

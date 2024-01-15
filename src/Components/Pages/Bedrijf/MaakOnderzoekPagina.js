@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../../css/styles.css';
 import axios from '../../../api/axios';
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 function MaakOnderzoekPagina()
 {
-    const ONDERZOEK_URL = '/api/Onderzoek/bedrijf/add';
+/*    const ONDERZOEK_URL = '/api/Onderzoek/bedrijf/add';*/
     const [titel, setTitel] = useState("");
     const [omschrijving, setOmschrijving] = useState("");
     const [beloning, setBeloning] = useState("");
@@ -17,7 +16,7 @@ function MaakOnderzoekPagina()
     const [geselecteerdeBeperkingen, setGeselecteerdeBeperkingen] = useState([]);
     const [mes, setMessage] = useState("");
     const [success, setSuccess] = useState(true);
-    const axiosPrivate = useAxiosPrivate();
+/*    const axiosPrivate = useAxiosPrivate();*/
 
     const fetchOnderzoeken = async () => {
         const responsTypeOnderzoeken = await axios('/api/Ervaringsdeskundige/TypeOnderzoeken');
@@ -43,8 +42,9 @@ function MaakOnderzoekPagina()
     async function handleSubmit(e) {
         e.preventDefault();
         console.log(datum);
+        /*await axiosPrivate.post(ONDERZOEK_URL, */
         try {
-            const response = await axiosPrivate.post(ONDERZOEK_URL, {
+            const response = {
                 titel: titel,
                 omschrijving: omschrijving,
                 beloning: beloning,
@@ -53,15 +53,15 @@ function MaakOnderzoekPagina()
                 typeOnderzoek: geselecteerdeType
 
             }
-                , { 'Access-Control-Allow-Crendentials': true });
+           /*     , { 'Access-Control-Allow-Crendentials': true });*/
             console.log(response);
-            setMessage("Account success gemaakt");
+            setMessage("Onderzoek goed gemaakt");
             setSuccess(true);
         }
         catch (err) {
             // console.log(err?.request?.response);
             console.log(err);
-            setMessage("registeer verkeert opnieuw proberen!");
+            setMessage("its verkeert invullen");
             setSuccess(false);
         }
     }
@@ -69,7 +69,7 @@ function MaakOnderzoekPagina()
     return (
         <div className="container">
             <div className="header text-center">
-                <h1>Registreer uw Bedrijf!</h1>
+                <h1>Maak de Onderzoek!</h1>
             </div>
             {success ? <h1 className="text-success">{mes}</h1> : <h1 className="text-danger ">{mes}</h1>}
             <form onSubmit={handleSubmit}>
@@ -110,8 +110,9 @@ function MaakOnderzoekPagina()
                             </option>
                         ))}
                     </select>
-
-                    <p>Het keis is:  {geselecteerdeBeperkingen.map(option => `${option.naam} `).join(', ')}</p>
+                    <p className="selectie">Uw geselecteerde beperkingen:</p>
+                    <span className="gekozen">{geselecteerdeBeperkingen.length !== 0 ? geselecteerdeBeperkingen.map((option) => ` ${option.naam}`).join(",") : " nog niets geselecteerd."}</span>
+                 
                 </div>
 
                 <button type="submit" className="btn btn-primary mt-2">Maak</button>

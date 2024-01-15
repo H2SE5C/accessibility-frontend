@@ -251,14 +251,14 @@ function RegistreerErvaringsdeskundige() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="wachtwoord">Wachtwoord (tenminste 1 hoofdletter, 1 kleine letter, 1 cijfer, 1 speciale teken en 6 letters in totaal)</label>
+          <label htmlFor="wachtwoord">Wachtwoord</label>
           <input
           required
           aria-required
             type="password"
             className="form-control"
             id="wachtwoord"
-            placeholder="Wachtwoord"
+            placeholder="(tenminste 1 hoofdletter, 1 kleine letter, 1 cijfer, 1 speciale teken en 6 letters in totaal)"
             value={wachtwoord}
             onChange={(e) => {
               setWachtwoord(e.target.value);

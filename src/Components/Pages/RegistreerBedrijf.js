@@ -158,8 +158,7 @@ function RegistreerBedrijf() {
               </div>
               <div className="form-group">
                 <label htmlFor="wachtwoord">
-                  Wachtwoord (tenminste 1 hoofdletter, 1 kleine letter, 1
-                  cijfer, 1 speciale teken en 6 letters in totaal)
+                  Wachtwoord 
                 </label>
                 <input
                   type="password"
@@ -167,7 +166,8 @@ function RegistreerBedrijf() {
                   aria-required
                   className="form-control"
                   id="wachtwoord"
-                  placeholder="Wachtwoord"
+                  placeholder="(tenminste 1 hoofdletter, 1 kleine letter, 1
+                  cijfer, 1 speciale teken en 6 letters in totaal)"
                   value={wachtwoord}
                   onChange={(e) => {
                     setWachtwoord(e.target.value);

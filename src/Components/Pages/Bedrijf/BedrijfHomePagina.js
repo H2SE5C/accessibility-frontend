@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import useAuth from "../../../hooks/useAuth";
-import axios from "../../../api/axios";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import '../../../css/onderzoek.css';
 import { Link } from 'react-router-dom';
@@ -21,7 +19,7 @@ function BedrijfHomePagina() {
 
     useEffect(() => {
         OnderzoekenLijst();
-    }, [])
+    })
 
     return (
         <>
@@ -40,7 +38,7 @@ function BedrijfHomePagina() {
                         <div className="typeOnderzoek">typeOnderzoek: {onderzoek.typeOnderzoek}</div>
                     </div>
                 ))}
-                <div className="btn btn-success"><Link to="/bedrijf/maak-Onderzoek">Nieuw Onderzoek</Link></div>
+                <div className="btn btn-success"><Link className="link" to="/bedrijf/maak-Onderzoek">Nieuw Onderzoek</Link></div>
             </div>
         </>
     );

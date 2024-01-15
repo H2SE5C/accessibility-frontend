@@ -68,7 +68,7 @@ function BedrijfProfielPagina() {
 
     useEffect(() => {
         fetchBedrijf();
-    }, []);
+    });
 
     return (
         <div className="row">

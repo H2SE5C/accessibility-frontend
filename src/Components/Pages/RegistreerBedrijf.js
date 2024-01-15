@@ -14,6 +14,7 @@ function RegistreerBedrijf() {
     const [website, setWebsite] = useState("");
     const [wachtwoord, setWachtwoord] = useState("");
     const [omschrijving, setOmschrijving] = useState("");
+    const [telefoonnummer, setTelefoonnummer] = useState("");
     const [isLoading, setLoading] = useState(false);
     const [bericht, setBericht] = useState("");
     const [error, setError] = useState(false);
@@ -27,6 +28,7 @@ function RegistreerBedrijf() {
                 bedrijfsnaam: bedrijfsnaam,
                 email: email,
                 locatie: locatie,
+                telefoonnummer: telefoonnummer,
                 linkNaarBedrijf: website,
                 wachtwoord: wachtwoord,
                 omschrijving: omschrijving
@@ -73,6 +75,10 @@ function RegistreerBedrijf() {
                     <label htmlFor="locatie">Locatie</label>
                     <input type="text" required className="form-control" id="locatie" placeholder="1111DD voorbeeldstraat 999" value={locatie} onChange={(e) => { setLocatie(e.target.value) }}  />
                 </div>
+                <div className="form-group">
+                     <label htmlFor="telefoonnummer">Telefoonnummer</label>
+                     <input required type="text" className="form-control" id="telefoonnummer" placeholder="0611111111" value={telefoonnummer} onChange={(e) => { setTelefoonnummer(e.target.value);}} />
+                  </div>
                 <div className="form-group">
                     <label htmlFor="website">Website van uw bedrijf</label>
                     <input type="text" required className="form-control" id="website" placeholder="voorbeeld.nl" value={website} onChange={(e) => { setWebsite(e.target.value) }} />

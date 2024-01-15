@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../css/styles.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -17,6 +17,12 @@ function Login() {
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [bericht, setBericht] = useState("");
+
+    useEffect(() => {
+        setError(false);
+        setBericht('');
+      },[email, wachtwoord])
+
     async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true);
@@ -34,8 +40,18 @@ function Login() {
             navigate(from, {replace: true});
         }
         catch (err) {
+            //error catches kan misschien apart zodat het niet meerdere keren wordt herhaalt op andere pagina's
+
+           if(err?.message === "Network Error") {
+            setBericht("Kan database niet bereiken... Probeer later nog een keer.");
+           }
+           else if (err?.request?.response) {
+            setBericht(JSON.parse(err?.request?.response)?.message);
+           }
+           else {
+            setBericht(JSON.stringify(err?.message));
+           }
            setError(true);
-           setBericht(JSON.stringify(err?.message));
         }
         finally {
             setLoading(false);
@@ -47,12 +63,12 @@ function Login() {
             <Loading isLoading={isLoading}>
             <div className="header text-center">
                 <h1>Login</h1>
-                {error && <p>{bericht}</p>}
+                {error && <p className='text-danger' aria-live='assertive'>Foutmelding: {bericht}</p>}
             </div>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="email">Emailadres</label>
-                    <input required type="text" className="form-control" id="email" placeholder="voorbeeld@voorbeeld.com" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                    <input required type="email" className="form-control" id="email" placeholder="voorbeeld@voorbeeld.com" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="wachtwoord">Wachtwoord</label>

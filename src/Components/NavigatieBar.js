@@ -29,7 +29,7 @@ function NavigatieBar() {
     return (
         <nav className="navbar navigatie">
             <Link to="/" className="navbar-brand" >
-                <img src={logo} alt="Logo" className="nav-logo" />
+                <img src={logo} alt="logo van stichting" className="nav-logo" />
                 {/*<div className="logo-tekst">Accessibility</div>*/}
             </Link>
             {hasBedrijfRole ? 

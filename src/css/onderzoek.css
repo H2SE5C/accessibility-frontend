@@ -1,0 +1,17 @@
+    
+.onderzoek {
+    border-radius: 10px;
+    border: 1px solid black; 
+    box-shadow: 0px 5px 7px 1px rgba(0,0,0,0.12);
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.beperkingen {
+    margin-bottom: -1.2em;
+}
+
+.beperking {
+    margin-left:1em;
+}
+

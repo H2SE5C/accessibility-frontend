@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-
+import '../../../css/onderzoek.css';
+import { Link } from 'react-router-dom';
 
 function BedrijfHomePagina() {
     const API_URL = '/api/Onderzoek/bedrijf/';
@@ -34,11 +35,12 @@ function BedrijfHomePagina() {
                         <div className="status">Status: {onderzoek.status}</div>
                         <div className="datum">datum: {onderzoek.datum}</div>
                         <div className="beperkingen d-flex">Beperkningen: {onderzoek.beperkingen.map((beperking) => (
-                            <p className="mr-3" key={beperking.id}>{beperking.naam}</p>
+                            <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                         ))}</div>
                         <div className="typeOnderzoek">typeOnderzoek: {onderzoek.typeOnderzoek}</div>
                     </div>
                 ))}
+                <div className="btn btn-success"><Link to="/bedrijf/maak-Onderzoek">Nieuw Onderzoek</Link></div>
             </div>
         </>
     );

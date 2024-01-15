@@ -119,7 +119,22 @@ function RegistreerBedrijf() {
                     setLocatie(e.target.value);
                   }}
                 />
-              </div>
+            </div>
+            <div className="form-group">
+            <label htmlFor="telefoonnummer">Telefoonnummer</label>
+             <input
+               required
+               aria-required
+               type="text"
+               className="form-control"
+               id="telefoonnummer"
+               placeholder="0611111111"
+               value={telefoonnummer}
+               onChange={(e) => {
+               setTelefoonnummer(e.target.value);
+               }}
+               />
+             </div>
               <div className="form-group">
                 <label htmlFor="website">Website van uw bedrijf</label>
                 <input

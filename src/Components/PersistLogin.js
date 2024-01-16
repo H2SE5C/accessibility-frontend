@@ -2,7 +2,7 @@ import {Outlet} from "react-router-dom";
 import { useState, useEffect} from 'react';
 import useAuth from '../hooks/useAuth';
 import useRefreshToken from "../hooks/useRefreshToken";
-
+import Loading from "./Loading";
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const {userAuth} = useAuth();
@@ -25,9 +25,9 @@ const PersistLogin = () => {
     },[refresh, userAuth?.token])
 
     return (
-        <>
-        {isLoading ? <p>Laden...</p> : <Outlet />}
-        </>
+        <Loading isLoading={isLoading}>
+            <Outlet />
+        </Loading>
     )
 }
 export default PersistLogin;

@@ -12,6 +12,7 @@ import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagin
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
 import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
 import PersistLogin from "./Components/PersistLogin";
+import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
 
 function App() {
     return (
@@ -42,6 +43,10 @@ function App() {
 
                     <Route element={<RequireAuth allowedRoles={["Bedrijf"]} />} >
                         <Route path="/bedrijf/profiel" element={<BedrijfProfielPagina />} />
+                    </Route>
+
+                        <Route element={<RequireAuth allowedRoles={["Bedrijf"]} />} >
+                            <Route path="/bedrijf/maak-onderzoek" element={<MaakOnderzoekPagina />} />
                     </Route>
 
             <Route element={<RequireAuth allowedRoles={["Beheerder"]} />}>

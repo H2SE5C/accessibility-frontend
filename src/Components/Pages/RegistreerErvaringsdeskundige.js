@@ -26,10 +26,14 @@ function RegistreerErvaringsdeskundige() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
-
+  const [geselecteerdeTypes, setGeselecteerdeTypes] = useState([]);
+  const [geselecteerdeAandoeningen, setGeselecteerdeAandoeningen] = useState([]);
+  const [geselecteerdeHulpmiddelen, setGeselecteerdeHulmiddelen] = useState([]);
   useEffect(() => {
-    console.log(commerciele);
-  },[commerciele])
+    setError(false);
+    setBericht('');
+  },[voornaam, achternaam, email, postcode, wachtwoord, telefoonnummer, voorkeurBenadering, typeOnderzoeken, aandoeningen, hulpmiddelen, voogd, commerciele, minderjarig])
+
   const fetchOnderzoeken = async () => {
     try {
         const responsTypeOnderzoeken = await axios(
@@ -46,8 +50,16 @@ function RegistreerErvaringsdeskundige() {
           setHulmiddelen(responsHulpmiddelen.data);
     }
    catch(err) {
-    setError(true);
-    setBericht("Probleem met database-> "+err);
+    if(err?.message === "Network Error") {
+      setBericht("Kan database niet bereiken... Probeer later nog een keer.");
+     }
+     else if (err?.request?.response) {
+      setBericht(JSON.parse(err?.request?.response)?.message);
+     }
+     else {
+      setBericht(JSON.stringify(err?.message));
+     }
+     setError(true);
    }
    finally {
     setLoading(false);
@@ -57,10 +69,6 @@ function RegistreerErvaringsdeskundige() {
   useEffect(() => {
     fetchOnderzoeken();
   }, []);
-
-  const [geselecteerdeTypes, setGeselecteerdeTypes] = useState([]);
-  const [geselecteerdeAandoeningen, setGeselecteerdeAandoeningen] = useState([]);
-  const [geselecteerdeHulpmiddelen, setGeselecteerdeHulmiddelen] = useState([]);
 
   const selecteerOnderzoekType = (event) => {
     const selected = Array.from(event.target.selectedOptions, (option) => {
@@ -79,6 +87,7 @@ function RegistreerErvaringsdeskundige() {
       );
       return { id: hulpmiddel.id, naam: hulpmiddel.naam };
     });
+
     setGeselecteerdeHulmiddelen(selected);
   };
 
@@ -126,9 +135,16 @@ function RegistreerErvaringsdeskundige() {
       setSuccess(true);
     }
     catch (err) {
-        setError(true);
-        setBericht(err.message);
-        console.log("error (kan wachtwoord probleem zijn): " + JSON.stringify(err));
+      if(err?.message === "Network Error") {
+       setBericht("Kan database niet bereiken...");
+      }
+      else if (err?.request?.response) {
+       setBericht(JSON.parse(err?.request?.response)?.message);
+      }
+      else {
+       setBericht(JSON.stringify("wachtwoord probleem? "+err?.message));
+      }
+      setError(true);
     }
     finally {
         setLoading(false);
@@ -139,14 +155,14 @@ function RegistreerErvaringsdeskundige() {
          <Loading isLoading={isLoading}>
         {success ? 
         <>
-        <h1>{bericht}</h1>
+        <h1 aria-live="assertive">{bericht}</h1>
         <NavLink to="/login">Naar login</NavLink>
         </>
        : 
         <>
         <div className="header text-center">
         <h1>Registreer als ervaringsdeskundige</h1>
-        {error ? <p className="text-danger">{bericht}</p> : null}
+        <p className={error ? "text-danger" : "buitenscherm"} tabIndex={0} aria-live="assertive">Foutmelding: {bericht}</p>
       </div>
       
       <form onSubmit={handleSubmit} className="row">
@@ -154,6 +170,7 @@ function RegistreerErvaringsdeskundige() {
           <label htmlFor="voornaam">Voornaam</label>
           <input
           required
+          aria-required
             type="text"
             className="form-control"
             id="voornaam"
@@ -168,6 +185,7 @@ function RegistreerErvaringsdeskundige() {
           <label htmlFor="achternaam">Achternaam</label>
           <input
           required
+          aria-required
             type="text"
             className="form-control"
             id="achternaam"
@@ -182,6 +200,7 @@ function RegistreerErvaringsdeskundige() {
           <label htmlFor="email">Emailadres</label>
           <input
           required
+          aria-required
             type="email"
             className="form-control"
             id="email"
@@ -196,6 +215,7 @@ function RegistreerErvaringsdeskundige() {
           <label htmlFor="postcode">Postcode</label>
           <input
           required
+          aria-required
             type="text"
             className="form-control"
             id="postcode"
@@ -210,6 +230,7 @@ function RegistreerErvaringsdeskundige() {
           <label htmlFor="telefoonnummer">Telefoonnummer</label>
           <input
           required
+          aria-required
             type="text"
             className="form-control"
             id="telefoonnummer"
@@ -222,13 +243,14 @@ function RegistreerErvaringsdeskundige() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="wachtwoord">Wachtwoord (tenminste 1 hoofdletter, 1 cijfer, 1 speciale teken)</label>
+          <label htmlFor="wachtwoord">Wachtwoord</label>
           <input
           required
+          aria-required
             type="password"
             className="form-control"
             id="wachtwoord"
-            placeholder="Wachtwoord"
+            placeholder="(tenminste 1 hoofdletter, 1 kleine letter, 1 cijfer, 1 speciale teken en 6 letters in totaal)"
             value={wachtwoord}
             onChange={(e) => {
               setWachtwoord(e.target.value);
@@ -250,34 +272,38 @@ function RegistreerErvaringsdeskundige() {
         </div>
         <div className="form-group col-md-12">
           <label htmlFor="hulpmiddel">
-            Kies de hulmiddel(en) dat u gebruikt (niet verplicht)
+            Kies het hulpmiddel(en) dat u gebruikt (niet verplicht)
           </label>
-          <select
+          <select 
             id="hulpmiddel"
             className="form-control"
             multiple
+            aria-multiselectable={true}
             value={geselecteerdeHulpmiddelen.map((option) => option.naam)}
             onChange={selecteerHulpmiddel}>
             {hulpmiddelen.map((hulpmiddel) => (
               <option key={hulpmiddel.id} value={hulpmiddel.naam}>{hulpmiddel.naam}</option>
             ))}
           </select>
-
-        <div className="selectie-container">
+          <div className="selectie-container" tabIndex={0}>
             <p className="selectie">Uw geselecteerde hulpmiddelen:</p>
-            <span className="gekozen">{geselecteerdeHulpmiddelen.map((option) => ` ${option.naam}`).join(",")}</span>
+            <span className="gekozen">{geselecteerdeHulpmiddelen.length !== 0 ? geselecteerdeHulpmiddelen.map((option) => ` ${option.naam}`).join(",") : " nog niets geselecteerd."}</span>
         </div>
+        
           
         </div>
         <div className="form-group col-md-6">
           <label htmlFor="typeOnderzoek">
-            Kies uw voorkeur voor de type onderzoeken 
+            Kies uw voorkeur voor de type onderzoeken
           </label>
           <select
+          required
+          aria-required
             id="typeOnderzoek"
             className="form-control"
             multiple
             // size={3}
+            aria-multiselectable={true}
             value={geselecteerdeTypes.map((option) => option.naam)}
             onChange={selecteerOnderzoekType}>
             {typeOnderzoeken.map((typeOnderzoek) => (
@@ -285,9 +311,9 @@ function RegistreerErvaringsdeskundige() {
             ))}
           </select>
 
-        <div className="selectie-container">
-            <p className="selectie">Uw geselecteerde onderzoekstypes:</p>
-            <span className="gekozen">{geselecteerdeTypes.map((option) => ` ${option.naam}`).join(",")}</span>
+        <div className="selectie-container" tabIndex={0}>
+            <p className="selectie">Uw geselecteerde onderzoekstypes:</p> 
+            <span className="gekozen" >{geselecteerdeTypes.length !== 0 ? geselecteerdeTypes.map((option) => ` ${option.naam}`).join(",") : " nog niets geselecteerd."}</span>
         </div>
           
         </div>
@@ -295,9 +321,11 @@ function RegistreerErvaringsdeskundige() {
           <label htmlFor="Aandoeningen">Kies de toepassende aandoening(en)</label>
           <select
           required
+          aria-required
             id="Aandoeningen"
             className="form-control"
             multiple
+            aria-multiselectable={true}
             value={geselecteerdeAandoeningen.map((option) => option.naam)}
             onChange={selecteerAandoening}
           >
@@ -307,9 +335,9 @@ function RegistreerErvaringsdeskundige() {
               </option>
             ))}
           </select>
-          <div className="selectie-container">
+          <div className="selectie-container" tabIndex={0}>
             <p className="selectie">Uw geselecteerde aandoeningen:</p>
-            <span className="gekozen">{geselecteerdeAandoeningen.map((option) => ` ${option.naam}`).join(",")}</span>
+            <span className="gekozen">{geselecteerdeAandoeningen.length !== 0 ? geselecteerdeAandoeningen.map((option) => ` ${option.naam}`).join(",") : " nog niets geselecteerd."}</span>
           </div>
         </div>
 

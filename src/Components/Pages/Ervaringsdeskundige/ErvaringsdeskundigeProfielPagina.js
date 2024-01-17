@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import axios from '../../../api/axios';
 
@@ -8,6 +9,7 @@ function ErvaringsdeskundigeProfielPagina() {
     const verwijderKnopStyle = { "color": "red", "textDecoration": "none", "fontWeight": "700", "backgroundColor": "transparent", "border": "none" };
 
     const {userAuth} = useAuth();
+    const navigate = useNavigate();
     const [ervaringsdeskundige, setErvaringsdeskundige] = useState({});
     const [tempErvaringsdeskundige, setTempErvaringsdeskundige] = useState({});
     const [isEditing, setIsEditing] = useState(false);
@@ -71,6 +73,22 @@ function ErvaringsdeskundigeProfielPagina() {
         }
     };
 
+    const handleDelete = async () => {
+        const confirmed = window.confirm('Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');
+        if(confirmed) {
+            try {
+                await axios.delete(`/api/ervaringsdeskundige/delete-profiel`, {
+                    headers: {
+                        'Authorization': `Bearer ${userAuth.token}`
+                    }
+                });
+                navigate('/');
+            } catch (error) {
+                console.error('Fout bij het verwijderen van het account:', error);
+            }
+        }
+    };
+
     return (
         <div>
             { !isEditing ? (
@@ -114,7 +132,7 @@ function ErvaringsdeskundigeProfielPagina() {
             </div>
             <div className="column">
                 <button type="button" style={bewerkKnopStyle} onClick={toggleEdit} className="btn btn-primary">bewerk</button>
-                <button type="button" style={verwijderKnopStyle} className="btn btn-primary">verwijder account</button>
+                <button type="button" style={verwijderKnopStyle} onClick={handleDelete} className="btn btn-primary">verwijder account</button>
             </div>
         </div>
         ) : ( 

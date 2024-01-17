@@ -29,6 +29,7 @@ function MaakOnderzoekPagina()
         fetchOnderzoeken();
     },[])
 
+    setGeselecteerdeType(typeOnderzoeken[0]);
  
 
     const selecteerBeperkingen = (event) => {

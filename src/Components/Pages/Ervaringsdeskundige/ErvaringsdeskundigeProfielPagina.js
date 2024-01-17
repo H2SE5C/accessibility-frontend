@@ -38,6 +38,7 @@ function ErvaringsdeskundigeProfielPagina() {
     };
 
     const handleInputChange = (event) => {
+        console.log({ ...tempErvaringsdeskundige, [event.target.name]: event.target.value });
         setTempErvaringsdeskundige({ ...tempErvaringsdeskundige, [event.target.name]: event.target.value });
     };
 
@@ -46,6 +47,7 @@ function ErvaringsdeskundigeProfielPagina() {
             await updateErvaringsdeskundige(tempErvaringsdeskundige);
             setSaveSuccess(true);
             setIsEditing(false);
+            setErvaringsdeskundige(tempErvaringsdeskundige);
         } catch (error) {
             console.error('Fout bij het opslaan van gegevens:', error);
             setSaveSuccess(false);
@@ -59,7 +61,7 @@ function ErvaringsdeskundigeProfielPagina() {
 
     const updateErvaringsdeskundige = async (updatedData) => {
         try {
-            await axios.put(`/api/ervaringsdeskundige/profiel`, updatedData, {
+            await axios.put(`/api/Ervaringsdeskundige/update`, updatedData, {
                 headers: {
                     'Authorization': `Bearer ${userAuth.token}`
                 }
@@ -119,61 +121,61 @@ function ErvaringsdeskundigeProfielPagina() {
         <div className="container">
             <form>
                 <div className="row">
-                    <div className={ervaringsdeskundige.minderjarig ? "form-group col-md-4" : "form-group col-md-6"}>
+                    <div className="form-group col-md-4">
                         <div className="form-group row">
-                            <label htmlFor="inputVoornaam" className="col-md-5 col-form-label">Voornaam:</label>
+                            <label htmlFor="voornaam" className="col-md-5 col-form-label">Voornaam:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputVoornaam" placeholder="voornaam" defaultValue={ ervaringsdeskundige.voornaam }/>
+                                <input type="text" className="form-control" name="voornaam" placeholder="voornaam" defaultValue={ tempErvaringsdeskundige.voornaam } onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputAchternaam" className="col-md-5 col-form-label">Achternaam:</label>
+                            <label htmlFor="achternaam" className="col-md-5 col-form-label">Achternaam:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputAchternaam" placeholder="achternaam" defaultValue={ ervaringsdeskundige.achternaam }/>
+                                <input type="text" className="form-control" name="achternaam" placeholder="achternaam" defaultValue={ ervaringsdeskundige.achternaam } onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputEmail" className="col-md-5 col-form-label">Email:</label>
+                            <label htmlFor="email" className="col-md-5 col-form-label">Email:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputEmail" placeholder="email" defaultValue={ ervaringsdeskundige.email }/>
+                                <input type="text" className="form-control" name="email" placeholder="email" defaultValue={ ervaringsdeskundige.email } onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputPostcode" className="col-md-5 col-form-label">Postcode:</label>
+                            <label htmlFor="postcode" className="col-md-5 col-form-label">Postcode:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputPostcode" placeholder="postcode" defaultValue={ ervaringsdeskundige.postcode }/>
+                                <input type="text" className="form-control" name="postcode" placeholder="postcode" defaultValue={ ervaringsdeskundige.postcode } onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputPlaats" className="col-md-5 col-form-label">Plaats:</label>
+                            <label htmlFor="plaats" className="col-md-5 col-form-label">Plaats:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputPlaats" placeholder="plaats" defaultValue={ ervaringsdeskundige.plaats }/>
+                                <input type="text" className="form-control" name="plaats" placeholder="plaats" defaultValue={ ervaringsdeskundige.plaats } onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputWachtwoord" className="col-md-5 col-form-label">Wachtwoord:</label>
+                            <label htmlFor="password" className="col-md-5 col-form-label">Wachtwoord:</label>
                             <div className="col-md-7">
-                                <input type="password" className="form-control" id="inputWachtwoord" placeholder="wachtwoord"/>
+                                <input type="password" className="form-control" name="password" placeholder="wachtwoord" onChange={handleInputChange}/>
                             </div>
                         <div className="form-group row">
-                            <label htmlFor="inputTelefoon" className="col-md-5 col-form-label">Telefoon:</label>
+                            <label htmlFor="phoneNumber" className="col-md-5 col-form-label">Telefoon:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputTelefoon" placeholder="telefoon" pattern="[0-9]{10}" defaultValue={ ervaringsdeskundige.phoneNumber }/>
+                                <input type="text" className="form-control" name="phoneNumber" placeholder="telefoon" pattern="[0-9]{10}" defaultValue={ ervaringsdeskundige.phoneNumber } onChange={handleInputChange}/>
                             </div>
                         </div>
                         </div>
                     </div>
-                    <div className={ervaringsdeskundige.minderjarig ? "form-group col-md-4" : "form-group col-md-6"}>
+                    <div className="form-group col-md-4">
                         <div className="form-group row">
-                            <label htmlFor="inputBeperking" className="col-md-5 col-form-label">Beperking:</label>
+                            <label htmlFor="beperking" className="col-md-5 col-form-label">Beperking:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputBeperking" placeholder="beperking"/>
+                                <input type="text" className="form-control" name="beperking" placeholder="beperking" onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputBeperkingToevoegen" className="col-md-5 col-form-label">Beperking toevoegen:</label>
+                            <label htmlFor="beperkingToevoegen" className="col-md-5 col-form-label">Beperking toevoegen:</label>
                             <div className="col-md-7">
-                                <select className="form-control" id="inputBeperkingToevoegen">
+                                <select className="form-control" name="beperkingToevoegen">
                                     <option>-</option>
                                     <option>Visueel</option>
                                     <option>Motorisch</option>
@@ -183,15 +185,15 @@ function ErvaringsdeskundigeProfielPagina() {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputHulpmiddel" className="col-md-5 col-form-label">Hulpmiddel:</label>
+                            <label htmlFor="hulpmiddel" className="col-md-5 col-form-label">Hulpmiddel:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputHulpmiddel" placeholder="hulpmiddel"/>
+                                <input type="text" className="form-control" name="hulpmiddel" placeholder="hulpmiddel" onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputHulpmiddelToevoegen" className="col-md-5 col-form-label">Hulpmiddel toevoegen:</label>
+                            <label htmlFor="hulpmiddelToevoegen" className="col-md-5 col-form-label">Hulpmiddel toevoegen:</label>
                             <div className="col-md-7">
-                                <select className="form-control" id="inputHulpmiddelToevoegen">
+                                <select className="form-control" name="hulpmiddelToevoegen">
                                     <option>-</option>
                                     <option>Software</option>
                                     <option>Keyboard</option>
@@ -199,15 +201,15 @@ function ErvaringsdeskundigeProfielPagina() {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputAandoening" className="col-md-5 col-form-label">Aandoening:</label>
+                            <label htmlFor="aandoening" className="col-md-5 col-form-label">Aandoening:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" id="inputAandoening" placeholder="Aandoening"/>
+                                <input type="text" className="form-control" name="aandoening" placeholder="Aandoening" onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputAandoeningToevoegen" className="col-md-5 col-form-label">Aandoening toevoegen:</label>
+                            <label htmlFor="aandoeningToevoegen" className="col-md-5 col-form-label">Aandoening toevoegen:</label>
                             <div className="col-md-7">
-                                <select className="form-control" id="inputAandoeningToevoegen">
+                                <select className="form-control" name="aandoeningToevoegen">
                                     <option>-</option>
                                     <option>Software</option>
                                     <option>Keyboard</option>
@@ -215,19 +217,19 @@ function ErvaringsdeskundigeProfielPagina() {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputBenadering" className="col-md-5 col-form-label">Benadering:</label>
+                            <label htmlFor="voorkeurBenadering" className="col-md-5 col-form-label">Voorkeur benadering:</label>
                             <div className="col-md-7">
-                                <select className="form-control" id="inputBenadering">
-                                    { ervaringsdeskundige.voorkeurBenadering === "geen voorkeur" ? <option selected> Geen voorkeur</option> : <option> Geen voorkeur</option> }
-                                    { ervaringsdeskundige.voorkeurBenadering === "email" ? <option selected> Email</option> : <option> Email</option> }
-                                    { ervaringsdeskundige.voorkeurBenadering === "telefoon" ? <option selected> Telefoon</option> : <option> Telefoon</option> }
+                                <select className="form-control" name="voorkeurBenadering" onChange={handleInputChange}>
+                                    { ervaringsdeskundige.voorkeurBenadering === "geen voorkeur" ? <option selected value="geen voorkeur"> Geen voorkeur</option> : <option value="geen voorkeur"> Geen voorkeur</option> }
+                                    { ervaringsdeskundige.voorkeurBenadering === "email" ? <option selected value="email"> Email</option> : <option value="email"> Email</option> }
+                                    { ervaringsdeskundige.voorkeurBenadering === "telefoon" ? <option selected value="telefoon"> Telefoon</option> : <option value="telefoon"> Telefoon</option> }
                                 </select>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputVoorkeurOnderzoek" className="col-md-5 col-form-label">Voorkeur onderzoek:</label>
+                            <label htmlFor="voorkeurOnderzoek" className="col-md-5 col-form-label">Voorkeur onderzoek:</label>
                             <div className="col-md-7">
-                                <select className="form-control" id="inputVoorkeurOnderzoek">
+                                <select className="form-control" id="voorkeurOnderzoek">
                                     <option>Vragenlijst</option>
                                     <option>Fysiek</option>
                                     <option>Website test</option>
@@ -235,60 +237,58 @@ function ErvaringsdeskundigeProfielPagina() {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputCommercieel" className="col-md-5 control-label">Commercieel: </label>
+                            <label htmlFor="commerciele" className="col-md-5 control-label">Commercieel: </label>
                             <div className="col-md-7">
                                 { ervaringsdeskundige.commerciele ? (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="inputCommercieel" id="commercieelJa" value="commercieelJa" defaultChecked /> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="inputCommercieel" id="commercieelNee" value="commercieelNee"/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="commercieelJa" defaultChecked onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="commercieelNee" onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 ) : (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="inputCommercieel" id="commercieelJa" value="commercieelJa" /> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="inputCommercieel" id="commercieelNee" value="commercieelNee" defaultChecked/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="commercieelJa" onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="commercieelNee" defaultChecked onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 )}
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="inputVolwassene" className="col-md-5 control-label">Volwassene: </label>
+                            <label htmlFor="minderjarig" className="col-md-5 control-label">Volwassene: </label>
                             <div className="col-md-7">
                                 { ervaringsdeskundige.minderjarig ? (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="inputVolwassene" id="volwasseneJa" value="volwasseneJa"/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="inputVolwassene" id="volwasseneNee" value="volwasseneNee" defaultChecked/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneJa" value="volwasseneJa" onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneNee" value="volwasseneNee" defaultChecked onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 ) : (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="inputVolwassene" id="volwasseneJa" value="volwasseneJa" defaultChecked/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="inputVolwassene" id="volwasseneNee" value="volwasseneNee"/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneJa" value="volwasseneJa" defaultChecked onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneNee" value="volwasseneNee" onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 )}
                             </div>
                         </div>
                     </div>
-                    { ervaringsdeskundige.minderjarig &&
-                        <div className="form-group col-md-4">
-                            <div className="form-group row">
-                                <label htmlFor="inputVoogdVoornaam" className="col-md-5 col-form-label">Voornaam:</label>
-                                <div className="col-md-7">
-                                    <input type="text" className="form-control" id="inputVoogdVoornaam" placeholder="voogd voornaam"/>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="inputVoogdAchternaam" className="col-md-5 col-form-label">Achternaam:</label>
-                                <div className="col-md-7">
-                                    <input type="text" className="form-control" id="inputVoogdAchternaam" placeholder="voogd achternaam"/>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="inputVoogdEmail" className="col-md-5 col-form-label">Email:</label>
-                                <div className="col-md-7">
-                                    <input type="text" className="form-control" id="inputVoogdEmail" placeholder="voogd email"/>
-                                </div>
+                    <div className="form-group col-md-4">
+                        <div className="form-group row">
+                            <label htmlFor="voogdVoornaam" className="col-md-5 col-form-label">Voornaam:</label>
+                            <div className="col-md-7">
+                                <input type="text" className="form-control" name="voogdVoornaam" placeholder="voogd voornaam" onChange={handleInputChange}/>
                             </div>
                         </div>
-                    }
+                        <div className="form-group row">
+                            <label htmlFor="voogdAchternaam" className="col-md-5 col-form-label">Achternaam:</label>
+                            <div className="col-md-7">
+                                <input type="text" className="form-control" name="voogdAchternaam" placeholder="voogd achternaam" onChange={handleInputChange}/>
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="voogdEmail" className="col-md-5 col-form-label">Email:</label>
+                            <div className="col-md-7">
+                                <input type="text" className="form-control" name="voogdEmail" placeholder="voogd email" onChange={handleInputChange}/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <button type="button" onClick={handleSave} className="btn btn-primary">Opslaan</button>

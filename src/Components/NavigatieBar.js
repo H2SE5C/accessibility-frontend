@@ -34,7 +34,7 @@ function NavigatieBar() {
             </Link>
             {hasBedrijfRole ? 
                 <div>
-                <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >BedrijfProfiel</NavLink>
+                <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >Profiel</NavLink>
                 </div>
                 : <></>}
             {!isUserAuthEmpty ? <NavLink to="/" className="login-knop Navlink" onClick={() => logUit()}>Log uit</NavLink> : <NavLink style={active} to="/login" className="login-knop Navlink">Login</NavLink>}

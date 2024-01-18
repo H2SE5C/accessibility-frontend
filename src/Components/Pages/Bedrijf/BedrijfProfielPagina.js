@@ -2,11 +2,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../../../css/styles.css';
 import '../../../css/BedrijfProfielPagina.css';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import axios from '../../../api/axios';
 
 function BedrijfProfielPagina() {
     const { userAuth } = useAuth();
+    const navigate = useNavigate();
     const [bedrijf, setBedrijf] = useState({});
     const [tempBedrijf, setTempBedrijf] = useState({});
     const [isEditing, setIsEditing] = useState(false);
@@ -66,6 +68,23 @@ function BedrijfProfielPagina() {
         }
     };
 
+    const handleDelete = async () => {
+        const confirmed = window.confirm('Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');
+
+        if (confirmed) {
+            try {
+                await axios.delete(`/api/bedrijf/delete-profiel`, {
+                    headers: {
+                        'Authorization': `Bearer ${userAuth.token}`
+                    }
+                });
+                navigate('/');
+            } catch (error) {
+                console.error('Fout bij het verwijderen van het account:', error);
+            }
+        }
+    };
+
     useEffect(() => {
         fetchBedrijf();
     });
@@ -116,14 +135,19 @@ function BedrijfProfielPagina() {
                     </div>
                 </div>
                 <div className="form-group">
-                    {isEditing ? (
-                        <>
-                            <button type="button" onClick={handleSave} className="btn btn-primary">Opslaan</button>
-                            <button type="button" onClick={handleCancel} className="btn btn-default">Annuleren</button>
-                        </>
-                    ) : (
-                        <button type="button" onClick={toggleEdit} className="btn btn-primary">Wijzigen</button>
-                    )}
+                    <div className="d-flex justify-content-between align-items-center">
+                        {isEditing ? (
+                            <>
+                                <button type="button" onClick={handleSave} className="btn btn-primary">Opslaan</button>
+                                <button type="button" onClick={handleCancel} className="btn btn-default">Annuleren</button>
+                            </>
+                        ) : (
+                            <>
+                                <button type="button" onClick={toggleEdit} className="btn btn-primary">Wijzigen</button>
+                            </>
+                        )}
+                        <button type="button" onClick={handleDelete} className="btn btn-danger">Verwijder Account</button>
+                    </div>
                     {saveSuccess && <p>Gegevens zijn gewijzigd!</p>}
                 </div>
             </div>

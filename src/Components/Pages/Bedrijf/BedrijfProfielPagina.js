@@ -20,6 +20,7 @@ function BedrijfProfielPagina() {
     });
     const [incorrectPassword, setIncorrectPassword] = useState(false);
     const [incorrectNewPassword, setIncorrectNewPassword] = useState(false);
+    const [changePasswordMode, setChangePasswordMode] = useState(false); // Nieuwe staat voor wachtwoordwijziging
 
     const fetchBedrijf = async () => {
         try {
@@ -82,36 +83,22 @@ function BedrijfProfielPagina() {
         setIncorrectPassword(false);
         setIncorrectNewPassword(false);
 
-        if (passwordData.newPassword !== passwordData.newPasswordRepeat) {
-            setIncorrectNewPassword(true);
-            setPasswordData({
-                currentPassword: '',
-                newPassword: '',
-                newPasswordRepeat: '',
-            });
-            setTimeout(() => {
-                setIncorrectNewPassword(false);
-            }, 4000);
-            return;
-        }
+        if (changePasswordMode) { // Alleen controleren en wijzigen als de wachtwoordwijzigingsmodus is ingeschakeld
+            if (passwordData.newPassword !== passwordData.newPasswordRepeat) {
+                setIncorrectNewPassword(true);
+                setPasswordData({
+                    currentPassword: '',
+                    newPassword: '',
+                    newPasswordRepeat: '',
+                });
+                setTimeout(() => {
+                    setIncorrectNewPassword(false);
+                }, 4000);
+                return;
+            }
 
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-        if (!passwordPattern.test(passwordData.newPassword)) {
-            setIncorrectPassword(true);
-            setPasswordData({
-                currentPassword: '',
-                newPassword: '',
-                newPasswordRepeat: '',
-            });
-            setTimeout(() => {
-                setIncorrectPassword(false);
-            }, 4000);
-            return;
-        }
-
-        try {
-            const isPasswordValid = await checkPasswordValidity();
-            if (!isPasswordValid) {
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+            if (!passwordPattern.test(passwordData.newPassword)) {
                 setIncorrectPassword(true);
                 setPasswordData({
                     currentPassword: '',
@@ -124,10 +111,32 @@ function BedrijfProfielPagina() {
                 return;
             }
 
-            await updateBedrijf(tempBedrijf);
-            if (passwordData.newPassword) {
+            try {
+                const isPasswordValid = await checkPasswordValidity();
+                if (!isPasswordValid) {
+                    setIncorrectPassword(true);
+                    setPasswordData({
+                        currentPassword: '',
+                        newPassword: '',
+                        newPasswordRepeat: '',
+                    });
+                    setTimeout(() => {
+                        setIncorrectPassword(false);
+                    }, 4000);
+                    return;
+                }
+
                 await changePassword(passwordData);
+            } catch (error) {
+                console.error('Fout bij het wijzigen van het wachtwoord:', error);
+                setSaveSuccess(false);
+                return;
             }
+        }
+
+        // Update de bedrijfsgegevens hier zonder het wachtwoord te veranderen
+        try {
+            await updateBedrijf(tempBedrijf);
             setSaveSuccess(true);
             setIsEditing(false);
             setBedrijf(tempBedrijf);
@@ -136,8 +145,6 @@ function BedrijfProfielPagina() {
             setSaveSuccess(false);
         }
     };
-
-
 
     const handleCancel = () => {
         setTempBedrijf(bedrijf);
@@ -211,23 +218,27 @@ function BedrijfProfielPagina() {
                                     <label>Telefoon</label>
                                     <input type="text" name="phoneNumber" value={tempBedrijf.phoneNumber || ''} onChange={handleInputChange} />
                                 </div>
-                                <div className="bio-row">
-                                    <label>Huidig Wachtwoord</label>
-                                    <input type="password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} />
-                                </div>
-                                <div className="bio-row">
-                                    <label>Nieuw Wachtwoord</label>
-                                    <input type="password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} />
-                                </div>
-                                <div className="bio-row">
-                                    <label>Herhaal Nieuw Wachtwoord</label>
-                                    <input
-                                        type="password"
-                                        name="newPasswordRepeat"
-                                        value={passwordData.newPasswordRepeat}
-                                        onChange={handlePasswordChange}
-                                    />
-                                </div>
+                                {changePasswordMode && (
+                                    <>
+                                        <div className="bio-row">
+                                            <label>Huidig Wachtwoord</label>
+                                            <input type="password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} />
+                                        </div>
+                                        <div className="bio-row">
+                                            <label>Nieuw Wachtwoord</label>
+                                            <input type="password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} />
+                                        </div>
+                                        <div className="bio-row">
+                                            <label>Herhaal Nieuw Wachtwoord</label>
+                                            <input
+                                                type="password"
+                                                name="newPasswordRepeat"
+                                                value={passwordData.newPasswordRepeat}
+                                                onChange={handlePasswordChange}
+                                            />
+                                        </div>
+                                    </>
+                                )}
                             </>
                         ) : (
                             <>
@@ -257,6 +268,9 @@ function BedrijfProfielPagina() {
                             <>
                                 <button type="button" onClick={handleSave} className="btn btn-primary">Opslaan</button>
                                 <button type="button" onClick={handleCancel} className="btn btn-default">Annuleren</button>
+                                <button type="button" onClick={() => setChangePasswordMode(!changePasswordMode)} className="btn btn-warning">
+                                    {changePasswordMode ? 'Annuleer wachtwoordwijziging' : 'Wijzig wachtwoord'}
+                                </button>
                             </>
                         ) : (
                             <>

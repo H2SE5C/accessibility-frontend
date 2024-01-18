@@ -34,7 +34,7 @@ function BedrijfHomePagina() {
                         <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
                             <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                         ))}</div>
-                        <div className="typeOnderzoek">typeOnderzoek: {onderzoek.typeOnderzoek}</div>
+                        <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
                     </div>
                 ))}
                 <button className="btn btn-success"><Link className="link" to="/bedrijf/maak-Onderzoek">Nieuw Onderzoek</Link></button>

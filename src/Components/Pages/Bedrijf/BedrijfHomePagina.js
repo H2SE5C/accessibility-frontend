@@ -8,18 +8,17 @@ function BedrijfHomePagina() {
     const [onderzoeken, setOnderzoeken] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     
-    const OnderzoekenLijst = async () => {
-        try {
-            const response = await axiosPrivate.get(API_URL);
-            setOnderzoeken(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
-
     useEffect(() => {
+        const OnderzoekenLijst = async () => {
+            try {
+                const response = await axiosPrivate.get(API_URL);
+                setOnderzoeken(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
         OnderzoekenLijst();
-    }, []);
+    },[axiosPrivate])
 
     return (
         <>
@@ -27,18 +26,18 @@ function BedrijfHomePagina() {
             <div className="Onderzoeken">
                 {onderzoeken.map((onderzoek) => (
                     <div className="from-group onderzoek" key={onderzoek.id}>
-                        <div className="title">Title: {onderzoek.titel}</div>
+                        <div className="title">Titel: {onderzoek.titel}</div>
                         <div className="Omschrijving">Omschrijving: {onderzoek.omschrijving}</div>
                         <div className="beloning">Beloning: {onderzoek.beloning}</div>
                         <div className="status">Status: {onderzoek.status}</div>
-                        <div className="datum">datum: {onderzoek.datum}</div>
-                        <div className="beperkingen d-flex">Beperkningen: {onderzoek.beperkingen.map((beperking) => (
+                        <div className="datum">Datum: {onderzoek.datum}</div>
+                        <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
                             <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                         ))}</div>
-                        <div className="typeOnderzoek">typeOnderzoek: {onderzoek.typeOnderzoek}</div>
+                        <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
                     </div>
                 ))}
-                <div className="btn btn-success"><Link className="link" to="/bedrijf/maak-Onderzoek">Nieuw Onderzoek</Link></div>
+                <button className="btn btn-success"><Link className="link" to="/bedrijf/maak-Onderzoek">Nieuw Onderzoek</Link></button>
             </div>
         </>
     );

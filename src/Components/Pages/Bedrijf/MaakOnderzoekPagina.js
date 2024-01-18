@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../../../css/styles.css';
 import axios from '../../../api/axios';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 function MaakOnderzoekPagina()
 {
@@ -18,17 +18,21 @@ function MaakOnderzoekPagina()
     const [mes, setMessage] = useState("");
     const [success, setSuccess] = useState(true);
     const axiosPrivate = useAxiosPrivate();
-
-    const fetchOnderzoeken = async () => {
-        const responsTypeOnderzoeken = await axios('/api/Ervaringsdeskundige/TypeOnderzoeken');
-        const responsBeperkingen = await axios('/api/Onderzoek/Beperkingen');
-        setTypeOnderzoeken(responsTypeOnderzoeken.data);
-        setBeperkingen(responsBeperkingen.data);
-    }
+    const navigate = useNavigate();
+   
     useEffect(() => {
+        const fetchOnderzoeken = async () => {
+            const responsTypeOnderzoeken = await axios('/api/Ervaringsdeskundige/TypeOnderzoeken');
+            const responsBeperkingen = await axios('/api/Onderzoek/Beperkingen');
+            setTypeOnderzoeken(responsTypeOnderzoeken.data);
+            setBeperkingen(responsBeperkingen.data);
+
+            setGeselecteerdeType(responsTypeOnderzoeken.data[0]);
+        }
         fetchOnderzoeken();
     },[])
 
+    
  
 
     const selecteerBeperkingen = (event) => {
@@ -54,13 +58,12 @@ function MaakOnderzoekPagina()
 
             });
             console.log(response);
-            setMessage("Onderzoek goed gemaakt");
-            setSuccess(true);
+            navigate('/bedrijf');
         }
         catch (err) {
             // console.log(err?.request?.response);
             console.log(err);
-            setMessage("its verkeert invullen");
+            setMessage("Verkeerd ingevuld");
             setSuccess(false);
         }
     }
@@ -97,11 +100,10 @@ function MaakOnderzoekPagina()
                             </option>
                         ))}
                     </select>
-
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="beperkingen">Kies de Beperkingen</label>
+                    <label htmlFor="beperkingen">Kies de beperkingen</label>
                     <select id="beperkingen" className="form-control" multiple value={geselecteerdeBeperkingen.map(option => option.naam)} onChange={selecteerBeperkingen}>
                         {beperkingen.map((beperking) => (
                             <option key={beperking.id} value={beperking.naam}>

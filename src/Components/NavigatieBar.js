@@ -41,7 +41,8 @@ function NavigatieBar() {
 
             { hasErvaringsdeskundigeRole ? 
                 <div>
-                    <NavLink to="/ervaringsdeskundige" className="ervaringsdeskundige Navlink">Ervaringsdeskundige</NavLink>
+                    <NavLink to="/ervaringsdeskundige" className="ervaringsdeskundige Navlink">Onderzoeken</NavLink>
+                    <NavLink to="/ervaringsdeskundige/profiel" className="ervaringsdeskundige Navlink">Profiel</NavLink>
                 </div> : <></>
             }
 

@@ -23,7 +23,7 @@ function RegistreerBedrijf() {
   useEffect(() => {
     setError(false);
     setBericht('');
-  },[bedrijfsnaam, locatie, email, website, wachtwoord, omschrijving])
+  },[bedrijfsnaam, locatie, email, website, wachtwoord, omschrijving, telefoonnummer])
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -33,7 +33,7 @@ function RegistreerBedrijf() {
         bedrijfsnaam: bedrijfsnaam,
         email: email,
         locatie: locatie,
-        telefoonnummer: telefoonnummer,
+        PhoneNumber: telefoonnummer,
         linkNaarBedrijf: website,
         wachtwoord: wachtwoord,
         omschrijving: omschrijving,
@@ -47,7 +47,7 @@ function RegistreerBedrijf() {
       );
       console.log(response);
     } catch (err) {
-      // console.log(err?.request?.response);
+      console.log(err);
       if (err?.message === "Network Error") {
         setBericht("Kan database niet bereiken... Probeer later nog een keer.");
       } else if (err?.request?.response) {

@@ -4,6 +4,7 @@ import '../../../css/BedrijfProfielPagina.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import axios from '../../../api/axios';
 
 function BedrijfProfielPagina() {
@@ -13,20 +14,31 @@ function BedrijfProfielPagina() {
     const [tempBedrijf, setTempBedrijf] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
+    const axiosPrivate = useAxiosPrivate();
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: '',
+        newPassword: '',
+        newPasswordRepeat: '',
+    });
+    const [incorrectPassword, setIncorrectPassword] = useState(false);
+    const [incorrectNewPassword, setIncorrectNewPassword] = useState(false);
+    const [changePasswordMode, setChangePasswordMode] = useState(false); // Nieuwe staat voor wachtwoordwijziging
 
-    const fetchBedrijf = async () => {
-        try {
-            const response = await axios.get(`/api/bedrijf/profiel`, {
-                headers: {
-                    'Authorization': `Bearer ${userAuth.token}`
-                }
-            });
-            setBedrijf(response.data);
-            setTempBedrijf(response.data);
-        } catch (error) {
-            console.error('Fout bij het ophalen van bedrijfsgegevens:', error);
+  
+
+    useEffect(() => {
+        const fetchBedrijf = async () => {
+            try {
+                const response = await axiosPrivate.get(`/api/bedrijf/profiel`);
+                setBedrijf(response.data);
+                setTempBedrijf(response.data);
+            } catch (error) {
+                console.error('Fout bij het ophalen van bedrijfsgegevens:', error);
+            }
         }
-    }
+        fetchBedrijf();
+    }, [axiosPrivate]);
+
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
@@ -39,7 +51,94 @@ function BedrijfProfielPagina() {
         setTempBedrijf({ ...tempBedrijf, [event.target.name]: event.target.value });
     };
 
+    const handlePasswordChange = (event) => {
+        setPasswordData({
+            ...passwordData,
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    const changePassword = async (passwordData) => {
+        try {
+            await axios.put(`/api/bedrijf/wachtwoord-change`, passwordData, {
+                headers: {
+                    'Authorization': `Bearer ${userAuth.token}`
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    const checkPasswordValidity = async () => {
+        try {
+            const response = await axios.put(`/api/bedrijf/wachtwoord-check`, passwordData, {
+                headers: {
+                    'Authorization': `Bearer ${userAuth.token}`
+                }
+            });
+            return response.data.isValid;
+        } catch (error) {
+            throw error;
+        }
+    };
+
     const handleSave = async () => {
+        setIncorrectPassword(false);
+        setIncorrectNewPassword(false);
+
+        if (changePasswordMode) { // Alleen controleren en wijzigen als de wachtwoordwijzigingsmodus is ingeschakeld
+            if (passwordData.newPassword !== passwordData.newPasswordRepeat) {
+                setIncorrectNewPassword(true);
+                setPasswordData({
+                    currentPassword: '',
+                    newPassword: '',
+                    newPasswordRepeat: '',
+                });
+                setTimeout(() => {
+                    setIncorrectNewPassword(false);
+                }, 4000);
+                return;
+            }
+
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+            if (!passwordPattern.test(passwordData.newPassword)) {
+                setIncorrectPassword(true);
+                setPasswordData({
+                    currentPassword: '',
+                    newPassword: '',
+                    newPasswordRepeat: '',
+                });
+                setTimeout(() => {
+                    setIncorrectPassword(false);
+                }, 4000);
+                return;
+            }
+
+            try {
+                const isPasswordValid = await checkPasswordValidity();
+                if (!isPasswordValid) {
+                    setIncorrectPassword(true);
+                    setPasswordData({
+                        currentPassword: '',
+                        newPassword: '',
+                        newPasswordRepeat: '',
+                    });
+                    setTimeout(() => {
+                        setIncorrectPassword(false);
+                    }, 4000);
+                    return;
+                }
+
+                await changePassword(passwordData);
+            } catch (error) {
+                console.error('Fout bij het wijzigen van het wachtwoord:', error);
+                setSaveSuccess(false);
+                return;
+            }
+        }
+
+        // Update de bedrijfsgegevens hier zonder het wachtwoord te veranderen
         try {
             await updateBedrijf(tempBedrijf);
             setSaveSuccess(true);
@@ -85,10 +184,7 @@ function BedrijfProfielPagina() {
         }
     };
 
-    useEffect(() => {
-        fetchBedrijf();
-    });
-
+  
     return (
         <div className="row">
             <div className="panel">
@@ -121,6 +217,27 @@ function BedrijfProfielPagina() {
                                     <label>Telefoon</label>
                                     <input type="text" name="phoneNumber" value={tempBedrijf.phoneNumber || ''} onChange={handleInputChange} />
                                 </div>
+                                {changePasswordMode && (
+                                    <>
+                                        <div className="bio-row">
+                                            <label>Huidig Wachtwoord</label>
+                                            <input type="password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} />
+                                        </div>
+                                        <div className="bio-row">
+                                            <label>Nieuw Wachtwoord</label>
+                                            <input type="password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} />
+                                        </div>
+                                        <div className="bio-row">
+                                            <label>Herhaal Nieuw Wachtwoord</label>
+                                            <input
+                                                type="password"
+                                                name="newPasswordRepeat"
+                                                value={passwordData.newPasswordRepeat}
+                                                onChange={handlePasswordChange}
+                                            />
+                                        </div>
+                                    </>
+                                )}
                             </>
                         ) : (
                             <>
@@ -133,6 +250,16 @@ function BedrijfProfielPagina() {
                             </>
                         )}
                     </div>
+                    {incorrectPassword && (
+                        <div className="alert alert-danger" role="alert">
+                            Onjuist huidig wachtwoord. Controleer uw huidige wachtwoord.
+                        </div>
+                    )}
+                    {incorrectNewPassword && (
+                        <div className="alert alert-danger" role="alert">
+                            Nieuwe wachtwoorden komen niet overeen.
+                        </div>
+                    )}
                 </div>
                 <div className="form-group">
                     <div className="d-flex justify-content-between align-items-center">
@@ -140,6 +267,9 @@ function BedrijfProfielPagina() {
                             <>
                                 <button type="button" onClick={handleSave} className="btn btn-primary">Opslaan</button>
                                 <button type="button" onClick={handleCancel} className="btn btn-default">Annuleren</button>
+                                <button type="button" onClick={() => setChangePasswordMode(!changePasswordMode)} className="btn btn-warning">
+                                    {changePasswordMode ? 'Annuleer wachtwoordwijziging' : 'Wijzig wachtwoord'}
+                                </button>
                             </>
                         ) : (
                             <>

@@ -93,7 +93,7 @@ function RegistreerBedrijf() {
               <div className="form-group">
                 <label htmlFor="email">Emailadres</label>
                 <input
-                  type="text"
+                  type="email"
                   required
                   aria-required
                   className="form-control"

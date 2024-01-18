@@ -9,7 +9,7 @@
 
             cy.get('form').submit();
 
-            cy.url().should('include', 'http://localhost:3000/Medewerker'); // 请替换成实际的登录成功后的 URL
+            cy.url().should('include', 'http://localhost:3000/Medewerker'); 
         });
 
         it('login met onjuist email en wachtwoord', () => {

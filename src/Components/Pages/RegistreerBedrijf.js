@@ -66,7 +66,7 @@ function RegistreerBedrijf() {
         {success ? (
           <>
             <h1 aria-live="assertive">{bericht}</h1>
-            <NavLink to="/login">Naar login</NavLink>
+            <NavLink to="/login" className="naar-login">Naar login</NavLink>
           </>
         ) : (
           <>

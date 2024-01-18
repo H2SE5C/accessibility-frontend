@@ -86,8 +86,10 @@ function BedrijfProfielPagina() {
     };
 
     useEffect(() => {
-        fetchBedrijf();
-    });
+        if (userAuth.token) {
+            fetchBedrijf();
+        }
+    }, [userAuth.token]);
 
     return (
         <div className="row">

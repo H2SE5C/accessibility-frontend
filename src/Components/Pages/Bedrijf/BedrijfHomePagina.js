@@ -19,7 +19,7 @@ function BedrijfHomePagina() {
 
     useEffect(() => {
         OnderzoekenLijst();
-    })
+    }, []);
 
     return (
         <>

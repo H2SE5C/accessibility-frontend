@@ -1,11 +1,14 @@
 body {
     background-color: #D9EBF7;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .navigatie {
     background-color: #2B50EC;
     font-family: Inter;
     color: white;
+    list-style: none; 
+    padding: 0;     
 }
 .nav-logo {
     height: 2em;
@@ -13,28 +16,65 @@ body {
     margin: 0.5em;
 }
 
+
 .navbar-brand {
     display: flex;
     align-content: center;
+    justify-content : left;
 }
 
 .logo-tekst {
     margin: 0;
-
 }
 
-.login-knop {
+.Navlink {
     color: white;
     font-size: large;
     text-decoration: none;
     margin: 1em;
+    justify-content: end;
 }
 .inhoud {
     background-color: white;
     padding: 2em;
     border-radius: 1em;
     margin-top: 2em;
+    margin-bottom: 2em;
     word-wrap: break-word;
     white-space: pre-wrap;
     word-break: break-word;
+}
+.form-group {
+    margin-bottom: 0.7rem;
+}
+label, p, button, option, input, .form-select, ::placeholder{
+    font-weight: medium;
+    font-size: medium;
+}
+.form-control, .form-select {
+    border: 1px solid grey;
+}
+.selectie {
+    font-weight: 600;
+    text-decoration: underline;
+    display: inline;
+}
+.gekozen {
+    font-weight: 600;
+}
+option {
+    border-bottom: 1px solid black;
+}
+.checkBox {
+    border: 3px solid black;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+.selectie-container {
+    margin-bottom: 2em;
+}
+
+.buitenscherm {
+    position: absolute;
+    left: -9999px;
 }

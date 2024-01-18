@@ -1,0 +1,41 @@
+.profiel-info h1 {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 400;
+    margin: 0 auto 40px;
+}
+
+.profiel-info .bio-row {
+    width: 50%;
+    float: left;
+    margin-bottom: 10px;
+    padding: 0 15px;
+}
+
+.profiel-info .bio-row p,
+.profiel-info .bio-row input,
+.profiel-info .bio-row label {
+    font-size: 20px;
+}
+
+.profiel-info .bio-row p span,
+.profiel-info .bio-row label {
+    width: 200px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.profiel-info .bio-row input {
+    width: calc(100% - 210px);
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.profiel-info .bio-row input[type="text"],
+.profiel-info .bio-row input[type="password"] {
+    border: 1px solid grey;
+}
+
+.profiel-info .bio-row + .bio-row {
+    margin-top: 10px;
+}

@@ -10,7 +10,7 @@ function ErvaringsdeskundigeHomePagina () {
     const detailsKnopStyle = { "fontWeight": "700", "color": "blue" };
     const uitschrijvenKnopStyle = { "fontWeight": "700", "color": "red" };
     const listStyle = { "margin": "0" };
-    
+
     return (
         <div className="container">
             <div className="row">

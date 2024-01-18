@@ -4,6 +4,7 @@ import '../../../css/BedrijfProfielPagina.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import axios from '../../../api/axios';
 
 function BedrijfProfielPagina() {
@@ -13,6 +14,7 @@ function BedrijfProfielPagina() {
     const [tempBedrijf, setTempBedrijf] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [saveSuccess, setSaveSuccess] = useState(false);
+    const axiosPrivate = useAxiosPrivate();
     const [passwordData, setPasswordData] = useState({
         currentPassword: '',
         newPassword: '',
@@ -22,19 +24,21 @@ function BedrijfProfielPagina() {
     const [incorrectNewPassword, setIncorrectNewPassword] = useState(false);
     const [changePasswordMode, setChangePasswordMode] = useState(false); // Nieuwe staat voor wachtwoordwijziging
 
-    const fetchBedrijf = async () => {
-        try {
-            const response = await axios.get(`/api/bedrijf/profiel`, {
-                headers: {
-                    'Authorization': `Bearer ${userAuth.token}`
-                }
-            });
-            setBedrijf(response.data);
-            setTempBedrijf(response.data);
-        } catch (error) {
-            console.error('Fout bij het ophalen van bedrijfsgegevens:', error);
+  
+
+    useEffect(() => {
+        const fetchBedrijf = async () => {
+            try {
+                const response = await axiosPrivate.get(`/api/bedrijf/profiel`);
+                setBedrijf(response.data);
+                setTempBedrijf(response.data);
+            } catch (error) {
+                console.error('Fout bij het ophalen van bedrijfsgegevens:', error);
+            }
         }
-    }
+        fetchBedrijf();
+    }, [axiosPrivate]);
+
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
@@ -180,12 +184,7 @@ function BedrijfProfielPagina() {
         }
     };
 
-    useEffect(() => {
-        if (userAuth.token) {
-            fetchBedrijf();
-        }
-    }, [userAuth.token]);
-
+  
     return (
         <div className="row">
             <div className="panel">

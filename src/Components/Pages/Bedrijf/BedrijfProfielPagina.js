@@ -268,6 +268,9 @@ function BedrijfProfielPagina() {
                             <>
                                 <button type="button" onClick={handleSave} className="btn btn-primary">Opslaan</button>
                                 <button type="button" onClick={handleCancel} className="btn btn-default">Annuleren</button>
+                                <button type="button" onClick={() => setChangePasswordMode(!changePasswordMode)} className="btn btn-warning">
+                                    {changePasswordMode ? 'Annuleer wachtwoordwijziging' : 'Wijzig wachtwoord'}
+                                </button>
                             </>
                         ) : (
                             <>
@@ -275,9 +278,6 @@ function BedrijfProfielPagina() {
                             </>
                         )}
                         <button type="button" onClick={handleDelete} className="btn btn-danger">Verwijder Account</button>
-                        <button type="button" onClick={() => setChangePasswordMode(!changePasswordMode)} className="btn btn-warning">
-                            {changePasswordMode ? 'Annuleer wachtwoordwijziging' : 'Wijzig wachtwoord'}
-                        </button>
                     </div>
                     {saveSuccess && <p>Gegevens zijn gewijzigd!</p>}
                 </div>

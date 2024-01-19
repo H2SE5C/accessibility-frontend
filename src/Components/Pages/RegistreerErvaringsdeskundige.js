@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "../../css/styles.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import { Link, NavLink } from "react-router-dom";
 import VoogdFormulier from "./VoogdFormulier";
@@ -29,8 +29,6 @@ function RegistreerErvaringsdeskundige() {
   const [geselecteerdeTypes, setGeselecteerdeTypes] = useState([]);
   const [geselecteerdeAandoeningen, setGeselecteerdeAandoeningen] = useState([]);
   const [geselecteerdeHulpmiddelen, setGeselecteerdeHulmiddelen] = useState([]);
-  const errRef = useRef();
-
   useEffect(() => {
     setError(false);
     setBericht('');
@@ -62,9 +60,6 @@ function RegistreerErvaringsdeskundige() {
       setBericht(JSON.stringify(err?.message));
      }
      setError(true);
-     if(errRef.current) {
-      errRef.current.focus();
-     }
    }
    finally {
     setLoading(false);
@@ -150,9 +145,6 @@ function RegistreerErvaringsdeskundige() {
        setBericht(JSON.stringify("wachtwoord probleem? "+err?.message));
       }
       setError(true);
-      if(errRef.current) {
-        errRef.current.focus();
-       }
     }
     finally {
         setLoading(false);
@@ -170,7 +162,7 @@ function RegistreerErvaringsdeskundige() {
         <>
         <div className="header text-center">
         <h1>Registreer als ervaringsdeskundige</h1>
-        {<p className={error ? "text-danger" : "buitenscherm"} ref={errRef} tabIndex={0}>{bericht}</p>}
+        <p className={error ? "text-danger" : "buitenscherm"} tabIndex={0} aria-live="assertive">Foutmelding: {bericht}</p>
       </div>
       
       <form onSubmit={handleSubmit} className="row">
@@ -251,14 +243,14 @@ function RegistreerErvaringsdeskundige() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="wachtwoord">Wachtwoord (tenminste 1 hoofdletter, 1 kleine letter, 1 cijfer, 1 speciale teken en 6 letters in totaal)</label>
+          <label htmlFor="wachtwoord">Wachtwoord</label>
           <input
           required
           aria-required
             type="password"
             className="form-control"
             id="wachtwoord"
-            placeholder="Wachtwoord"
+            placeholder="(tenminste 1 hoofdletter, 1 kleine letter, 1 cijfer, 1 speciale teken en 6 letters in totaal)"
             value={wachtwoord}
             onChange={(e) => {
               setWachtwoord(e.target.value);
@@ -321,7 +313,6 @@ function RegistreerErvaringsdeskundige() {
 
         <div className="selectie-container" tabIndex={0}>
             <p className="selectie">Uw geselecteerde onderzoekstypes:</p> 
-            {console.log(geselecteerdeTypes)}
             <span className="gekozen" >{geselecteerdeTypes.length !== 0 ? geselecteerdeTypes.map((option) => ` ${option.naam}`).join(",") : " nog niets geselecteerd."}</span>
         </div>
           

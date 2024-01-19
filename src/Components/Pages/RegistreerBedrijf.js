@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "../../css/styles.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
@@ -14,16 +14,16 @@ function RegistreerBedrijf() {
   const [website, setWebsite] = useState("");
   const [wachtwoord, setWachtwoord] = useState("");
   const [omschrijving, setOmschrijving] = useState("");
+  const [telefoonnummer, setTelefoonnummer] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [bericht, setBericht] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const errRef = useRef(null);
 
   useEffect(() => {
     setError(false);
     setBericht('');
-  },[bedrijfsnaam, locatie, email, website, wachtwoord, omschrijving])
+  },[bedrijfsnaam, locatie, email, website, wachtwoord, omschrijving, telefoonnummer])
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -33,6 +33,7 @@ function RegistreerBedrijf() {
         bedrijfsnaam: bedrijfsnaam,
         email: email,
         locatie: locatie,
+        PhoneNumber: telefoonnummer,
         linkNaarBedrijf: website,
         wachtwoord: wachtwoord,
         omschrijving: omschrijving,
@@ -46,7 +47,7 @@ function RegistreerBedrijf() {
       );
       console.log(response);
     } catch (err) {
-      // console.log(err?.request?.response);
+      console.log(err);
       if (err?.message === "Network Error") {
         setBericht("Kan database niet bereiken... Probeer later nog een keer.");
       } else if (err?.request?.response) {
@@ -55,11 +56,6 @@ function RegistreerBedrijf() {
         setBericht(JSON.stringify(err?.message));
       }
       setError(true);
-      console.log(errRef);
-      if (errRef.current) {
-        console.log("chekc");
-        errRef.current.focus();
-      }
     } finally {
       setLoading(false);
     }
@@ -70,14 +66,13 @@ function RegistreerBedrijf() {
         {success ? (
           <>
             <h1 aria-live="assertive">{bericht}</h1>
-            <NavLink to="/login">Naar login</NavLink>
+            <NavLink to="/login" className="naar-login">Naar login</NavLink>
           </>
         ) : (
           <>
             <div className="header text-center">
               <h1>Registreer uw Bedrijf!</h1>
-              <p className={error ? "text-danger" : "buitenscherm"} ref={errRef} tabIndex={0}>{bericht}</p>
-              {console.log(errRef)}
+              <p className={error ? "text-danger" : "buitenscherm"} tabIndex={0} aria-live="assertive">Foutmelding: {bericht}</p>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -98,7 +93,7 @@ function RegistreerBedrijf() {
               <div className="form-group">
                 <label htmlFor="email">Emailadres</label>
                 <input
-                  type="text"
+                  type="email"
                   required
                   aria-required
                   className="form-control"
@@ -124,7 +119,22 @@ function RegistreerBedrijf() {
                     setLocatie(e.target.value);
                   }}
                 />
-              </div>
+            </div>
+            <div className="form-group">
+            <label htmlFor="telefoonnummer">Telefoonnummer</label>
+             <input
+               required
+               aria-required
+               type="text"
+               className="form-control"
+               id="telefoonnummer"
+               placeholder="0611111111"
+               value={telefoonnummer}
+               onChange={(e) => {
+               setTelefoonnummer(e.target.value);
+               }}
+               />
+             </div>
               <div className="form-group">
                 <label htmlFor="website">Website van uw bedrijf</label>
                 <input
@@ -158,8 +168,7 @@ function RegistreerBedrijf() {
               </div>
               <div className="form-group">
                 <label htmlFor="wachtwoord">
-                  Wachtwoord (tenminste 1 hoofdletter, 1 kleine letter, 1
-                  cijfer, 1 speciale teken en 6 letters in totaal)
+                  Wachtwoord 
                 </label>
                 <input
                   type="password"
@@ -167,7 +176,8 @@ function RegistreerBedrijf() {
                   aria-required
                   className="form-control"
                   id="wachtwoord"
-                  placeholder="Wachtwoord"
+                  placeholder="(tenminste 1 hoofdletter, 1 kleine letter, 1
+                  cijfer, 1 speciale teken en 6 letters in totaal)"
                   value={wachtwoord}
                   onChange={(e) => {
                     setWachtwoord(e.target.value);

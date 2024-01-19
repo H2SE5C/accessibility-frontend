@@ -16,46 +16,58 @@ import PersistLogin from "./Components/PersistLogin";
 import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
 
 function App() {
-    return (
-        <main className="app">
-            <NavigatieBar />
-            <div className="inhoud container">
+  return (
+    <main className="app">
+      <NavigatieBar />
+      <div className="inhoud container">
+        <Routes>
+          <Route path="/" element={<BezoekerHomePagina />} />
 
-                <Routes>
-                    <Route path="/" element={<BezoekerHomePagina />} />
-                    
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/registreer-bedrijf" element={<RegistreerBedrijf />} />
-                    <Route path="/registreer-ervaringsdeskundige" element={<RegistreerErvaringsdeskundige />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registreer-bedrijf" element={<RegistreerBedrijf />} />
+          <Route
+            path="/registreer-ervaringsdeskundige"
+            element={<RegistreerErvaringsdeskundige />}
+          />
 
-                    <Route element={<PersistLogin/>}>
-                      <Route element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]}/>}>
-                        <Route path="/ervaringsdeskundige" element={<ErvaringsdeskundigeHomePagina/>}/>
-                        <Route path="/ervaringsdeskundige/profiel" element={<ErvaringsdeskundigeProfielPagina/>}/>
-                      </Route>
-
-                    <Route element={<RequireAuth allowedRoles={["Bedrijf"]}/>} >
-                        <Route path="/bedrijf" element={<BedrijfHomePagina />}/>
-                    </Route>
-
-                    <Route element={<RequireAuth allowedRoles={["Bedrijf"]} />} >
-                        <Route path="/bedrijf/profiel" element={<BedrijfProfielPagina />} />
-                    </Route>
-
-                        <Route element={<RequireAuth allowedRoles={["Bedrijf"]} />} >
-                            <Route path="/bedrijf/maak-onderzoek" element={<MaakOnderzoekPagina />} />
-                    </Route>
-
-            <Route element={<RequireAuth allowedRoles={["Beheerder"]} />}>
-              <Route path="/beheerder" element={<BeheerderHomePagina />} />
+          <Route element={<PersistLogin />}>
+            <Route
+              path="/ervaringsdeskundige"
+              element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]} />}
+            >
+              <Route
+              index
+                element={<ErvaringsdeskundigeHomePagina />}
+              />
+              <Route
+                path="profiel"
+                element={<ErvaringsdeskundigeProfielPagina />}
+              />
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={["Medewerker"]} />}>
-              <Route path="/medewerker" element={<MedewerkerHomePagina />} />
+            <Route path="/bedrijf" element={<RequireAuth allowedRoles={["Bedrijf"]} />}>
+              <Route index element={<BedrijfHomePagina />} />
+              <Route
+                path="profiel"
+                element={<BedrijfProfielPagina />}
+              />
+               <Route
+                path="maak-onderzoek"
+                element={<MaakOnderzoekPagina />}
+              />
             </Route>
+
+
+            <Route path="/beheerder" element={<RequireAuth allowedRoles={["Beheerder"]} />}>
+              <Route index element={<BeheerderHomePagina />} />
+            </Route>
+
+            <Route path="/medewerker" element={<RequireAuth allowedRoles={["Medewerker"]} />}>
+              <Route index element={<MedewerkerHomePagina />} />
+            </Route>
+
+            <Route path="*" element={<PaginaNietGevonden />} />
           </Route>
-
-          <Route path="*" element={<PaginaNietGevonden />} />
         </Routes>
       </div>
     </main>

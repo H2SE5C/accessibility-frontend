@@ -38,7 +38,7 @@ function VoogdFormulier({ onFormChange }) {
             </div>
             <div className="form-group col-md-12">
                 <label htmlFor="voogdEmail">Email voogd</label>
-                <input aria-required required type="text" className="form-control" name="voogdEmail" id="voogdEmail" placeholder="voorbeeld@voorbeeld.com" value={voogd.voogdEmail} onChange={handleInputChange} />
+                <input aria-required required type="email" className="form-control" name="voogdEmail" id="voogdEmail" placeholder="voorbeeld@voorbeeld.com" value={voogd.voogdEmail} onChange={handleInputChange} />
             </div>
             <div className="form-group col-md-12">
                 <label htmlFor="voogdTelefoonnummer">Telefoonnummer voogd</label>

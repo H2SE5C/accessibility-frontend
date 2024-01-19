@@ -21,6 +21,7 @@ function ErvaringsdeskundigeProfielPagina() {
             try {
                 const response = await axiosPrivate.get(`/api/ervaringsdeskundige/profiel`);
                 setErvaringsdeskundige(response.data);
+                setTempErvaringsdeskundige(response.data);
             } catch (error) {
                 console.error('Fout bij het ophalen van gegevens:', error);
             }
@@ -138,7 +139,7 @@ function ErvaringsdeskundigeProfielPagina() {
                         <div className="form-group row">
                             <label htmlFor="voornaam" className="col-md-5 col-form-label">Voornaam:</label>
                             <div className="col-md-7">
-                                <input type="text" className="form-control" name="voornaam" placeholder="voornaam" defaultValue={ tempErvaringsdeskundige.voornaam } onChange={handleInputChange}/>
+                                <input type="text" className="form-control" name="voornaam" placeholder="voornaam" defaultValue={ ervaringsdeskundige.voornaam } onChange={handleInputChange}/>
                             </div>
                         </div>
                         <div className="form-group row">

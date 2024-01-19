@@ -2,35 +2,32 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import axios from '../../../api/axios';
 
 function ErvaringsdeskundigeProfielPagina() {
     const bewerkKnopStyle = { "color": "blue", "textDecoration": "none", "marginRight": "10px", "backgroundColor": "transparent", "border": "none" };
     const verwijderKnopStyle = { "color": "red", "textDecoration": "none", "fontWeight": "700", "backgroundColor": "transparent", "border": "none" };
-
+    const axiosPrivate = useAxiosPrivate();
     const {userAuth} = useAuth();
     const navigate = useNavigate();
     const [ervaringsdeskundige, setErvaringsdeskundige] = useState({});
     const [tempErvaringsdeskundige, setTempErvaringsdeskundige] = useState({});
     const [isEditing, setIsEditing] = useState(false);
-    const [saveSuccess, setSaveSuccess] = useState(false);
 
-    const fetchErvaringsdeskundige = async () => {
-        try {
-            const response = await axios.get(`/api/ervaringsdeskundige/profiel`, {
-                headers: {
-                    'Authorization': `Bearer ${userAuth.token}`
-                }
-            });
-            setErvaringsdeskundige(response.data);
-        } catch (error) {
-            console.error('Fout bij het ophalen van gegevens:', error);
-        }
-    }
-        
+   
     useEffect(() => {
+        const fetchErvaringsdeskundige = async () => {
+            try {
+                const response = await axiosPrivate.get(`/api/ervaringsdeskundige/profiel`);
+                setErvaringsdeskundige(response.data);
+            } catch (error) {
+                console.error('Fout bij het ophalen van gegevens:', error);
+            }
+        }
+
         fetchErvaringsdeskundige();
-    }, []);
+    }, [axiosPrivate]);
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
@@ -47,12 +44,10 @@ function ErvaringsdeskundigeProfielPagina() {
     const handleSave = async () => {
         try {
             await updateErvaringsdeskundige(tempErvaringsdeskundige);
-            setSaveSuccess(true);
             setIsEditing(false);
             setErvaringsdeskundige(tempErvaringsdeskundige);
         } catch (error) {
             console.error('Fout bij het opslaan van gegevens:', error);
-            setSaveSuccess(false);
         }
     };
 

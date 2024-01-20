@@ -32,8 +32,6 @@ function MaakOnderzoekPagina()
         fetchOnderzoeken();
     },[])
 
-    
- 
 
     const selecteerBeperkingen = (event) => {
         const selected = Array.from(event.target.selectedOptions, (option) => {

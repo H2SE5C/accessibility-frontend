@@ -110,7 +110,6 @@ option {
 }
 .berichten {
     flex-grow: 1;
-    background-color: plum;
     max-height: 100%;
     overflow: auto;
 }
@@ -122,6 +121,7 @@ option {
 
 .bericht {
     display: flex;
+    flex-grow: 1;
     flex-direction: row;
     margin-top: 0.2rem;
 }
@@ -146,6 +146,7 @@ option {
     min-width: 8rem;
 }
 .chat-input {
+    margin-top: auto;
     background-color: #2B50EC;
     display: flex;
     flex-direction: row;
@@ -157,6 +158,7 @@ option {
     background-color: white;
 }
 .chat-kolom {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }

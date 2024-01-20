@@ -38,11 +38,24 @@ function ErvaringsdeskundigeProfielPagina() {
     };
 
     const handleInputChange = (event) => {
-        console.log({ ...tempErvaringsdeskundige, [event.target.name]: event.target.value });
         setTempErvaringsdeskundige({ ...tempErvaringsdeskundige, [event.target.name]: event.target.value });
     };
 
     const handleSave = async () => {
+        if(tempErvaringsdeskundige.minderjarig === "true") {
+            tempErvaringsdeskundige.minderjarig = true;
+        } else if(tempErvaringsdeskundige.minderjarig === "false") {
+            tempErvaringsdeskundige.minderjarig = false;
+        }
+
+        if(tempErvaringsdeskundige.commerciele === "true") {
+            tempErvaringsdeskundige.commerciele = true;
+        } else if(tempErvaringsdeskundige.commerciele === "false") {
+            tempErvaringsdeskundige.commerciele = false;
+        }
+
+        console.log(tempErvaringsdeskundige.minderjarig);
+
         try {
             await updateErvaringsdeskundige(tempErvaringsdeskundige);
             setIsEditing(false);
@@ -171,12 +184,12 @@ function ErvaringsdeskundigeProfielPagina() {
                             <div className="col-md-7">
                                 <input type="password" className="form-control" name="password" placeholder="wachtwoord" onChange={handleInputChange}/>
                             </div>
+                        </div>
                         <div className="form-group row">
                             <label htmlFor="phoneNumber" className="col-md-5 col-form-label">Telefoon:</label>
                             <div className="col-md-7">
                                 <input type="text" className="form-control" name="phoneNumber" placeholder="telefoon" pattern="[0-9]{10}" defaultValue={ ervaringsdeskundige.phoneNumber } onChange={handleInputChange}/>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <div className="form-group col-md-4">
@@ -255,13 +268,13 @@ function ErvaringsdeskundigeProfielPagina() {
                             <div className="col-md-7">
                                 { ervaringsdeskundige.commerciele ? (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="commercieelJa" defaultChecked onChange={handleInputChange}/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="commercieelNee" onChange={handleInputChange}/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="true" defaultChecked onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="false" onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 ) : (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="commercieelJa" onChange={handleInputChange}/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="commercieelNee" defaultChecked onChange={handleInputChange}/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="true" onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="false" defaultChecked onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 )}
                             </div>
@@ -271,13 +284,13 @@ function ErvaringsdeskundigeProfielPagina() {
                             <div className="col-md-7">
                                 { ervaringsdeskundige.minderjarig ? (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneJa" value="volwasseneJa" onChange={handleInputChange}/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneNee" value="volwasseneNee" defaultChecked onChange={handleInputChange}/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneJa" value="false" onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneNee" value="true" defaultChecked onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 ) : (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneJa" value="volwasseneJa" defaultChecked onChange={handleInputChange}/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneNee" value="volwasseneNee" onChange={handleInputChange}/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneJa" value="false" defaultChecked onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="minderjarig" id="volwasseneNee" value="true" onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 )}
                             </div>

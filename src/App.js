@@ -14,6 +14,8 @@ import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePa
 import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
 import PersistLogin from "./Components/PersistLogin";
 import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
+import ErvaringsdeskundigeChatPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeChatPagina";
+import MaakChatPagina from "./Components/Pages/Ervaringsdeskundige/MaakChatPagina";
 
 function App() {
   return (
@@ -42,6 +44,14 @@ function App() {
               <Route
                 path="profiel"
                 element={<ErvaringsdeskundigeProfielPagina />}
+              />
+              <Route
+                path="chat"
+                element={<ErvaringsdeskundigeChatPagina />}
+              />
+              <Route
+                path="chat/maak"
+                element={<MaakChatPagina />}
               />
             </Route>
 

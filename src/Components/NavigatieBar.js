@@ -38,6 +38,7 @@ function NavigatieBar() {
                 <div>
                     <NavLink to="/bedrijf" className="BedrijfHome Navlink">Bedrijf Home</NavLink>
                     <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >Bedrijf Profiel</NavLink>
+                    <NavLink to="/bedrijf/chat" className="BedrijfProfiel Navlink" >Chat</NavLink>
                 </div> : <></>
             }
 

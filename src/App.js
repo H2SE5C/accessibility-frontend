@@ -16,6 +16,7 @@ import PersistLogin from "./Components/PersistLogin";
 import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
 import ErvaringsdeskundigeChatPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeChatPagina";
 import MaakChatPagina from "./Components/Pages/Ervaringsdeskundige/MaakChatPagina";
+import BedrijfChatPagina from "./Components/Pages/Bedrijf/BedrijfChatPagina";
 
 function App() {
   return (
@@ -64,6 +65,10 @@ function App() {
                <Route
                 path="maak-onderzoek"
                 element={<MaakOnderzoekPagina />}
+              />
+               <Route
+                path="chat"
+                element={<BedrijfChatPagina />}
               />
             </Route>
 

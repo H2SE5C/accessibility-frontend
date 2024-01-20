@@ -4,7 +4,7 @@ import '../../../css/onderzoek.css';
 import { Link } from 'react-router-dom';
 
 function BedrijfHomePagina() {
-    const API_URL = '/api/Onderzoek/bedrijf/';
+    const API_URL = '/api/Onderzoek/medewerker/';
     const [onderzoeken, setOnderzoeken] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     

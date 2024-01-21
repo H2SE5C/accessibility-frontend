@@ -19,6 +19,7 @@ import ErvaringsdeskundigeChatPagina from "./Components/Pages/Ervaringsdeskundig
 import MaakChatPagina from "./Components/Pages/Ervaringsdeskundige/MaakChatPagina";
 import BedrijfChatPagina from "./Components/Pages/Bedrijf/BedrijfChatPagina";
 import OnderzoekVerwijzenPagina from "./Components/Pages/Medewerker/OnderzoekVerwijzenPagina";
+import AllesGebruikersPagina from "./Components/Pages/Beheerder/AllesGebruikersPagina"
 
 function App() {
   return (
@@ -86,6 +87,9 @@ function App() {
 
             <Route path="/beheerder" element={<RequireAuth allowedRoles={["Beheerder"]} />}>
               <Route index element={<BeheerderHomePagina />} />
+              <Route path="ervaringsdeskundigen" element={<AllesGebruikersPagina />} />
+              <Route path="bedrijven" element={<AllesGebruikersPagina />} />
+              <Route path="medewerkers" element={<AllesGebruikersPagina />} />
             </Route>
 
             <Route path="/medewerker" element={<RequireAuth allowedRoles={["Medewerker"]} />}>

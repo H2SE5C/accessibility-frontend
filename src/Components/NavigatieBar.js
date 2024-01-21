@@ -14,6 +14,7 @@ function NavigatieBar() {
     const hasBedrijfRole = !isUserAuthEmpty && userAuth.roles[0] === "Bedrijf";
     const hasErvaringsdeskundigeRole = !isUserAuthEmpty && userAuth.roles[0] === "Ervaringsdeskundige";
     const hasMedewerkerRole = !isUserAuthEmpty && userAuth.roles[0] === "Medewerker";
+    const hasBeheerderRole = !isUserAuthEmpty && userAuth.roles[0] === "Beheerder";
   
     const logUit = async () => {
 
@@ -35,9 +36,18 @@ function NavigatieBar() {
                 <img src={logo} alt="logo van stichting" className="nav-logo" />
                 {/*<div className="logo-tekst">Accessibility</div>*/}
             </Link>
+
+            {hasBeheerderRole ?
+                <div>
+                    <NavLink to="/beheerder" className="BEheerderHome Navlink">Beheerder Home</NavLink>
+                    <NavLink to="/beheerder/ervaringsdeskundigen" className="BEheerderHome Navlink">Ervaringsdeskundigen</NavLink>
+                    <NavLink to="/beheerder/bedrijven" className="BEheerderHome Navlink">Bedrijven</NavLink>
+                    <NavLink to="/beheerder/medewerkers" className="BEheerderHome Navlink">Medewerkers</NavLink>
+                </div> : <></>
+            }
            {hasMedewerkerRole ?
                 <div>
-            <NavLink to="/medewerker" className="MedewerkerfHome Navlink">Bedrijf Home</NavLink>
+            <NavLink to="/medewerker" className="MedewerkerfHome Navlink">Medewerker Home</NavLink>
                 </div> : <></>
             }
 

@@ -82,8 +82,12 @@ function AllesGebruiekrsPagina() {
                     <thead className="table-dark">
                         <tr>
                             <th>#</th>
-                            <th>Naam</th>
+                            <th>Bedrijfsnaam</th>
                             <th>Email</th>
+                            <th>Omschrijving</th>
+                            <th>Telephone Nummer</th>
+                            <th>Locatie</th>
+                            <th>Website</th>
                             <th>Active</th>
                         </tr>
                     </thead>
@@ -91,10 +95,12 @@ function AllesGebruiekrsPagina() {
                         {bedrijvenAfwachting.map(gebruiekr => (
                             <tr key={gebruiekr.id}>
                                 <th scope="row">{gebruiekr.id}</th>
-                                {gebruiekr.voornaam && <td>{gebruiekr.voornaam} {gebruiekr.achternaam}</td>}
-                                {gebruiekr.bedrijfsnaam && <td>{gebruiekr.bedrijfsnaam} </td>}
-                                {gebruiekr.naam && <td>{gebruiekr.naam}</td>}
+                                <td>{gebruiekr.bedrijfsnaam} </td>
                                 <td>{gebruiekr.email}</td>
+                                <td>{gebruiekr.omschrijving}</td>
+                                <td>{gebruiekr.phoneNumbe}</td>
+                                <td>{gebruiekr.locatie}</td>
+                                <td>{gebruiekr.linkNaarBedrijf}</td>
                                 <td><button className="btn btn-primary backBtn" onClick={() => setEmailverifTrue(gebruiekr.id)} >Akkoord</button></td>
                             </tr>
                         ))}

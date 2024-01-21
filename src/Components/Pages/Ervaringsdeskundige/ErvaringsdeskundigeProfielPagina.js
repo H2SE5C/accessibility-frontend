@@ -38,23 +38,19 @@ function ErvaringsdeskundigeProfielPagina() {
     };
 
     const handleInputChange = (event) => {
+        // if(event.target.name === "minderjarig" && event.target.value === "true") {
+        //     event.target.value = Boolean(event.target.value);
+        // } else if(event.target.name === "minderjarig" && event.target.value === "false") {
+        //     tempErvaringsdeskundige.minderjarig = false;
+        // }
+
+        // console.log(typeof(event.target.value));
+        // console.log(event.target.value);
         setTempErvaringsdeskundige({ ...tempErvaringsdeskundige, [event.target.name]: event.target.value });
     };
 
     const handleSave = async () => {
-        if(tempErvaringsdeskundige.minderjarig === "true") {
-            tempErvaringsdeskundige.minderjarig = true;
-        } else if(tempErvaringsdeskundige.minderjarig === "false") {
-            tempErvaringsdeskundige.minderjarig = false;
-        }
-
-        if(tempErvaringsdeskundige.commerciele === "true") {
-            tempErvaringsdeskundige.commerciele = true;
-        } else if(tempErvaringsdeskundige.commerciele === "false") {
-            tempErvaringsdeskundige.commerciele = false;
-        }
-
-        console.log(tempErvaringsdeskundige.minderjarig);
+        console.log(tempErvaringsdeskundige);
 
         try {
             await updateErvaringsdeskundige(tempErvaringsdeskundige);
@@ -121,7 +117,7 @@ function ErvaringsdeskundigeProfielPagina() {
                         <li>Hulpmiddel: keyboard, software -</li>
                         <li>Aandoening: blind -</li>
                         <li>Benadering: { ervaringsdeskundige.voorkeurBenadering }</li>
-                        <li>Commercieel: { ervaringsdeskundige.commerciele ? "ja" : "nee" }</li>
+                        <li>Commercieel: { ervaringsdeskundige.commerciële ? "ja" : "nee" }</li>
                         <li>Onderzoek voorkeur: vragenlijst -</li>
                         <li>Volwassene: { ervaringsdeskundige.minderjarig ? "nee" : "ja" }</li>
                     </ul> 
@@ -264,17 +260,17 @@ function ErvaringsdeskundigeProfielPagina() {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="commerciele" className="col-md-5 control-label">Commercieel: </label>
+                            <label htmlFor="commerciële" className="col-md-5 control-label">Commercieel: </label>
                             <div className="col-md-7">
-                                { ervaringsdeskundige.commerciele ? (
+                                { ervaringsdeskundige.commerciële ? (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="true" defaultChecked onChange={handleInputChange}/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="false" onChange={handleInputChange}/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciële" id="commercieelJa" value="true" defaultChecked onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciële" id="commercieelNee" value="false" onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 ) : (
                                     <div>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelJa" value="true" onChange={handleInputChange}/> Ja </label>
-                                        <label className="radio-inline"> <input type="radio" name="commerciele" id="commercieelNee" value="false" defaultChecked onChange={handleInputChange}/> Nee </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciële" id="commercieelJa" value="true" onChange={handleInputChange}/> Ja </label>
+                                        <label className="radio-inline"> <input type="radio" name="commerciële" id="commercieelNee" value="false" defaultChecked onChange={handleInputChange}/> Nee </label>
                                     </div>
                                 )}
                             </div>

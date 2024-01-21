@@ -28,6 +28,6 @@ describe('Registratie bedrijf', () => {
            cy.get('#wachtwoord').type('slechtwachtwoord');
 
            cy.get('form').submit();
-           cy.get('.text-danger').contains("Foutmelding: Wachtwoord is verkeerd");
+           cy.get('.text-danger').contains("Foutmelding: Formaat van wachtwoord is niet correct");
        });
    });

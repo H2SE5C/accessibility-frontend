@@ -1,104 +1,70 @@
-function ErvaringsdeskundigeHomePagina () {
-    const kolomDivStyle = { "maxHeight": "75vh", "overflow": "auto" };
-    const onderzoekDivStyle = {
-        "borderRadius": "10px",
-        "border": "1px solid black",
-        "boxShadow": "0px 5px 7px 1px rgba(0,0,0,0.12)",
-        "marginBottom": "10px",
-        "padding": "5px"
-    };
-    const detailsKnopStyle = { "fontWeight": "700", "color": "blue" };
-    const uitschrijvenKnopStyle = { "fontWeight": "700", "color": "red" };
-    const listStyle = { "margin": "0" };
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import '../../../css/onderzoek.css';
+
+
+function ErvaringsdeskundigeHomePagina() {
+    const API_URL = '/api/Onderzoek/ervaringsdeskundige';
+    const [activeOnderzoeken, setActiveOnderzoeken] = useState([]);
+    const [inActiveOnderzoeken, setInActiveOnderzoeken] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
+
+
+    useEffect(() => {
+        const OnderzoekenLijst = async () => {
+            try {
+                const response = await axiosPrivate.get(API_URL);
+                console.log(response.data);
+                setActiveOnderzoeken(response.data["onderzoekenEerste"]);
+                setInActiveOnderzoeken(response.data["onderzoekenTweede"]);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+        OnderzoekenLijst();
+    }, [axiosPrivate])
+
 
     return (
         <div className="container">
             <div className="row">
-                <div id="deelnemend" className="col-md-6" style={kolomDivStyle}>
-                    <h2>Deelnemende onderzoeken</h2>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: Albert Heijn vragenlijst</li>
-                            <li>Bedrijf: Albert Heijn</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
-                    </div>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: Jumbo vragenlijst</li>
-                            <li>Bedrijf: Jumbo</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
-                    </div>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: Dirk vragenlijst</li>
-                            <li>Bedrijf: Dirk</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
-                    </div>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: Co-op vragenlijst</li>
-                            <li>Bedrijf: Co-op</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
-                    </div>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: Hoogvliet vragenlijst</li>
-                            <li>Bedrijf: Hoogvliet</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
+                <div id="deelnemend" className="col-md-6 kolom" >
+                    <h2>Onderzoeken Lijst</h2>
+                    <div className="Onderzoeken">
+                        {activeOnderzoeken.map((onderzoek) => (
+                            <div className="form-group onderzoek" key={onderzoek.id}>
+                                <div className="title">Titel: {onderzoek.titel}</div>
+                                <div className="Omschrijving">Omschrijving: {onderzoek.omschrijving}</div>
+                                <div className="beloning">Beloning: {onderzoek.beloning}</div>
+                                <div className="status">Status: {onderzoek.status}</div>
+                                <div className="datum">Datum: {onderzoek.datum.split('T')[0]}</div>
+                                <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
+                                    <p className="beperking" key={beperking.id}>{beperking.naam},</p>
+                                ))}</div>
+                                <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div id="openstaand"className="col-md-6" style={kolomDivStyle}>
-                    <h2>Openstaande onderzoeken</h2>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: Zara vragenlijst</li>
-                            <li>Bedrijf: Zara</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
+                <div id="openstaand" className="col-md-6 kolom" >
+                    <h2>Onderzoeken in Active</h2>
+                    <div className="Onderzoeken">
+                        {inActiveOnderzoeken.map((onderzoek) => (
+                            <div className="from-group onderzoek" key={onderzoek.id}>
+                                <div className="title">Titel: {onderzoek.titel}</div>
+                                <div className="Omschrijving">Omschrijving: {onderzoek.omschrijving}</div>
+                                <div className="beloning">Beloning: {onderzoek.beloning}</div>
+                                <div className="status">Status: {onderzoek.status}</div>
+                                <div className="datum">Datum: {onderzoek.datum.split('T')[0]}</div>
+                                <div className="bedrijf">Bedrijf: {onderzoek.bedrijf}</div>
+                                <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
+                                    <p className="beperking" key={beperking.id}>{beperking.naam},</p>
+                                ))}</div>
+                                <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
+                            </div>
+                        ))}
                     </div>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: Ikea vragenlijst</li>
-                            <li>Bedrijf: Ikea</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
-                    </div>
-                    <div style={onderzoekDivStyle}>
-                        <ul style={listStyle} className="list-unstyled">
-                            <li>Titel: HHS vragenlijst</li>
-                            <li>Bedrijf: HHS</li>
-                            <li>Locatie: Online</li>
-                            <li>Beloning: &euro;140</li>
-                            <li style={detailsKnopStyle}>Details</li>
-                            <li style={uitschrijvenKnopStyle}>Uitschrijven</li>
-                        </ul>
-                    </div>
+
                 </div>
             </div>
         </div>

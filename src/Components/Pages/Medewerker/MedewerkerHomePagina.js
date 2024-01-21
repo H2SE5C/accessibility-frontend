@@ -15,8 +15,8 @@ function MedewerkerHomePagina () {
             try {
                 const response = await axiosPrivate.get(API_URL);
                 console.log(response.data);
-                setGoedgekeurdOnderzoeken(response.data["goedgekeurd"]);
-                setAanvragenOnderzoek(response.data["aanvragen"]);
+               await setGoedgekeurdOnderzoeken(response.data["onderzoekenEerste"]);
+                setAanvragenOnderzoek(response.data["onderzoekenTweede"]);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -24,7 +24,6 @@ function MedewerkerHomePagina () {
         OnderzoekenLijst();
     }, [axiosPrivate])
 
-    
     return (
         <div className="container">
             <div className="row">
@@ -43,6 +42,7 @@ function MedewerkerHomePagina () {
                                 ))}</div>
                                 <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
                                 <button className="btn btn-primary"><Link className="link" to={`/medewerker/onderzoek-detail/${onderzoek.id}`}>Details</Link></button>
+                                {/*{onderzoek.status === "Active" && <button className="btn btn-primary"><Link className="link" to={`/medewerker/onderzoek-inschrijven/${onderzoek.id}`}>Inschrijven</Link></button> }*/}
                             </div>
                         ))}
                     </div>

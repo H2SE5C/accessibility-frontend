@@ -9,7 +9,7 @@ function Loading({ isLoading, children }) {
     }
   })
   return (
-    <div>
+    <>
       {isLoading ? (
         <p aria-live='assertive' ref={laadRef} tabIndex={0}>Laden... Wees geduldig.</p>
       ) : (
@@ -17,7 +17,7 @@ function Loading({ isLoading, children }) {
           {children}
         </>
       )}
-    </div>
+    </>
   );
 }
 

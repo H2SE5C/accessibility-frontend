@@ -38,6 +38,7 @@ function NavigatieBar() {
                 <div>
                     <NavLink to="/bedrijf" className="BedrijfHome Navlink">Bedrijf Home</NavLink>
                     <NavLink to="/bedrijf/profiel" className="BedrijfProfiel Navlink" >Bedrijf Profiel</NavLink>
+                    <NavLink to="/bedrijf/chat" className="BedrijfProfiel Navlink" >Chat</NavLink>
                 </div> : <></>
             }
 
@@ -45,6 +46,7 @@ function NavigatieBar() {
                 <div>
                     <NavLink to="/ervaringsdeskundige" className="ervaringsdeskundige Navlink">Onderzoeken</NavLink>
                     <NavLink to="/ervaringsdeskundige/profiel" className="ervaringsdeskundige Navlink">Profiel</NavLink>
+                    <NavLink to="/ervaringsdeskundige/chat" className="ervaringsdeskundige Navlink">Chat</NavLink>
                 </div> : <></>
             }
 

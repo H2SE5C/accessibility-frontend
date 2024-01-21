@@ -70,7 +70,7 @@ function OnderzoekDetailPagina({ isAanvraag }) {
                         </> :
                         <>
                            <button className="btn btn-warning backBtn" ><Link className="link" to={`/${rolNaam}/onderzoek-wijzig/${onderzoek.id}`}>wijzigen</Link></button>
-                            <button className="btn btn-danger backBtn" onClick={verwijderOnderzoek} >verwijderen</button>
+                            <button className="btn btn-danger backBtn" onClick={()=>verwijderOnderzoek()} >verwijderen</button>
                          </>
                     }
                        

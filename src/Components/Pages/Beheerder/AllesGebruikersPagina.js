@@ -98,7 +98,7 @@ function AllesGebruiekrsPagina() {
                                 <td>{gebruiekr.bedrijfsnaam} </td>
                                 <td>{gebruiekr.email}</td>
                                 <td>{gebruiekr.omschrijving}</td>
-                                <td>{gebruiekr.phoneNumbe}</td>
+                                <td>{gebruiekr.phoneNumber}</td>
                                 <td>{gebruiekr.locatie}</td>
                                 <td>{gebruiekr.linkNaarBedrijf}</td>
                                 <td><button className="btn btn-primary backBtn" onClick={() => setEmailverifTrue(gebruiekr.id)} >Akkoord</button></td>

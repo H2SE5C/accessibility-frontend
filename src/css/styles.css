@@ -15,8 +15,6 @@ body {
     padding: 0;
     margin: 0.5em;
 }
-
-
 .navbar-brand {
     display: flex;
     align-content: center;
@@ -77,4 +75,102 @@ option {
 .buitenscherm {
     position: absolute;
     left: -9999px;
+}
+.chat-container {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    max-height: 60vh;
+    min-height: 60vh;
+}
+.chat-lijstje {
+    display: flex;
+    border-right: 1px solid black;
+    flex-direction: column;
+    min-width: 16em;
+    max-width: 20em;
+
+}
+.chat {
+    background: none;
+	border: none;
+    border-bottom: 1px solid gray;
+    padding: 1rem;
+}
+.chat:hover {
+    background-color: lightgray;
+}
+.maak-chat-knop{
+    border-radius: 0;
+    margin-top: auto;
+}
+.maak-chat-knop > a {
+    color: white;
+    text-decoration: none;
+}
+.berichten {
+    flex-grow: 1;
+    max-height: 100%;
+    overflow: auto;
+}
+.chat-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.bericht {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    margin-top: 0.2rem;
+}
+.bericht > * {
+    padding: 0.2rem;
+}
+.bericht > header {
+    font-size: small;
+    font-weight: bold;
+    text-align: right;
+    min-width: 10rem;
+}
+.bericht > p {
+    font-size: small;
+    margin: 0;
+    flex-grow: 5;
+}
+.bericht > footer {
+    font-size: smaller;
+    text-align: center;
+    font-style: italic;
+    min-width: 8rem;
+}
+.chat-input {
+    margin-top: auto;
+    background-color: #2B50EC;
+    display: flex;
+    flex-direction: row;
+}
+.bericht-input {
+    flex-grow: 2;
+}
+.bericht-verzenden-knop {
+    background-color: white;
+}
+.chat-kolom {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.chats {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: auto;
+}
+.bericht {
+    border-bottom: 1px solid black;
+}
+.bericht:last-child {
+    border-bottom: none;
 }

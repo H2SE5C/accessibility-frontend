@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import "bootstrap/dist/css/bootstrap.css";
 import "../../../css/styles.css";

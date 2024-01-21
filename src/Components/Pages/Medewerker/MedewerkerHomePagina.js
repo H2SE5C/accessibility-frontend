@@ -37,7 +37,7 @@ function MedewerkerHomePagina () {
                                 <div className="Omschrijving">Omschrijving: {onderzoek.omschrijving}</div>
                                 <div className="beloning">Beloning: {onderzoek.beloning}</div>
                                 <div className="status">Status: {onderzoek.status}</div>
-                                <div className="datum">Datum: {onderzoek.datum}</div>
+                                <div className="datum">Datum: {onderzoek.datum.split('T')[0]}</div>
                                 <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
                                     <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                                 ))}</div>
@@ -56,7 +56,7 @@ function MedewerkerHomePagina () {
                                     <div className="Omschrijving">Omschrijving: {onderzoek.omschrijving}</div>
                                     <div className="beloning">Beloning: {onderzoek.beloning}</div>
                                     <div className="status">Status: {onderzoek.status}</div>
-                                    <div className="datum">Datum: {onderzoek.datum}</div>
+                                    <div className="datum">Datum: {onderzoek.datum.split('T')[0]}</div>
                                     <div className="bedrijf">Bedrijf: {onderzoek.bedrijf}</div>
                                     <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
                                         <p className="beperking" key={beperking.id}>{beperking.naam},</p>

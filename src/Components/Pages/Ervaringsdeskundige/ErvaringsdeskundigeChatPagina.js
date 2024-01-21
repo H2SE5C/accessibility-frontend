@@ -13,7 +13,6 @@ function ErvaringsdeskundigeChatPagina() {
   // const [gekozenChat, setGekozenChat] = useState();
   const [berichten, setBerichten] = useState([]);
   const [isLoadingChatLijst, setIsLoadingChatLijst] = useState(true);
-  const [isLoadingBerichten, setIsLoadingBerichten] = useState(false);
   const [invoerTekst, setInvoerTekst] = useState("");
   const [chatGekozen, setChatGekozen] = useState(false);
   const [gekozenChat, setGekozenChat] = useState();
@@ -119,14 +118,13 @@ function ErvaringsdeskundigeChatPagina() {
         </div>
        
         <div className="chat-kolom">
-        <Loading isLoading={isLoadingBerichten}>
+      
           <div className="berichten">
             {berichten.length !== 0 ? berichtElementen : <p>Geen berichten/Geen chat geklikt</p>}
           </div>
-          </Loading>
           <div className="chat-input">
             <input type="text" className="bericht-input" placeholder="voorbeeld bericht" value={invoerTekst} onChange={(e) => setInvoerTekst(e.target.value)}/>
-            <button className="bericht-verzenden-knop" onClick={verzendBericht} disabled={!chatGekozen || isLoadingBerichten}>Verzend</button>
+            <button className="bericht-verzenden-knop" onClick={verzendBericht} disabled={!chatGekozen}>Verzend</button>
           </div>
           
         </div>

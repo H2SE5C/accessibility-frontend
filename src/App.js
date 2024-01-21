@@ -26,7 +26,7 @@ function App() {
       <NavigatieBar />
       <div className="inhoud container">
         <Routes>
-          <Route path="/" element={<BezoekerHomePagina />} />
+                  <Route path="/" element={<BezoekerHomePagina />} /> 
 
           <Route path="/login" element={<Login />} />
           <Route path="/registreer-bedrijf" element={<RegistreerBedrijf />} />
@@ -86,10 +86,9 @@ function App() {
                     <Route path="/medewerker/onderzoek-wijzig/:id" element={<OnderzoekVerwijzenPagina />} />
                             
             </Route>
-          </Route>
 
             <Route path="*" element={<PaginaNietGevonden />} />
-          </Route>
+              </Route>
         </Routes>
       </div>
     </main>

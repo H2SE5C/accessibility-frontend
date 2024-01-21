@@ -5,7 +5,7 @@
 
       
             cy.get('#email').type('medewerker@example.com');
-            cy.get('#wachtwoord').type('Qwe123@');
+            cy.get('#wachtwoord').type('String123!')
 
             cy.get('form').submit();
 

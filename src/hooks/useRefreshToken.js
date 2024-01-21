@@ -14,8 +14,6 @@ const useRefreshToken = () => {
             const roles = response?.data?.roles;
             
             setAuth(prev => {
-                console.log(JSON.stringify(prev))
-                console.log(token)
                 return {...prev, token: token, expiration: expiration, roles: roles};
             });
             return token;

@@ -33,7 +33,9 @@ function Login() {
             const expiration = response?.data?.expiration;
             const token = response?.data?.token;
             const roles = response?.data?.roles;
-            setAuth({expiration, token, roles});
+            const emailString = response?.data?.email;
+
+            setAuth({expiration, token, roles, email: emailString});
             
             const from = location.state?.from?.pathname || "/"+[roles];
 

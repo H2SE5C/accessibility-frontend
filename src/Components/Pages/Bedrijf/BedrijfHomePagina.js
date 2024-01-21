@@ -36,6 +36,7 @@ function BedrijfHomePagina() {
                             <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                         ))}</div>
                         <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
+                        <button className="btn btn-primary"><Link className="link" to={`/bedrijf/onderzoek-detail/${onderzoek.id}`}>Details</Link></button>
                     </div>
                 ))}
                

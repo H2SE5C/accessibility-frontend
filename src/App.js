@@ -11,7 +11,7 @@ import ErvaringsdeskundigeProfielPagina from "./Components/Pages/Ervaringsdeskun
 import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
-import MedewerkerOnderzoekPagina from "./Components/Pages/Medewerker/MedewerkerOnderzoekPagina";
+import OnderzoekDetailPagina from "./Components/Pages/Medewerker/OnderzoekDetailPagina";
 import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
 import PersistLogin from "./Components/PersistLogin";
 import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
@@ -72,6 +72,15 @@ function App() {
                 path="chat"
                 element={<BedrijfChatPagina />}
               />
+                <Route
+                 path="onderzoek-detail/:id"
+                 element={<OnderzoekDetailPagina isAanvraag={false} />}
+               />
+
+               <Route
+                 path="onderzoek-wijzig/:id"
+                 element={<OnderzoekVerwijzenPagina />}
+               />
             </Route>
 
 
@@ -79,11 +88,11 @@ function App() {
               <Route index element={<BeheerderHomePagina />} />
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={["Medewerker"]} />}>
-                    <Route path="/medewerker" element={<MedewerkerHomePagina />} />
-                    <Route path="/medewerker/onderzoek-aanvraag/:id" element={<MedewerkerOnderzoekPagina isAanvraag={true} />} />
-                    <Route path="/medewerker/onderzoek-detail/:id" element={<MedewerkerOnderzoekPagina isAanvraag={false} />} />
-                    <Route path="/medewerker/onderzoek-wijzig/:id" element={<OnderzoekVerwijzenPagina />} />
+            <Route path="/medewerker" element={<RequireAuth allowedRoles={["Medewerker"]} />}>
+                 <Route index element={<MedewerkerHomePagina />} />
+                    <Route path="onderzoek-aanvraag/:id" element={<OnderzoekDetailPagina isAanvraag={true} />} />
+                   <Route path="onderzoek-detail/:id" element={<OnderzoekDetailPagina isAanvraag={false} />} />
+                    <Route path="onderzoek-wijzig/:id" element={<OnderzoekVerwijzenPagina />} />
                             
             </Route>
 

@@ -13,6 +13,7 @@ function NavigatieBar() {
     const isUserAuthEmpty = Object.keys(userAuth).length === 0;
     const hasBedrijfRole = !isUserAuthEmpty && userAuth.roles[0] === "Bedrijf";
     const hasErvaringsdeskundigeRole = !isUserAuthEmpty && userAuth.roles[0] === "Ervaringsdeskundige";
+    const hasMedewerkerRole = !isUserAuthEmpty && userAuth.roles[0] === "Medewerker";
   
     const logUit = async () => {
 
@@ -30,10 +31,16 @@ function NavigatieBar() {
 
     return (
         <nav className="navbar navigatie">
-            <Link to="/" className="navbar-brand">
+            <Link to={!isUserAuthEmpty ? `/${userAuth.roles[0]}` : "/"} className="navbar-brand">
                 <img src={logo} alt="logo van stichting" className="nav-logo" />
                 {/*<div className="logo-tekst">Accessibility</div>*/}
             </Link>
+           {hasMedewerkerRole ?
+                <div>
+            <NavLink to="/medewerker" className="MedewerkerfHome Navlink">Bedrijf Home</NavLink>
+                </div> : <></>
+            }
+
             { hasBedrijfRole ? 
                 <div>
                     <NavLink to="/bedrijf" className="BedrijfHome Navlink">Bedrijf Home</NavLink>

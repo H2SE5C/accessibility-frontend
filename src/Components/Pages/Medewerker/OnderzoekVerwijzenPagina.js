@@ -17,6 +17,8 @@ function OnderzoekVerwijzenPagina() {
     const [geselecteerdeBeperkingen, setGeselecteerdeBeperkingen] = useState([]);
     const [success, setSuccess] = useState(true);
     const API_URL = '/api/Onderzoek/medewerker/';
+    const pathArray = window.location.pathname.split('/');
+    const rolNaam = pathArray[1];
 
     useEffect(() => {
         const OnderzoekDetail = async () => {
@@ -65,7 +67,7 @@ function OnderzoekVerwijzenPagina() {
 
             });
             console.log(response);
-            navigate('/medewerker');
+            navigate(`/${rolNaam}`);
         }
         catch (err) {
             // console.log(err?.request?.response);
@@ -122,7 +124,7 @@ function OnderzoekVerwijzenPagina() {
                     </div>
 
                     <button type="submit" className="btn btn-success mt-2">Wijzigen</button>
-                    <p className="terug"><Link to="/medewerker">Terug</Link></p>
+                    <p className="terug"><Link to={`/${rolNaam}/onderzoek-detail/${id}`}>Annuleer</Link></p>
                 </form>
             </div>
         </div>

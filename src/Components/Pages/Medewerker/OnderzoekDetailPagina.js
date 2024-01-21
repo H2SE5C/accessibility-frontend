@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-function MedewerkerOnderzoekPagina({ isAanvraag }) {
+function OnderzoekDetailPagina({ isAanvraag }) {
 
     const [onderzoek, setOnderzoek] = useState({});
     const axiosPrivate = useAxiosPrivate();
     const { id } = useParams();
     const API_URL = '/api/Onderzoek/medewerker/';
     const navigate = useNavigate();
+    const pathArray = window.location.pathname.split('/');
+    const rolNaam = pathArray[1];
 
     useEffect(() => {
         const OnderzoekenLijst = async () => {
@@ -38,7 +40,7 @@ function MedewerkerOnderzoekPagina({ isAanvraag }) {
         if (confirmed) {
             try {
                 await axiosPrivate.delete(`/api/Onderzoek/verwijderen/${id}`);
-                navigate('/medewerker');
+                navigate(`/${rolNaam}`);
             } catch (error) {
                 console.error('Fout bij het verwijderen van het account:', error);
             }
@@ -61,13 +63,13 @@ function MedewerkerOnderzoekPagina({ isAanvraag }) {
                     {console.log(onderzoek)}
                     <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
                     <div className="d-flex">
-                        <button className="btn btn-primary backBtn" ><Link className="link" to="/medewerker">Terug</Link></button>
+                        <button className="btn btn-primary backBtn" ><Link className="link" to={`/${rolNaam}`}>Terug</Link></button>
                         {isAanvraag ? <>
                             <button className="btn btn-success backBtn" onClick={() => handleStatusClick(true)}>Akkoord</button>
                             <button className="btn btn-danger backBtn" onClick={() => handleStatusClick(false)}>Niet Akkoord</button>
                         </> :
                         <>
-                                <button className="btn btn-warning backBtn" ><Link className="link" to={`/medewerker/onderzoek-wijzig/${onderzoek.id}`}>wijzigen</Link></button>
+                           <button className="btn btn-warning backBtn" ><Link className="link" to={`/${rolNaam}/onderzoek-wijzig/${onderzoek.id}`}>wijzigen</Link></button>
                             <button className="btn btn-danger backBtn" onClick={verwijderOnderzoek} >verwijderen</button>
                          </>
                     }
@@ -81,4 +83,4 @@ function MedewerkerOnderzoekPagina({ isAanvraag }) {
     );
 }
 
-export default MedewerkerOnderzoekPagina;
+export default OnderzoekDetailPagina;

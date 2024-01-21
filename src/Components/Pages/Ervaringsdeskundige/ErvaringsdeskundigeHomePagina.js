@@ -47,7 +47,7 @@ function ErvaringsdeskundigeHomePagina() {
                     </div>
                 </div>
                 <div id="openstaand" className="col-md-6 kolom" >
-                    <h2>Onderzoeken in Active</h2>
+                    <h2>Onderzoeken in Actief</h2>
                     <div className="Onderzoeken">
                         {inActiveOnderzoeken.map((onderzoek) => (
                             <div className="from-group onderzoek" key={onderzoek.id}>

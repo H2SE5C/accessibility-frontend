@@ -20,7 +20,6 @@ const PersistLogin = () => {
                 setIsLoading(false);
             }
         }
-        console.log("wowza: "+ userAuth?.token);
         !userAuth?.token ? verifyRefreshToken() : setIsLoading(false);
     },[refresh, userAuth?.token])
 

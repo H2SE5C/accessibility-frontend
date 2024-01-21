@@ -3,23 +3,32 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import "bootstrap/dist/css/bootstrap.css";
 import "../../../css/styles.css";
 import Loading from "../../Loading";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 function BedrijfChatPagina() {
   const [chats, setChats] = useState([]);
+  const [connectionState, setConnectionState] = useState();
   const axiosPrivate = useAxiosPrivate();
   const [errorBericht, setErrorBericht] = useState();
   const [error, setError] = useState();
+  // const [gekozenChat, setGekozenChat] = useState();
   const [berichten, setBerichten] = useState([]);
   const [isLoadingChatLijst, setIsLoadingChatLijst] = useState(true);
   const [invoerTekst, setInvoerTekst] = useState("");
   const [chatGekozen, setChatGekozen] = useState(false);
   const [gekozenChat, setGekozenChat] = useState();
+  var url = '';
+  if (process.env.NODE_ENV === 'development') {
+    url = "https://localhost:5000";
+  }
+  else {
+    url = "https://accessibility-backend.azurewebsites.net"
+  }
   useEffect(() => {
     const getChats = async () => {
       try {
         const result = await axiosPrivate.get("/api/chat");
         setChats(result.data);
-        console.log(result);
       } catch (err) {
         if (err?.request?.response) {
           setErrorBericht(JSON.parse(err?.request?.response)?.message);
@@ -35,15 +44,67 @@ function BedrijfChatPagina() {
     getChats();
   }, [axiosPrivate]);
 
+  
+
+  useEffect(() => {
+    console.log("Chat is nu: " + gekozenChat);
+    
+    const joinRoom = async (roomName) => {
+      if (connectionState?.connectionId) {
+        try {
+          await axiosPrivate.post(`/api/chat/joinroom/${connectionState.connectionId}/${roomName}`, null);
+        }
+        catch (err) {
+          console.log(err);
+        }
+      }
+      else {
+        console.log("GEEN CONNECTIONID");
+      }
+    }
+    if(gekozenChat) {
+      joinRoom(gekozenChat.toString());
+    }
+  },[gekozenChat, axiosPrivate, connectionState])
+
+
+
+  const updateBericht = (bericht) => {
+    console.log(berichten);
+      if (!berichten.some(existingBericht => existingBericht.id === bericht.id)) {
+    setBerichten((prevBerichten) => [...prevBerichten, bericht]);
+  }
+  }
+
   const getBerichten = async (gekozenId) => {
-    setGekozenChat(gekozenId);
-    try {
+      try {
+      setGekozenChat(gekozenId);
       // setIsLoadingBerichten(true);
       const result = await axiosPrivate.get(`api/chat/bericht/${gekozenId}`);
       setBerichten(result.data);
+
+      if (gekozenId !== gekozenChat && connectionState) {
+        connectionState.off("ReceiveMessage");
+        // Close the existing connection
+        await connectionState.stop();
+        setConnectionState(null);
+      }
+      const connection = new HubConnectionBuilder()
+      .withUrl(url+"/chat")
+      // .configureLogging(LogLevel.Information)
+      .withAutomaticReconnect()
+      .build();
+
+      connection.on("ReceiveMessage", updateBericht)
+      await connection.start();
+      
+      //dit maakt connectie ding
+      setConnectionState(connection);
+
+      console.log("gekozen chat in getberichten: " + gekozenChat + " gekozen id: " + gekozenId + " berichten: " + JSON.stringify(berichten));
       setChatGekozen(true);
-      console.log(result);
     } catch (err) {
+      console.log(err);
       if (err?.request?.response) {
         setErrorBericht(err?.request?.response?.message);
       } else {
@@ -75,29 +136,36 @@ function BedrijfChatPagina() {
   });
 
   const verzendBericht = async () => {
-    try {
-      console.log("verzend gekozen: " + gekozenChat);
-      const result = await axiosPrivate.post(`api/chat/bericht`, {
-        ChatId: gekozenChat,
-        Tekst: invoerTekst
-      });
-      getBerichten(gekozenChat);
-      console.log(result);
-    } catch (err) {
-      if (err?.request?.response) {
-        setErrorBericht(err?.request?.response?.message);
-      } else {
-        setErrorBericht(JSON.stringify(err?.message));
+    console.log();
+    if (invoerTekst !== "") {
+      try {
+        // const result = await axiosPrivate.post(`api/chat/bericht`, {
+        //   ChatId: gekozenChat,
+        //   Tekst: invoerTekst
+        // });
+        await axiosPrivate.post(`api/chat/SendMessage`, {
+          ChatId: gekozenChat, 
+          Tekst: invoerTekst
+          
+        });
+        getBerichten(gekozenChat);
+        console.log("MESSAGE SENT!!");
+      } catch (err) {
+        if (err?.request?.response) {
+          setErrorBericht(err?.request?.response?.message);
+        } else {
+          setErrorBericht(JSON.stringify(err?.message));
+        }
+        setError(true);
       }
-      setError(true);
-    }
-    finally {
-      setInvoerTekst("");
+      finally {
+        setInvoerTekst("");
+      }
     }
   }
   return (
     <>
-      <h1 className="text-center">Chat met bedrijven</h1>
+      <h1 className="text-center">Chat met Ervaringsdeskundige</h1>
       <p
         className={error ? "text-danger" : "buitenscherm"}
         tabIndex={0}
@@ -115,6 +183,7 @@ function BedrijfChatPagina() {
         </div>
        
         <div className="chat-kolom">
+      
           <div className="berichten">
             {berichten.length !== 0 ? berichtElementen : <p>Geen berichten/Geen chat geklikt</p>}
           </div>

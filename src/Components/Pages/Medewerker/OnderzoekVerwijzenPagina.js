@@ -94,7 +94,7 @@ function OnderzoekVerwijzenPagina() {
                     </div>
                     <div className="form-group">
                         <label htmlFor="datum">Datum</label>
-                        <input type="date" required className="form-control" id="datum" placeholder="Datum" value={datum.split('T')[0]} onChange={(e) => { setDatum(e.target.value) }} />
+                         <input type="date" required className="form-control" id="datum" placeholder="Datum" value={datum.split('T')[0]} onChange={(e) => { setDatum(e.target.value) }} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="typeOnderzoek">Kies de onderzoek Type</label>
@@ -122,7 +122,7 @@ function OnderzoekVerwijzenPagina() {
                     </div>
 
                     <button type="submit" className="btn btn-success mt-2">Wijzigen</button>
-                    <p className="terug"><Link to="/bedrijf">Terug</Link></p>
+                    <p className="terug"><Link to="/medewerker">Terug</Link></p>
                 </form>
             </div>
         </div>

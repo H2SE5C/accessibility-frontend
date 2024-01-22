@@ -35,6 +35,9 @@ function BedrijfHomePagina() {
                         <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
                             <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                         ))}</div>
+                        {onderzoek.ervaringsdeskundigen.length !== 0 && <div className="ervaringsdeskundigen d-flex">Ervaringsdeskundigen: {onderzoek.ervaringsdeskundigen.map((deskundige) => (
+                            <p className="beperking" key={deskundige.id}>{deskundige.email},</p>
+                        ))}</div>}
                         <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
                         <button className="btn btn-primary"><Link className="link" to={`/bedrijf/onderzoek-detail/${onderzoek.id}`}>Details</Link></button>
                     </div>

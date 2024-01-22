@@ -6,7 +6,7 @@ import '../../../css/onderzoek.css';
 function ErvaringsdeskundigeHomePagina() {
     const API_URL = '/api/Onderzoek/ervaringsdeskundige';
     const [activeOnderzoeken, setActiveOnderzoeken] = useState([]);
-  /*  const [inActiveOnderzoeken, setInActiveOnderzoeken] = useState([]);*/
+    const [inActiveOnderzoeken, setInActiveOnderzoeken] = useState([]);
     const axiosPrivate = useAxiosPrivate();
 
 
@@ -14,8 +14,9 @@ function ErvaringsdeskundigeHomePagina() {
         const OnderzoekenLijst = async () => {
             try {
                 const response = await axiosPrivate.get(API_URL);
+                console.log(response.data);
                 setActiveOnderzoeken(response.data["onderzoekenEerste"]);
-               /* setInActiveOnderzoeken(response.data["onderzoekenTweede"]);*/
+                setInActiveOnderzoeken(response.data["onderzoekenTweede"]);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -24,9 +25,9 @@ function ErvaringsdeskundigeHomePagina() {
     }, [axiosPrivate])
 
     const Schrijven = async (id) => {
-         try {
+         try {  
              await axiosPrivate.put(`/api/Onderzoek/ervaringdiskundigen/${id}`);
-             window.location.reload();
+            window.location.reload();
             } catch (error) {
                 console.error('Fout bij het verwijderen van het account:', error);
             }
@@ -57,7 +58,7 @@ function ErvaringsdeskundigeHomePagina() {
                         ))}
                     </div>
                 </div>
-                {/*<div id="openstaand" className="col-md-6 kolom" >
+                <div id="openstaand" className="col-md-6 kolom" >
                     <h2>Onderzoeken in Actief</h2>
                     <div className="Onderzoeken">
                         {inActiveOnderzoeken.map((onderzoek) => (
@@ -71,13 +72,16 @@ function ErvaringsdeskundigeHomePagina() {
                                 <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
                                     <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                                 ))}</div>
+                                <div className="ervaringsdeskundigen d-flex">Ervaringsdeskundigen: {onderzoek.ervaringsdeskundigen.map((deskundige) => (
+                                    <p className="beperking" key={deskundige.id}>{deskundige.email},</p>
+                                ))}</div>
                                 <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
-                              */}{/*  <button className="btn btn-danger backBtn" onClick={() => Schrijven(onderzoek.id)} >Schrijfven uit</button>*/}{/*
+                                <button className="btn btn-danger backBtn" onClick={() => Schrijven(onderzoek.id)} >Schrijfven uit</button>
                             </div>
                         ))}
                     </div>
 
-                </div>*/}
+                </div>
             </div>
         </div>
     );

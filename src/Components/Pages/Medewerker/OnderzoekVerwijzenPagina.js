@@ -15,6 +15,8 @@ function OnderzoekVerwijzenPagina() {
     const [beperkingen, setBeperkingen] = useState([]);
     const [geselecteerdeType, setGeselecteerdeType] = useState("");
     const [geselecteerdeBeperkingen, setGeselecteerdeBeperkingen] = useState([]);
+    const [deelnemers, setDeelnemers] = useState([]);
+    const [geselecteerdeDeelnemers, setGeselecteerdeDeelnemers] = useState([]);
     const [success, setSuccess] = useState(true);
     const API_URL = '/api/Onderzoek/medewerker/';
     const pathArray = window.location.pathname.split('/');
@@ -31,11 +33,14 @@ function OnderzoekVerwijzenPagina() {
                 setDatum(onderzoek.datum);
                 setGeselecteerdeType(onderzoek.typeOnderzoek);
                 setGeselecteerdeBeperkingen(onderzoek.beperkingen);
+                setGeselecteerdeDeelnemers(onderzoek.ervaringsdeskundigen);
 
                 const responsTypeOnderzoeken = await axiosPrivate('/api/Ervaringsdeskundige/TypeOnderzoeken');
                 const responsBeperkingen = await axiosPrivate('/api/Onderzoek/Beperkingen');
+                const responsdeelnemers = await axiosPrivate('/api/Onderzoek/ervaringsdeskundigen');
                 setTypeOnderzoeken(responsTypeOnderzoeken.data);
                 setBeperkingen(responsBeperkingen.data);
+                setDeelnemers(responsdeelnemers.data);
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -51,6 +56,16 @@ function OnderzoekVerwijzenPagina() {
             return { id: beperking.id, naam: beperking.naam };
         });
         setGeselecteerdeBeperkingen(selected);
+    };
+
+    const selecteerDeelnemers = (event) => {
+        if (event.target.value !== "geen") {
+            const selected = Array.from(event.target.selectedOptions, (option) => {
+                const deelnemer = deelnemers.find(item => item.email === option.value);
+                return { id: deelnemer.id, email: deelnemer.email };
+            });
+            setGeselecteerdeDeelnemers(selected);
+        } else { setGeselecteerdeDeelnemers([]); }
 
     };
     async function handleSubmit(e) {
@@ -63,8 +78,8 @@ function OnderzoekVerwijzenPagina() {
                 beloning: beloning,
                 datum: datum,
                 beperkingen: geselecteerdeBeperkingen,
-                typeOnderzoek: geselecteerdeType
-
+                typeOnderzoek: geselecteerdeType,
+                deelnemers: geselecteerdeDeelnemers
             });
             console.log(response);
             navigate(`/${rolNaam}`);
@@ -120,6 +135,22 @@ function OnderzoekVerwijzenPagina() {
                         </select>}
                         <p className="selectie">Uw geselecteerde beperkingen:</p>
                         {Array.isArray(geselecteerdeBeperkingen) && <span className="gekozen">{geselecteerdeBeperkingen.length !== 0 ? geselecteerdeBeperkingen.map((option) => ` ${option.naam}`).join(",") : " nog niets geselecteerd."}</span>}
+
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="beperkingen">Deelnemers</label>
+                        {console.log(deelnemers)}
+                        {Array.isArray(geselecteerdeDeelnemers)  && <select id="deelnemers" className="form-control" multiple value={geselecteerdeDeelnemers.map(option => option.email)} onChange={selecteerDeelnemers}>
+                            <option value={"geen"}>Geen deelnemer</option>
+                            {deelnemers.map((deelnemer) => (
+                                <option key={deelnemer.id} value={deelnemer.email}>
+                                    {deelnemer.email}
+                                </option>
+                            ))}
+                        </select>}
+                        <p className="selectie">Het deelnemers zijn:</p>
+                        {Array.isArray(geselecteerdeDeelnemers) && <span className="gekozen">{geselecteerdeDeelnemers.length !== 0 ? geselecteerdeDeelnemers.map((option) => ` ${option.email}`).join(",") : " nog niets geselecteerd."}</span>}
 
                     </div>
 

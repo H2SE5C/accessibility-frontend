@@ -60,7 +60,10 @@ function OnderzoekDetailPagina({ isAanvraag }) {
                     {Array.isArray(onderzoek.beperkingen) && <div className="beperkingen d-flex">Beperkingen: {onderzoek.beperkingen.map((beperking) => (
                         <p className="beperking" key={beperking.id}>{beperking.naam},</p>
                     ))}</div>}
-                    {console.log(onderzoek)}
+                    {Array.isArray(onderzoek.ervaringsdeskundigen)&&onderzoek.ervaringsdeskundigen.length !== 0 && <div className="ervaringsdeskundigen d-flex">Ervaringsdeskundigen: {onderzoek.ervaringsdeskundigen.map((deskundige) => (
+                        <p className="beperking" key={deskundige.id}>{deskundige.email},</p>
+                    ))}</div>}
+                    
                     <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
                     <div className="d-flex">
                         <button className="btn btn-primary backBtn" ><Link className="link" to={`/${rolNaam}`}>Terug</Link></button>

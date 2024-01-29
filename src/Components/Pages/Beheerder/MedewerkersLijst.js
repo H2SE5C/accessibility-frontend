@@ -8,9 +8,7 @@ function ErvaringsdeskundigenLijst() {
     const [gebruikers, setGebruikers] = useState([]);
     const [gesorteerdeGebruikers, setGesorteerdeGebruikers] = useState([]);
     const [sorteerOptie, setSorteerOptie] = useState('');
-    const [geselecteerdeAandoening, setGeselecteerdeAandoening] = useState('');
     const [filterTerm, setFilterTerm] = useState('');
-    const [geselecteerdeGebruiker, setGeselecteerdeGebruiker] = useState(null);
 
     useEffect(() => {
         const fetchMedewerkersLijst = async () => {

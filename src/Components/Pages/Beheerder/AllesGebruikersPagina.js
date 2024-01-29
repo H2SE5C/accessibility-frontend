@@ -11,12 +11,12 @@ function AllesGebruiekrsPagina() {
     const axiosPrivate = useAxiosPrivate();
     const pathArray = window.location.pathname.split('/');
     const rolNaam = pathArray[2];
-    const Titel = rolNaam.toUpperCase(); 
+    const Titel = rolNaam.toUpperCase();
+
     useEffect(() => {
         const fetchGebruikers = async () => {
             try {
-                if (rolNaam === "bedrijven")
-                {
+                if (rolNaam === "bedrijven") {
                     const respons = await axiosPrivate.get(API_URL + rolNaam);
                     setBedrijvenAfwachting(respons.data["bedrijvenFalse"]);
                     setGebruikers(respons.data["bedrijvenTrue"]);
@@ -24,33 +24,32 @@ function AllesGebruiekrsPagina() {
                     const respons = await axiosPrivate.get(API_URL + rolNaam);
                     setGebruikers(respons.data);
                 }
-                
+
             } catch (error) {
-               console.error("Error fetching data:", error);
+                console.error("Error fetching data:", error);
             }
         }
         fetchGebruikers();
-    }, [rolNaam,axiosPrivate])
+    }, [rolNaam, axiosPrivate])
 
     const verwijderGebruiker = async (id) => {
         try {
-             await axiosPrivate.delete(`/api/gebruiker/${id}`);
-              window.location.reload();
+            await axiosPrivate.delete(`/api/gebruiker/${id}`);
+            window.location.reload();
         } catch (error) {
-                console.error('Fout bij het verwijderen van het account:', error);
+            console.error('Fout bij het verwijderen van het account:', error);
         }
     };
 
-    const setEmailverifTrue = async (id) =>
-    {
+    const setEmailverifTrue = async (id) => {
         try {
-            await axiosPrivate.put(API_URL+`bedrijf/${id}`);
+            await axiosPrivate.put(API_URL + `bedrijf/${id}`);
             window.location.reload();
         } catch (error) {
             console.error("Error updating status:", error);
         };
     }
-    
+
     return (
         <div className="container mt-4">
             <h1 className="text-center">{Titel}</h1>
@@ -64,19 +63,19 @@ function AllesGebruiekrsPagina() {
                     </tr>
                 </thead>
                 <tbody>
-                    {gebruikers.map(gebruiekr => (
-                        <tr key={gebruiekr.id}>
-                            <th scope="row">{gebruiekr.id}</th>
-                            {gebruiekr.voornaam && <td>{gebruiekr.voornaam} {gebruiekr.achternaam}</td>}
-                            {gebruiekr.bedrijfsnaam && <td>{gebruiekr.bedrijfsnaam } </td>}
-                            {gebruiekr.naam && <td>{gebruiekr.naam}</td>}
-                            <td>{gebruiekr.email}</td>
-                            <td><button className="btn btn-danger backBtn" onClick={()=>verwijderGebruiker(gebruiekr.id)} >verwijderen</button></td>
+                    {gebruikers.map(gebruiker => (
+                        <tr key={gebruiker.id}>
+                            <th scope="row">{gebruiker.id}</th>
+                            {gebruiker.voornaam && <td>{gebruiker.voornaam} {gebruiker.achternaam}</td>}
+                            {gebruiker.bedrijfsnaam && <td>{gebruiker.bedrijfsnaam} </td>}
+                            {gebruiker.naam && <td>{gebruiker.naam}</td>}
+                            <td>{gebruiker.email}</td>
+                            <td><button className="btn btn-danger backBtn" onClick={() => verwijderGebruiker(gebruiker.id)} >verwijderen</button></td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            {rolNaam === "bedrijven" && 
+            {rolNaam === "bedrijven" &&
 
                 <table className="table  table-bordered">
                     <thead className="table-dark">
@@ -92,23 +91,21 @@ function AllesGebruiekrsPagina() {
                         </tr>
                     </thead>
                     <tbody>
-                        {bedrijvenAfwachting.map(gebruiekr => (
-                            <tr key={gebruiekr.id}>
-                                <th scope="row">{gebruiekr.id}</th>
-                                <td>{gebruiekr.bedrijfsnaam} </td>
-                                <td>{gebruiekr.email}</td>
-                                <td>{gebruiekr.omschrijving}</td>
-                                <td>{gebruiekr.phoneNumber}</td>
-                                <td>{gebruiekr.locatie}</td>
-                                <td>{gebruiekr.linkNaarBedrijf}</td>
-                                <td><button className="btn btn-primary backBtn" onClick={() => setEmailverifTrue(gebruiekr.id)} >Akkoord</button></td>
+                        {bedrijvenAfwachting.map(gebruiker => (
+                            <tr key={gebruiker.id}>
+                                <th scope="row">{gebruiker.id}</th>
+                                <td>{gebruiker.bedrijfsnaam} </td>
+                                <td>{gebruiker.email}</td>
+                                <td>{gebruiker.omschrijving}</td>
+                                <td>{gebruiker.phoneNumber}</td>
+                                <td>{gebruiker.locatie}</td>
+                                <td>{gebruiker.linkNaarBedrijf}</td>
+                                <td><button className="btn btn-primary backBtn" onClick={() => setEmailverifTrue(gebruiker.id)} >Akkoord</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-        
-        
-        }
+            }
         </div>
     );
 };

@@ -1,25 +1,27 @@
-import NavigatieBar from "./Components/NavigatieBar";
 import { Route, Routes } from "react-router-dom";
-import RegistreerBedrijf from "./Components/Pages/RegistreerBedrijf";
-import RegistreerErvaringsdeskundige from "./Components/Pages/RegistreerErvaringsdeskundige";
-import Login from "./Components/Pages/Login";
+import NavigatieBar from "./Components/NavigatieBar";
+import BedrijfChatPagina from "./Components/Pages/Bedrijf/BedrijfChatPagina";
+import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
+import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
+import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
+import AllesGebruikersPagina from "./Components/Pages/Beheerder/AllesGebruikersPagina";
+import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
+import ErvaringsdeskundigenLijst from "./Components/Pages/Beheerder/ErvaringsdeskundigenLijst";
+import MedewerkersLijst from "./Components/Pages/Beheerder/MedewerkersLijst";
 import BezoekerHomePagina from "./Components/Pages/BezoekerHomePagina";
-import PaginaNietGevonden from "./Components/Pages/PaginaNietGevonden";
-import RequireAuth from "./Components/RequireAuth";
+import ErvaringsdeskundigeChatPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeChatPagina";
 import ErvaringsdeskundigeHomePagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeHomePagina";
 import ErvaringsdeskundigeProfielPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeProfielPagina";
-import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
-import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
+import MaakChatPagina from "./Components/Pages/Ervaringsdeskundige/MaakChatPagina";
+import Login from "./Components/Pages/Login";
 import MedewerkerHomePagina from "./Components/Pages/Medewerker/MedewerkerHomePagina";
 import OnderzoekDetailPagina from "./Components/Pages/Medewerker/OnderzoekDetailPagina";
-import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
-import PersistLogin from "./Components/PersistLogin";
-import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
-import ErvaringsdeskundigeChatPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeChatPagina";
-import MaakChatPagina from "./Components/Pages/Ervaringsdeskundige/MaakChatPagina";
-import BedrijfChatPagina from "./Components/Pages/Bedrijf/BedrijfChatPagina";
 import OnderzoekVerwijzenPagina from "./Components/Pages/Medewerker/OnderzoekVerwijzenPagina";
-import AllesGebruikersPagina from "./Components/Pages/Beheerder/AllesGebruikersPagina"
+import PaginaNietGevonden from "./Components/Pages/PaginaNietGevonden";
+import RegistreerBedrijf from "./Components/Pages/RegistreerBedrijf";
+import RegistreerErvaringsdeskundige from "./Components/Pages/RegistreerErvaringsdeskundige";
+import PersistLogin from "./Components/PersistLogin";
+import RequireAuth from "./Components/RequireAuth";
 
 function App() {
   return (
@@ -87,9 +89,9 @@ function App() {
 
             <Route path="/beheerder" element={<RequireAuth allowedRoles={["Beheerder"]} />}>
               <Route index element={<BeheerderHomePagina />} />
-              <Route path="ervaringsdeskundigen" element={<AllesGebruikersPagina />} />
+              <Route path="ervaringsdeskundigen" element={<ErvaringsdeskundigenLijst />} />
               <Route path="bedrijven" element={<AllesGebruikersPagina />} />
-              <Route path="medewerkers" element={<AllesGebruikersPagina />} />
+              <Route path="medewerkers" element={<MedewerkersLijst />} />
             </Route>
 
             <Route path="/medewerker" element={<RequireAuth allowedRoles={["Medewerker"]} />}>

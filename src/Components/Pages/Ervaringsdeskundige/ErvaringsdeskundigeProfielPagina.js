@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import '../../../css/BedrijfProfielPagina.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';

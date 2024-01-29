@@ -3,8 +3,9 @@ function BeheerderHomePagina () {
     
     return (
         <>
-        <h1>BeheerderHomePagina</h1>
-        <p>Het is beeheerder Pagina, uw kunt account verwijderen</p>
+        <h1>BeheerderHome Pagina</h1>
+            <p>Welkom bij de home pagina voor Stichting Accessibiltiy. </p>
+            <p>Hier kunt u de bedrijven, medewerkers en ervaringsdeskundigen zien en al hun informatie.</p>
         </>
     );
 }

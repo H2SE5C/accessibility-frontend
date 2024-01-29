@@ -4,8 +4,11 @@ import React, { useState, useEffect } from 'react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 function ErvaringsdeskundigenLijst() {
-    const [gebruikers, setGebruikers] = useState([]);
     const axiosPrivate = useAxiosPrivate();
+    const [gebruikers, setGebruikers] = useState([]);
+    const [gesorteerdeGebruikers, setGesorteerdeGebruikers] = useState([]);
+    const [sorteerOptie, setSorteerOptie] = useState('');
+    const [geselecteerdeAandoening, setGeselecteerdeAandoening] = useState('');
     const [filterTerm, setFilterTerm] = useState('');
     const [geselecteerdeGebruiker, setGeselecteerdeGebruiker] = useState(null);
 
@@ -13,13 +16,45 @@ function ErvaringsdeskundigenLijst() {
         const fetchEVLijst = async () => {
             try {
                 const response = await axiosPrivate.get(`/api/gebruiker/ervaringsdeskundigen`);
-                setGebruikers(response.data);
+                const gebruikersData = response.data;
+                setGebruikers(gebruikersData);
             } catch (error) {
-                console.error('Fout bij het ophalen van bedrijfsgegevens:', error);
+                console.error('Fout bij het ophalen van gebruikersgegevens:', error);
             }
         }
+
         fetchEVLijst();
     }, [axiosPrivate]);
+
+    useEffect(() => {
+        let gefilterdeGebruikers = [...gebruikers];
+
+        if (geselecteerdeAandoening) {
+            gefilterdeGebruikers = gefilterdeGebruikers.filter((gebruiker) =>
+                gebruiker.aandoeningen.some((aandoening) => aandoening.naam.toLowerCase() === geselecteerdeAandoening.toLowerCase())
+            );
+        }
+
+        if (filterTerm) {
+            gefilterdeGebruikers = gefilterdeGebruikers.filter((gebruiker) =>
+                gebruiker.voornaam.toLowerCase().includes(filterTerm.toLowerCase()) ||
+                gebruiker.achternaam.toLowerCase().includes(filterTerm.toLowerCase()) ||
+                gebruiker.id.toString().includes(filterTerm)
+            );
+        }
+
+        if (sorteerOptie === 'naamOplopend') {
+            gefilterdeGebruikers.sort((a, b) => a.voornaam.localeCompare(b.voornaam));
+        } else if (sorteerOptie === 'naamAflopend') {
+            gefilterdeGebruikers.sort((a, b) => b.voornaam.localeCompare(a.voornaam));
+        } else if (sorteerOptie === 'idOplopend') {
+            gefilterdeGebruikers.sort((a, b) => a.id - b.id);
+        } else if (sorteerOptie === 'idAflopend') {
+            gefilterdeGebruikers.sort((a, b) => b.id - a.id);
+        }
+
+        setGesorteerdeGebruikers(gefilterdeGebruikers);
+    }, [gebruikers, geselecteerdeAandoening, filterTerm, sorteerOptie]);
 
     const verwijderGebruiker = async (id) => {
         try {
@@ -38,29 +73,49 @@ function ErvaringsdeskundigenLijst() {
         setGeselecteerdeGebruiker(null);
     };
 
-    const gefilterdeGebruikers = gebruikers.filter((gebruiker) => {
-        const zoektermLowerCase = filterTerm.toLowerCase();
-        return (
-            (gebruiker.id && gebruiker.id.toString().includes(zoektermLowerCase)) ||
-            (gebruiker.voornaam && gebruiker.voornaam.toLowerCase().includes(zoektermLowerCase)) ||
-            (gebruiker.achternaam && gebruiker.achternaam.toLowerCase().includes(zoektermLowerCase)) ||
-            (gebruiker.email && gebruiker.email.toLowerCase().includes(zoektermLowerCase))
-        );
-    });
-
     return (
         <div className="container mt-4">
             <h1 className="text-center">ERVARINGSDESKUNDIGEN</h1>
-            <div className="input-group mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Zoek ervaringsdeskundige"
-                    value={filterTerm}
-                    onChange={(e) => setFilterTerm(e.target.value)}
-                />
+            <div className="row align-items-start">
+                <div className="col-md-4">
+                    <label className="mb-2">Zoek ervaringsdeskundige:</label>
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Zoek ervaringsdeskundige"
+                            value={filterTerm}
+                            onChange={(e) => setFilterTerm(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <label className="mb-2">Sorteer op:</label>
+                    <select className="form-select" value={sorteerOptie} onChange={(e) => setSorteerOptie(e.target.value)}>
+                        <option value="">Geen Sortering</option>
+                        <option value="naamOplopend">Naam (Oplopend)</option>
+                        <option value="naamAflopend">Naam (Aflopend)</option>
+                        <option value="idOplopend">ID (Oplopend)</option>
+                        <option value="idAflopend">ID (Aflopend)</option>
+                    </select>
+                </div>
+                <div className="col-md-4">
+                    <label className="mb-2">Filter op aandoening:</label>
+                    <select className="form-select" value={geselecteerdeAandoening} onChange={(e) => setGeselecteerdeAandoening(e.target.value)}>
+                        <option value="">Geen Filter</option>
+                        <option value="Blindheid">Blindheid</option>
+                        <option value="Slechtziendheid">Slechtziendheid</option>
+                        <option value="Kleurenblindheid">Kleurenblindheid</option>
+                        <option value="Doofheid">Doofheid</option>
+                        <option value="Slechthorendheid">Slechthorendheid</option>
+                        <option value="Verlamming">Verlamming</option>
+                        <option value="Tremoren of beperkte motorische controle">Tremoren of beperkte motorische controle</option>
+                        <option value="ADHD">ADHD</option>
+                        <option value="Dyslexie">Dyslexie</option>
+                    </select>
+                </div>
             </div>
-            <table className="table table-bordered">
+            <table className="table table-bordered mt-3">
                 <thead className="table-dark">
                     <tr>
                         <th>ID#</th>
@@ -71,7 +126,7 @@ function ErvaringsdeskundigenLijst() {
                     </tr>
                 </thead>
                 <tbody>
-                    {gefilterdeGebruikers.map((gebruiker) => (
+                    {gesorteerdeGebruikers.map((gebruiker) => (
                         <tr key={gebruiker.id}>
                             <th scope="row">{gebruiker.id}</th>
                             <td>{gebruiker.voornaam} {gebruiker.achternaam}</td>
@@ -125,6 +180,35 @@ function ErvaringsdeskundigenLijst() {
                                 <span key={index}>{aandoening.naam}</span>
                             ))}
                         </span>
+                    </p>
+                    <p className="user-info-item">
+                        <span className="user-info-label">Hulpmiddel(en):</span>
+                        <span className="user-info-value">
+                            {geselecteerdeGebruiker.hulpmiddelen.map((hulpmiddel, index) => (
+                                <span key={index}>{hulpmiddel.naam}</span>
+                            ))}
+                        </span>
+                    </p>
+                    <p className="user-info-item">
+                        <span className="user-info-label">Deelname onderzoek(en):</span>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Onderzoek ID</th>
+                                    <th>Titel</th>
+                                    <th>Bedrijf</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {geselecteerdeGebruiker.onderzoeken.map((onderzoek, index) => (
+                                    <tr key={index}>
+                                        <td>{onderzoek.id}</td>
+                                        <td>{onderzoek.titel}</td>
+                                        <td>{onderzoek.bedrijf}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </p>
                 </div>
             )}

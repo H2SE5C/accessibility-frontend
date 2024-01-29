@@ -1,23 +1,52 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import '../../../css/styles.css';
 import React, { useState, useEffect } from 'react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 function ErvaringsdeskundigenLijst() {
-    const [gebruikers, setGebruikers] = useState([]);
-    const [filterTerm, setFilterTerm] = useState('');
     const axiosPrivate = useAxiosPrivate();
+    const [gebruikers, setGebruikers] = useState([]);
+    const [gesorteerdeGebruikers, setGesorteerdeGebruikers] = useState([]);
+    const [sorteerOptie, setSorteerOptie] = useState('');
+    const [geselecteerdeAandoening, setGeselecteerdeAandoening] = useState('');
+    const [filterTerm, setFilterTerm] = useState('');
+    const [geselecteerdeGebruiker, setGeselecteerdeGebruiker] = useState(null);
 
     useEffect(() => {
-        const fetchEVLijst = async () => {
+        const fetchMedewerkersLijst = async () => {
             try {
                 const response = await axiosPrivate.get(`/api/gebruiker/medewerkers`);
                 setGebruikers(response.data);
             } catch (error) {
-                console.error('Fout bij het ophalen van bedrijfsgegevens:', error);
+                console.error('Fout bij het ophalen van gebruikersgegevens:', error);
             }
         }
-        fetchEVLijst();
+
+        fetchMedewerkersLijst();
     }, [axiosPrivate]);
+
+    useEffect(() => {
+        let gefilterdeGebruikers = [...gebruikers];
+
+        if (filterTerm) {
+            gefilterdeGebruikers = gefilterdeGebruikers.filter((gebruiker) =>
+                gebruiker.naam.toLowerCase().includes(filterTerm.toLowerCase()) ||
+                gebruiker.id.toString().includes(filterTerm)
+            );
+        }
+
+        if (sorteerOptie === 'naamOplopend') {
+            gefilterdeGebruikers.sort((a, b) => a.naam.localeCompare(b.naam));
+        } else if (sorteerOptie === 'naamAflopend') {
+            gefilterdeGebruikers.sort((a, b) => b.naam.localeCompare(a.naam));
+        } else if (sorteerOptie === 'idOplopend') {
+            gefilterdeGebruikers.sort((a, b) => a.id - b.id);
+        } else if (sorteerOptie === 'idAflopend') {
+            gefilterdeGebruikers.sort((a, b) => b.id - a.id);
+        }
+
+        setGesorteerdeGebruikers(gefilterdeGebruikers);
+    }, [gebruikers, filterTerm, sorteerOptie]);
 
     const verwijderGebruiker = async (id) => {
         try {
@@ -28,29 +57,35 @@ function ErvaringsdeskundigenLijst() {
         }
     };
 
-    const gefilterdeGebruikers = gebruikers.filter((gebruiker) => {
-        const zoektermLowerCase = filterTerm.toLowerCase();
-        return (
-            gebruiker.id.toString().includes(zoektermLowerCase) ||
-            gebruiker.naam.toLowerCase().includes(zoektermLowerCase) ||
-            gebruiker.email.toLowerCase().includes(zoektermLowerCase)
-        );
-    });
-
     return (
         <div className="container mt-4">
             <h1 className="text-center">MEDEWERKERS</h1>
-            <div className="input-group mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Zoek medewerkers"
-                    value={filterTerm}
-                    onChange={(e) => setFilterTerm(e.target.value)}
-                />
+            <div className="row align-items-start">
+                <div className="col-md-4">
+                    <label className="mb-2">Zoek medewerkers:</label>
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Zoek medewerkers"
+                            value={filterTerm}
+                            onChange={(e) => setFilterTerm(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <label className="mb-2">Sorteer op:</label>
+                    <select className="form-select" value={sorteerOptie} onChange={(e) => setSorteerOptie(e.target.value)}>
+                        <option value="">Geen Sortering</option>
+                        <option value="naamOplopend">Naam (Oplopend)</option>
+                        <option value="naamAflopend">Naam (Aflopend)</option>
+                        <option value="idOplopend">ID (Oplopend)</option>
+                        <option value="idAflopend">ID (Aflopend)</option>
+                    </select>
+                </div>
             </div>
 
-            <table className="table table-bordered">
+            <table className="table table-bordered mt-3">
                 <thead className="table-dark">
                     <tr>
                         <th>ID#</th>
@@ -60,7 +95,7 @@ function ErvaringsdeskundigenLijst() {
                     </tr>
                 </thead>
                 <tbody>
-                    {gefilterdeGebruikers.map((gebruiker) => (
+                    {gesorteerdeGebruikers.map((gebruiker) => (
                         <tr key={gebruiker.id}>
                             <th scope="row">{gebruiker.id}</th>
                             {gebruiker.naam && <td>{gebruiker.naam}</td>}

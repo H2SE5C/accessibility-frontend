@@ -174,33 +174,23 @@ option {
 .bericht:last-child {
     border-bottom: none;
 }
-
-/* Stijl voor de container van de gebruikersinformatie */
 .user-info-container {
     margin-top: 20px;
     padding: 20px;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
 }
-
-/* Stijl voor de kop van de gebruikersinformatie */
 .user-info-header {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
 }
-
-/* Stijl voor de individuele gebruikersinformatie-items */
 .user-info-item {
     margin-bottom: 10px;
 }
-
-/* Stijl voor de labels */
 .user-info-label {
     font-weight: bold;
 }
-
-/* Stijl voor de waarden */
 .user-info-value {
     margin-left: 10px;
 }

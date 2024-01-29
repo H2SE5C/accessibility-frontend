@@ -185,7 +185,7 @@ function ErvaringsdeskundigenLijst() {
                         <span className="user-info-label">Hulpmiddel(en):</span>
                         <span className="user-info-value">
                             {geselecteerdeGebruiker.hulpmiddelen.map((hulpmiddel, index) => (
-                                <span key={index}>{hulpmiddel.naam}</span>
+                                <div key={index}>{hulpmiddel.naam}</div>
                             ))}
                         </span>
                     </p>

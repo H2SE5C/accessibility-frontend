@@ -4,9 +4,9 @@ import axios from '../../../api/axios';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-function MaakOnderzoekPagina()
-{
-    const ONDERZOEK_URL = '/api/Onderzoek/bedrijf/add';
+
+function MaakVragenlijstPagina() {
+    const ONDERZOEK_URL = '/api/Vragenlijst/add';
     const [titel, setTitel] = useState("");
     const [omschrijving, setOmschrijving] = useState("");
     const [beloning, setBeloning] = useState("");
@@ -121,4 +121,4 @@ function MaakOnderzoekPagina()
     );
 }
 
-export default MaakOnderzoekPagina;
+export default MaakVragenlijstPagina;

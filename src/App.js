@@ -20,6 +20,7 @@ import MaakChatPagina from "./Components/Pages/Ervaringsdeskundige/MaakChatPagin
 import BedrijfChatPagina from "./Components/Pages/Bedrijf/BedrijfChatPagina";
 import OnderzoekVerwijzenPagina from "./Components/Pages/Medewerker/OnderzoekVerwijzenPagina";
 import AllesGebruikersPagina from "./Components/Pages/Beheerder/AllesGebruikersPagina"
+import VragenlijstenPagina from "./Components/Pages/Bedrijf/VragenlijstenPagina";
 
 function App() {
   return (
@@ -27,61 +28,29 @@ function App() {
       <NavigatieBar />
       <div className="inhoud container">
         <Routes>
-                  <Route path="/" element={<BezoekerHomePagina />} /> 
+          <Route path="/" element={<BezoekerHomePagina />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/registreer-bedrijf" element={<RegistreerBedrijf />} />
-          <Route
-            path="/registreer-ervaringsdeskundige"
-            element={<RegistreerErvaringsdeskundige />}
-          />
+          <Route path="/registreer-ervaringsdeskundige" element={<RegistreerErvaringsdeskundige />} />
 
           <Route element={<PersistLogin />}>
-            <Route
-              path="/ervaringsdeskundige"
-              element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]} />}
-            >
-              <Route
-              index
-                element={<ErvaringsdeskundigeHomePagina />}
-              />
-              <Route
-                path="profiel"
-                element={<ErvaringsdeskundigeProfielPagina />}
-              />
-              <Route
-                path="chat"
-                element={<ErvaringsdeskundigeChatPagina />}
-              />
-              <Route
-                path="chat/maak"
-                element={<MaakChatPagina />}
-              />
+            <Route path="/ervaringsdeskundige" element={<RequireAuth allowedRoles={["Ervaringsdeskundige"]} />} >
+              <Route index element={<ErvaringsdeskundigeHomePagina />} />
+              <Route path="profiel" element={<ErvaringsdeskundigeProfielPagina />} />
+              <Route path="chat" element={<ErvaringsdeskundigeChatPagina />} />
+              <Route path="chat/maak" element={<MaakChatPagina />} />
             </Route>
 
             <Route path="/bedrijf" element={<RequireAuth allowedRoles={["Bedrijf"]} />}>
               <Route index element={<BedrijfHomePagina />} />
-              <Route
-                path="profiel"
-                element={<BedrijfProfielPagina />}
-              />
-               <Route
-                path="maak-onderzoek"
-                element={<MaakOnderzoekPagina />}
-              />
-               <Route
-                path="chat"
-                element={<BedrijfChatPagina />}
-              />
-                <Route
-                 path="onderzoek-detail/:id"
-                 element={<OnderzoekDetailPagina isAanvraag={false} />}
-               />
+              <Route path="profiel" element={<BedrijfProfielPagina />} />
+              <Route path="maak-onderzoek" element={<MaakOnderzoekPagina />} />
+              <Route path="vragenlijsten" element={<VragenlijstenPagina/>} />
+              <Route path="chat" element={<BedrijfChatPagina />} />
 
-               <Route
-                 path="onderzoek-wijzig/:id"
-                 element={<OnderzoekVerwijzenPagina />}
-               />
+              <Route path="onderzoek-detail/:id" element={<OnderzoekDetailPagina isAanvraag={false} />} />
+              <Route path="onderzoek-wijzig/:id" element={<OnderzoekVerwijzenPagina />} />
             </Route>
 
 
@@ -93,15 +62,14 @@ function App() {
             </Route>
 
             <Route path="/medewerker" element={<RequireAuth allowedRoles={["Medewerker"]} />}>
-                 <Route index element={<MedewerkerHomePagina />} />
-                    <Route path="onderzoek-aanvraag/:id" element={<OnderzoekDetailPagina isAanvraag={true} />} />
-                   <Route path="onderzoek-detail/:id" element={<OnderzoekDetailPagina isAanvraag={false} />} />
-                    <Route path="onderzoek-wijzig/:id" element={<OnderzoekVerwijzenPagina />} />
-                            
+              <Route index element={<MedewerkerHomePagina />} />
+              <Route path="onderzoek-aanvraag/:id" element={<OnderzoekDetailPagina isAanvraag={true} />} />
+              <Route path="onderzoek-detail/:id" element={<OnderzoekDetailPagina isAanvraag={false} />} />
+              <Route path="onderzoek-wijzig/:id" element={<OnderzoekVerwijzenPagina />} />
             </Route>
 
             <Route path="*" element={<PaginaNietGevonden />} />
-              </Route>
+          </Route>
         </Routes>
       </div>
     </main>

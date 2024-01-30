@@ -42,6 +42,7 @@ function NavigatieBar() {
                     <NavLink to="/beheerder" className="BeheerderHome Navlink">Beheerder Home</NavLink>
                     <NavLink to="/beheerder/ervaringsdeskundigen" className="BeheerderHome Navlink">Ervaringsdeskundigen</NavLink>
                     <NavLink to="/beheerder/bedrijven" className="BeheerderHome Navlink">Bedrijven</NavLink>
+                    <NavLink to="/beheerder/onderzoeken" className="BeheerderHome Navlink">Onderzoeken</NavLink>
                     <NavLink to="/beheerder/medewerkers" className="BeheerderHome Navlink">Medewerkers</NavLink>
                 </div> : <></>
             }

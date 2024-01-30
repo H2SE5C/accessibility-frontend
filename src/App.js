@@ -21,6 +21,8 @@ import BedrijfChatPagina from "./Components/Pages/Bedrijf/BedrijfChatPagina";
 import OnderzoekVerwijzenPagina from "./Components/Pages/Medewerker/OnderzoekVerwijzenPagina";
 import AllesGebruikersPagina from "./Components/Pages/Beheerder/AllesGebruikersPagina"
 import VragenlijstenPagina from "./Components/Pages/Bedrijf/VragenlijstenPagina";
+import VragenlijstDetailPagina from "./Components/Pages/Bedrijf/VragenlijstDetailPagina";
+import VragenlijstWijzigenPagina from "./Components/Pages/Bedrijf/VragenlijstWijzigenPagina";
 
 function App() {
   return (
@@ -49,6 +51,8 @@ function App() {
               <Route path="vragenlijsten" element={<VragenlijstenPagina/>} />
               <Route path="chat" element={<BedrijfChatPagina />} />
 
+              <Route path="vragenlijst-detail/:id" element={<VragenlijstDetailPagina/>} />
+              <Route path="vragenlijst-wijzig/:id" element={<VragenlijstWijzigenPagina />} />
               <Route path="onderzoek-detail/:id" element={<OnderzoekDetailPagina isAanvraag={false} />} />
               <Route path="onderzoek-wijzig/:id" element={<OnderzoekVerwijzenPagina />} />
             </Route>

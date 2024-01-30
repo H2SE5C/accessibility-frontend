@@ -3,7 +3,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { Link } from 'react-router-dom';
 
 function VragenlijstenPagina() {
-    const API_URL = '/api/Vragenlijst/';
+    const API_URL = '/api/Vragenlijst/get-all';
     const [vragenlijsten, setVragenlijsten] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     
@@ -27,7 +27,7 @@ function VragenlijstenPagina() {
                 { vragenlijsten.map((vragenlijst) => (
                     <div className="from-group onderzoek" key={vragenlijst.id}>
                         <div className="title">Titel: {vragenlijst.naam}</div>
-                        <button className="btn btn-primary"><Link className="link" to={`/bedrijf/onderzoek-detail/${vragenlijst.id}`}>Details</Link></button>
+                        <button className="btn btn-primary"><Link className="link" to={`/bedrijf/vragenlijst-detail/${vragenlijst.id}`}>Details</Link></button>
                     </div>
                 ))}
                

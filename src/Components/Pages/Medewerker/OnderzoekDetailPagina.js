@@ -81,8 +81,6 @@ function OnderzoekDetailPagina({ isAanvraag }) {
                 </div>
             </div>
         </div>
-               
-               
     );
 }
 

@@ -11,7 +11,7 @@ function ErvaringsdeskundigenLijst() {
     const [filterTerm, setFilterTerm] = useState('');
 
     useEffect(() => {
-        const fetchMedewerkersLijst = async () => {
+        const fetchMedewerkers = async () => {
             try {
                 const response = await axiosPrivate.get(`/api/gebruiker/medewerkers`);
                 setGebruikers(response.data);
@@ -20,7 +20,7 @@ function ErvaringsdeskundigenLijst() {
             }
         }
 
-        fetchMedewerkersLijst();
+        fetchMedewerkers();
     }, [axiosPrivate]);
 
     useEffect(() => {

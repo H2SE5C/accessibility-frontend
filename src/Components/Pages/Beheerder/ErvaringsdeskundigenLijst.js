@@ -13,7 +13,7 @@ function ErvaringsdeskundigenLijst() {
     const [geselecteerdeGebruiker, setGeselecteerdeGebruiker] = useState(null);
 
     useEffect(() => {
-        const fetchEVLijst = async () => {
+        const fetchEV = async () => {
             try {
                 const response = await axiosPrivate.get(`/api/gebruiker/ervaringsdeskundigen`);
                 const gebruikersData = response.data;
@@ -23,7 +23,7 @@ function ErvaringsdeskundigenLijst() {
             }
         }
 
-        fetchEVLijst();
+        fetchEV();
     }, [axiosPrivate]);
 
     useEffect(() => {
@@ -57,11 +57,15 @@ function ErvaringsdeskundigenLijst() {
     }, [gebruikers, geselecteerdeAandoening, filterTerm, sorteerOptie]);
 
     const verwijderGebruiker = async (id) => {
-        try {
-            await axiosPrivate.delete(`/api/gebruiker/${id}`);
-            window.location.reload();
-        } catch (error) {
-            console.error('Fout bij het verwijderen van het account:', error);
+        const confirmed = window.confirm('Weet je zeker dat deze onderzoek wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');
+
+        if (confirmed) {
+            try {
+                await axiosPrivate.delete(`/api/gebruiker/${id}`);
+                window.location.reload();
+            } catch (error) {
+                console.error('Fout bij het verwijderen van het account:', error);
+            }
         }
     };
 
@@ -177,7 +181,7 @@ function ErvaringsdeskundigenLijst() {
                         <span className="user-info-label">Aandoening(en):</span>
                         <span className="user-info-value">
                             {geselecteerdeGebruiker.aandoeningen.map((aandoening, index) => (
-                                <span key={index}>{aandoening.naam}</span>
+                                <div key={index}>{aandoening.naam}</div>
                             ))}
                         </span>
                     </p>

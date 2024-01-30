@@ -8,6 +8,8 @@ import AllesGebruikersPagina from "./Components/Pages/Beheerder/AllesGebruikersP
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import ErvaringsdeskundigenLijst from "./Components/Pages/Beheerder/ErvaringsdeskundigenLijst";
 import MedewerkersLijst from "./Components/Pages/Beheerder/MedewerkersLijst";
+import BedrijvenLijst from "./Components/Pages/Beheerder/BedrijvenLijst";
+import OnderzoekenLijst from "./Components/Pages/Beheerder/OnderzoekenLijst";
 import BezoekerHomePagina from "./Components/Pages/BezoekerHomePagina";
 import ErvaringsdeskundigeChatPagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeChatPagina";
 import ErvaringsdeskundigeHomePagina from "./Components/Pages/Ervaringsdeskundige/ErvaringsdeskundigeHomePagina";
@@ -90,7 +92,8 @@ function App() {
             <Route path="/beheerder" element={<RequireAuth allowedRoles={["Beheerder"]} />}>
               <Route index element={<BeheerderHomePagina />} />
               <Route path="ervaringsdeskundigen" element={<ErvaringsdeskundigenLijst />} />
-              <Route path="bedrijven" element={<AllesGebruikersPagina />} />
+              <Route path="bedrijven" element={<BedrijvenLijst />} />
+              <Route path="onderzoeken" element={<OnderzoekenLijst />} />
               <Route path="medewerkers" element={<MedewerkersLijst />} />
             </Route>
 

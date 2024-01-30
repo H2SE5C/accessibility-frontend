@@ -197,7 +197,9 @@ function OnderzoekenLijst() {
                     </p>
                     <p className="user-info-item">
                         <span className="user-info-label">Startdatum:</span>
-                        <span className="user-info-value">{geselecteerdeOnderzoek.datum}</span>
+                        <span className="user-info-value">
+                            {geselecteerdeOnderzoek && new Date(geselecteerdeOnderzoek.datum).toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </span>
                     </p>
                     <p className="user-info-item">
                         <span className="user-info-label">Beperkingen:</span>

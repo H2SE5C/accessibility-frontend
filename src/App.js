@@ -4,7 +4,6 @@ import BedrijfChatPagina from "./Components/Pages/Bedrijf/BedrijfChatPagina";
 import BedrijfHomePagina from "./Components/Pages/Bedrijf/BedrijfHomePagina";
 import BedrijfProfielPagina from "./Components/Pages/Bedrijf/BedrijfProfielPagina";
 import MaakOnderzoekPagina from "./Components/Pages/Bedrijf/MaakOnderzoekPagina";
-//import AllesGebruikersPagina from "./Components/Pages/Beheerder/AllesGebruikersPagina";
 import BeheerderHomePagina from "./Components/Pages/Beheerder/BeheerderHomePagina";
 import ErvaringsdeskundigenLijst from "./Components/Pages/Beheerder/ErvaringsdeskundigenLijst";
 import MedewerkersLijst from "./Components/Pages/Beheerder/MedewerkersLijst";

@@ -15,7 +15,6 @@ function VragenlijstDetailPagina() {
         const fetchVragenlijst = async () => {
             try {
                 const response = await axiosPrivate.get(API_URL + id);
-                console.log(response.data);
                 setVragenlijst(response.data);
             } catch (error) {
                 console.error('Fout bij het ophalen van de vragenlijsten:', error);
@@ -41,6 +40,9 @@ function VragenlijstDetailPagina() {
         <div className="container"> 
             <div className="header">
                 <div className="title">Titel: {vragenlijst.naam}</div>
+                    {/* {Array.isArray(onderzoek.ervaringsdeskundigen)&&onderzoek.ervaringsdeskundigen.length !== 0 && <div className="ervaringsdeskundigen d-flex">Ervaringsdeskundigen: {onderzoek.ervaringsdeskundigen.map((deskundige) => (
+                        <p className="beperking" key={deskundige.id}>{deskundige.email},</p>
+                    ))}</div>} */}
                 <div className="d-flex">
                     <button className="btn btn-primary backBtn" ><Link className="link" to={`/${rolNaam}/vragenlijsten`}>Terug</Link></button>
                     <button className="btn btn-warning backBtn" ><Link className="link" to={`/${rolNaam}/vragenlijst-wijzig/${vragenlijst.id}`}>wijzigen</Link></button>

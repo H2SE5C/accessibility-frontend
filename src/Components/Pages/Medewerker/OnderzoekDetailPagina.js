@@ -17,6 +17,7 @@ function OnderzoekDetailPagina({ isAanvraag }) {
             try {
                 const response = await axiosPrivate.get(API_URL + id);
                 await setOnderzoek(response.data);
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -63,8 +64,11 @@ function OnderzoekDetailPagina({ isAanvraag }) {
                     {Array.isArray(onderzoek.ervaringsdeskundigen)&&onderzoek.ervaringsdeskundigen.length !== 0 && <div className="ervaringsdeskundigen d-flex">Ervaringsdeskundigen: {onderzoek.ervaringsdeskundigen.map((deskundige) => (
                         <p className="beperking" key={deskundige.id}>{deskundige.email},</p>
                     ))}</div>}
-                    
                     <div className="typeOnderzoek">Type onderzoek: {onderzoek.typeOnderzoek}</div>
+                    { onderzoek.typeOnderzoek == "Vragenlijst" &&
+                        <div className="vragenlijst">Vragenlijst: {onderzoek.vragenlijst} - <Link to={`/bedrijf/vragenlijst-detail/${onderzoek.vragenlijst}`} >Details</Link> </div>
+                    }
+
                     <div className="d-flex">
                         <button className="btn btn-primary backBtn" ><Link className="link" to={`/${rolNaam}`}>Terug</Link></button>
                         {isAanvraag ? <>

@@ -13,8 +13,8 @@ function OnderzoekenLijst() {
     const [filterStatus, setFilterStatus] = useState('');
     const [filterTerm, setFilterTerm] = useState('');
     const [geselecteerdeOnderzoek, setGeselecteerdeOnderzoek] = useState(null);
-    const isoDate = "2024-02-01T00:00:00";
-    const formattedDate = new Date(isoDate).toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' });
+    //const isoDate = "2024-02-01T00:00:00";
+    //const formattedDate = new Date(isoDate).toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' });
 
     useEffect(() => {
         const fetchOnderzoeken = async () => {
@@ -197,9 +197,7 @@ function OnderzoekenLijst() {
                     </p>
                     <p className="user-info-item">
                         <span className="user-info-label">Startdatum:</span>
-                        <span className="user-info-value">
-                            {geselecteerdeOnderzoek && new Date(geselecteerdeOnderzoek.datum).toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' })}
-                        </span>
+                        <span className="user-info-value">{geselecteerdeOnderzoek.datum}</span>
                     </p>
                     <p className="user-info-item">
                         <span className="user-info-label">Beperkingen:</span>

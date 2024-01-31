@@ -153,47 +153,47 @@ function ErvaringsdeskundigenLijst() {
             {geselecteerdeGebruiker && (
                 <div className="user-info-container">
                     <h2 className="user-info-header">Gebruikersinformatie</h2>
-                    <p className="user-info-item">
+                    <div className="user-info-item">
                         <span className="user-info-label">Voornaam:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.voornaam}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Achternaam:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.achternaam}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Email:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.email}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Telefoon:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.phoneNumber}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Postcode:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.postcode}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Benadering:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.voorkeurBenadering}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Aandoening(en):</span>
                         <span className="user-info-value">
                             {geselecteerdeGebruiker.aandoeningen.map((aandoening, index) => (
                                 <div key={index}>{aandoening.naam}</div>
                             ))}
                         </span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Hulpmiddel(en):</span>
                         <span className="user-info-value">
                             {geselecteerdeGebruiker.hulpmiddelen.map((hulpmiddel, index) => (
                                 <div key={index}>{hulpmiddel.naam}</div>
                             ))}
                         </span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Deelname onderzoek(en):</span>
                         <table className="table">
                             <thead>
@@ -213,7 +213,7 @@ function ErvaringsdeskundigenLijst() {
                                 ))}
                             </tbody>
                         </table>
-                    </p>
+                    </div>
                 </div>
             )}
         </div>

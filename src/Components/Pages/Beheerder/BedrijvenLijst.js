@@ -59,7 +59,7 @@ function BedrijvenLijst() {
     }, [gebruikers, filterTerm, filterStatus, sorteerOptie]);
 
     const verwijderGebruiker = async (id) => {
-        const confirmed = window.confirm('Weet je zeker dat deze onderzoek wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');
+        const confirmed = window.confirm('Weet je zeker dat je deze gebruiker wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');
 
         if (confirmed) {
             try {
@@ -71,14 +71,21 @@ function BedrijvenLijst() {
         }
     };
 
+
     const setEmailverifyTrue = async (id) => {
         try {
-            await axiosPrivate.put(`api/gebruiker/bedrijf/${id}`);
-            window.location.reload();
+            const response = await axiosPrivate.put(`api/Gebruiker/bedrijf/${id}`);
+            if (response.status === 200) {
+                console.log("Email is bevestigd");
+                window.location.reload();
+            } else {
+                console.error("Onverwachte statuscode:", response.status);
+            }
         } catch (error) {
-            console.error("Error updating status:", error);
-        };
-    }
+            console.error("Fout bij het bijwerken van de status:", error);
+        }
+    };
+
 
     const openGebruikerInfo = (gebruiker) => {
         setGeselecteerdeGebruiker(gebruiker);
@@ -170,27 +177,27 @@ function BedrijvenLijst() {
                             <button className="btn btn-warning" onClick={() => setEmailverifyTrue(geselecteerdeGebruiker.id)}>Accepteer</button>
                         )}
                     </div>
-                    <p className="user-info-item">
+                    <div className="user-info-item">
                         <span className="user-info-label">Bedrijfsnaam:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.bedrijfsnaam}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Omschrijving:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.omschrijving}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Email:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.email}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Telefoon:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.phoneNumber}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Website:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.linkNaarBedrijf}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Onderzoek(en):</span>
                         <table className="table">
                             <thead>
@@ -210,7 +217,7 @@ function BedrijvenLijst() {
                                 ))}
                             </tbody>
                         </table>
-                    </p>
+                    </div>
                 </div>
             )}
         </div>

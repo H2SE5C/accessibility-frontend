@@ -28,6 +28,7 @@ function BedrijfChatPagina() {
     const getChats = async () => {
       try {
         const result = await axiosPrivate.get("/api/chat");
+        console.log(result.data);
         setChats(result.data);
       } catch (err) {
         if (err?.request?.response) {

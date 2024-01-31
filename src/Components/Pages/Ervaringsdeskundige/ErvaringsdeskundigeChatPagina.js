@@ -12,7 +12,6 @@ function ErvaringsdeskundigeChatPagina() {
     const axiosPrivate = useAxiosPrivate();
     const [errorBericht, setErrorBericht] = useState();
     const [error, setError] = useState();
-    // const [gekozenChat, setGekozenChat] = useState();
     const [berichten, setBerichten] = useState([]);
     const [isLoadingChatLijst, setIsLoadingChatLijst] = useState(true);
     const [invoerTekst, setInvoerTekst] = useState("");
@@ -21,8 +20,7 @@ function ErvaringsdeskundigeChatPagina() {
     var url = '';
     if (process.env.NODE_ENV === 'development') {
         url = "https://localhost:5000";
-    }
-    else {
+    } else {
         url = "https://accessibility-backend.azurewebsites.net"
     }
 
@@ -38,8 +36,7 @@ function ErvaringsdeskundigeChatPagina() {
                     setErrorBericht(JSON.stringify(err?.message));
                 }
                 setError(true);
-            }
-            finally {
+            } finally {
                 setIsLoadingChatLijst(false);
             }
         };
@@ -47,25 +44,22 @@ function ErvaringsdeskundigeChatPagina() {
     }, [axiosPrivate]);
 
     useEffect(() => {
-        console.log("Chat is nu: " + gekozenChat);
-
         const joinRoom = async (roomName) => {
             if (connectionState?.connectionId) {
                 try {
                     await axiosPrivate.post(`/api/chat/joinroom/${connectionState.connectionId}/${roomName}`, null);
-                }
-                catch (err) {
+                } catch (err) {
                     console.log(err);
                 }
-            }
-            else {
+            } else {
                 console.log("GEEN CONNECTIONID");
             }
-        }
+        };
+
         if (gekozenChat) {
             joinRoom(gekozenChat.toString());
         }
-    }, [gekozenChat, axiosPrivate, connectionState])
+    }, [gekozenChat, axiosPrivate, connectionState]);
 
     const updateBericht = (bericht) => {
         setBerichten((prevBerichten) => {
@@ -74,35 +68,34 @@ function ErvaringsdeskundigeChatPagina() {
             // Voeg het nieuwe bericht toe
             return [...updatedBerichten, bericht];
         });
-    }
-
+    };
 
     const getBerichten = async (gekozenId) => {
         try {
             setGekozenChat(gekozenId);
-            // setIsLoadingBerichten(true);
             const result = await axiosPrivate.get(`api/chat/bericht/${gekozenId}`);
             setBerichten(result.data);
 
             if (gekozenId !== gekozenChat && connectionState) {
                 connectionState.off("ReceiveMessage");
-                // Close the existing connection
                 await connectionState.stop();
                 setConnectionState(null);
             }
+
             const connection = new HubConnectionBuilder()
                 .withUrl(url + "/chat")
-                // .configureLogging(LogLevel.Information)
                 .withAutomaticReconnect()
                 .build();
 
-            connection.on("ReceiveMessage", updateBericht)
-            await connection.start();
+            connection.on("ReceiveMessage", updateBericht);
 
-            //dit maakt connectie ding
-            setConnectionState(connection);
+            try {
+                await connection.start();
+                setConnectionState(connection);
+            } catch (error) {
+                console.error("Fout bij het starten van SignalR-verbinding:", error);
+            }
 
-            console.log("gekozen chat in getberichten: " + gekozenChat + " gekozen id: " + gekozenId + " berichten: " + JSON.stringify(berichten));
             setChatGekozen(true);
         } catch (err) {
             console.log(err);
@@ -113,10 +106,7 @@ function ErvaringsdeskundigeChatPagina() {
             }
             setError(true);
         }
-        // finally {
-        //   setIsLoadingBerichten(false);
-        // }
-    }
+    };
 
     const chatElementen = chats.map((chat) => {
         return (
@@ -137,20 +127,13 @@ function ErvaringsdeskundigeChatPagina() {
     });
 
     const verzendBericht = async () => {
-        console.log();
         if (invoerTekst !== "") {
             try {
-                // const result = await axiosPrivate.post(`api/chat/bericht`, {
-                //   ChatId: gekozenChat,
-                //   Tekst: invoerTekst
-                // });
                 await axiosPrivate.post(`api/chat/SendMessage`, {
                     ChatId: gekozenChat,
                     Tekst: invoerTekst
-
                 });
                 getBerichten(gekozenChat);
-                console.log("MESSAGE SENT!!");
             } catch (err) {
                 if (err?.request?.response) {
                     setErrorBericht(err?.request?.response?.message);
@@ -158,12 +141,11 @@ function ErvaringsdeskundigeChatPagina() {
                     setErrorBericht(JSON.stringify(err?.message));
                 }
                 setError(true);
-            }
-            finally {
+            } finally {
                 setInvoerTekst("");
             }
         }
-    }
+    };
 
     return (
         <>

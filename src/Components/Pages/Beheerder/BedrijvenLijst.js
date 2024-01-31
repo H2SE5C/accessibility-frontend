@@ -177,27 +177,27 @@ function BedrijvenLijst() {
                             <button className="btn btn-warning" onClick={() => setEmailverifyTrue(geselecteerdeGebruiker.id)}>Accepteer</button>
                         )}
                     </div>
-                    <p className="user-info-item">
+                    <div className="user-info-item">
                         <span className="user-info-label">Bedrijfsnaam:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.bedrijfsnaam}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Omschrijving:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.omschrijving}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Email:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.email}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Telefoon:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.phoneNumber}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Website:</span>
                         <span className="user-info-value">{geselecteerdeGebruiker.linkNaarBedrijf}</span>
-                    </p>
-                    <p className="user-info-item">
+                    </div>
+                    <div className="user-info-item">
                         <span className="user-info-label">Onderzoek(en):</span>
                         <table className="table">
                             <thead>
@@ -217,7 +217,7 @@ function BedrijvenLijst() {
                                 ))}
                             </tbody>
                         </table>
-                    </p>
+                    </div>
                 </div>
             )}
         </div>
